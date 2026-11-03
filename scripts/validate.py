@@ -46,6 +46,28 @@ def validate():
         assert all(type(n) is int and 0 <= n <= row["count"] for n in row["countries"].values())
     if live["status"] == "ok":
         assert live["history"] and live["lastSuccessAt"] == live["history"][-1]["collectedAt"]
+    firmware = json.loads((ROOT / 'versions.json').read_text())
+    assert firmware['schemaVersion'] == 1
+    assert firmware['methodVersion'] == 'storeview-last-modified-v1'
+    assert firmware['query'] == live['query']
+    assert firmware['status'] in ('pending', 'awaiting_key', 'ok', 'error')
+    link(firmware['fingerprintSource'])
+    assert firmware['history'] == sorted(firmware['history'], key=lambda row: row['date'])
+    assert len({row['date'] for row in firmware['history']}) == len(firmware['history'])
+    for row in firmware['history']:
+        valid_date(row['date'])
+        assert row['collectedAt'].startswith(row['date'])
+        for scope in ('all', 'excludingHoneypots'):
+            sample = row[scope]
+            assert type(sample['total']) is int and sample['total'] >= 0
+            assert 'Unknown/unmapped' in sample['versions']
+            assert all(type(n) is int and n >= 0 for n in sample['versions'].values())
+            assert sum(sample['versions'].values()) == sample['total']
+        assert row['honeypotServicesExcluded'] == row['all']['total'] - row['excludingHoneypots']['total'] >= 0
+        assert set(row['all']['versions']) == set(row['excludingHoneypots']['versions'])
+        assert all(n <= row['all']['versions'][v] for v,n in row['excludingHoneypots']['versions'].items())
+    if firmware['status'] == 'ok':
+        assert firmware['history'] and firmware['lastSuccessAt'] == firmware['history'][-1]['collectedAt']
     print("Editorial and measurement data validated.")
 
 

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "methodVersion": "storeview-last-modified-v1",
+  "query": "http.title:\"Danfoss StoreView\"",
+  "metric": "services",
+  "scope": "worldwide",
+  "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
+  "status": "ok",
+  "lastAttemptAt": "2026-11-03T02:39:41Z",
+  "lastSuccessAt": "2026-11-03T02:39:41Z",
+  "history": [
+    {
+      "date": "2026-11-03",
+      "collectedAt": "2026-11-03T02:39:41Z",
+      "all": {
+        "total": 6522,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 13,
+          "SMG09.000.135 (0176)": 11,
+          "SMG09.000.135 (0179)": 32,
+          "SMG09.000.141": 85,
+          "3.0.12": 409,
+          "3.1.11": 65,
+          "3.2.6": 320,
+          "3.3.0": 501,
+          "4.0.14": 43,
+          "4.1.4": 535,
+          "4.2.4": 213,
+          "4.3.1": 3290,
+          "5.0.19": 32,
+          "5.1.1": 132,
+          "5.3.2": 832,
+          "Unknown/unmapped": 9
+        }
+      },
+      "excludingHoneypots": {
+        "total": 4612,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 13,
+          "SMG09.000.135 (0176)": 11,
+          "SMG09.000.135 (0179)": 32,
+          "SMG09.000.141": 85,
+          "3.0.12": 409,
+          "3.1.11": 65,
+          "3.2.6": 320,
+          "3.3.0": 501,
+          "4.0.14": 43,
+          "4.1.4": 535,
+          "4.2.4": 213,
+          "4.3.1": 1381,
+          "5.0.19": 32,
+          "5.1.1": 132,
+          "5.3.2": 832,
+          "Unknown/unmapped": 8
+        }
+      },
+      "honeypotServicesExcluded": 1910,
+      "finishedAt": "2026-11-03T02:40:06Z"
+    }
+  ]
+}

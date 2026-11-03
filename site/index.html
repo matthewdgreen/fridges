@@ -9,13 +9,14 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
+  <script src="versions.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div class="shell">
 <header class="masthead">
   <a class="wordmark" href="./"><span class="fridge-icon" aria-hidden="true"></span> Are the fridges ok?</a>
-  <nav aria-label="Main"><a href="#history">The numbers</a><a href="#timeline">The attacks</a><a href="#method">About the data <span aria-hidden="true">↗</span></a></nav>
+  <nav aria-label="Main"><a href="#history">The numbers</a><a href="#versions">Firmware</a><a href="#timeline">The attacks</a><a href="#method">About the data <span aria-hidden="true">↗</span></a></nav>
 </header>
 <main id="main">
   <section class="hero" aria-labelledby="question">
@@ -72,19 +73,35 @@
     <p class="chart-note">Published observations may use different search details and collection times. Gaps are unmeasured; points are not interpolated.</p>
     <details><summary>View observations & sources <span aria-hidden="true">+</span></summary><div class="table-wrap"><table><caption class="sr-only">Shodan observations for the selected region</caption><thead><tr><th scope="col">Observed</th><th scope="col">Services</th><th scope="col">Source</th><th scope="col">Type</th></tr></thead><tbody id="observations"></tbody></table></div></details>
   </section>
+  <section id="versions" class="section firmware-section" aria-labelledby="firmware-heading">
+    <div class="section-heading"><div><div class="eyebrow">02 / Firmware over time</div><h2 id="firmware-heading">Is the exposed fleet getting newer?</h2></div><div class="segmented" role="group" aria-label="Firmware chart measure"><button type="button" data-firmware-measure="share" aria-pressed="true">Share</button><button type="button" data-firmware-measure="count" aria-pressed="false">Service count</button></div></div>
+    <p class="section-intro">Daily inferred firmware mix across internet-exposed Danfoss StoreView services worldwide. Versions come from cached HTTP headers; no controllers are contacted.</p>
+    <div class="firmware-controls"><label><input id="exclude-honeypots" type="checkbox" checked> Exclude Shodan-tagged honeypots</label><button id="firmware-download" type="button" class="download">Download history CSV ↓</button></div>
+    <div id="firmware-status" class="firmware-status" role="status">Loading firmware observations…</div>
+    <div class="firmware-summary"><div><strong id="firmware-newer">—</strong><span>share inferred as 4.3.1 or 5.x</span></div><div><strong id="firmware-total">—</strong><span>matching services in this view</span></div><div><strong id="firmware-excluded">—</strong><span>services tagged as honeypots</span></div></div>
+    <div id="firmware-legend" class="firmware-legend"></div>
+    <div id="firmware-chart" class="firmware-chart" aria-live="polite"></div>
+    <p id="firmware-trend" class="firmware-trend"></p>
+    <p class="chart-note">A rising share of newer versions can reflect upgrades, older systems going offline, new arrivals, or changes in Shodan's index. This chart does not follow individual devices or prove upgrades. Multiple ports can still inflate counts, and untagged honeypots may remain.</p>
+    <details><summary>Latest version breakdown & methodology <span aria-hidden="true">+</span></summary>
+      <div class="table-wrap"><table><caption id="firmware-table-caption">Latest inferred firmware distribution</caption><thead><tr><th scope="col">Inferred firmware</th><th scope="col">Services</th><th scope="col">Share</th></tr></thead><tbody id="firmware-breakdown"></tbody></table></div>
+      <p class="firmware-method">Exact cached <code>Last-Modified</code> fingerprints are matched to the firmware-build timestamps published by <a href="https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report">Censys</a>. Shared fingerprints remain ambiguous; unmatched banners remain unknown. The chart uses the same StoreView query as the headline count, with an optional honeypot exclusion. Newer StoreView Web titles were present in this query during our baseline census; this is still not a complete inventory of all Danfoss products.</p>
+      <p class="firmware-method">Counts are collected from Shodan's existing index, not from a live vulnerability test. The queries run sequentially and are not a single atomic snapshot. The collector rejects changing population totals or inconsistent sums and preserves the last valid observation. “4.3.1 or 5.x” is a version grouping, not an assurance that equipment is secure. <a href="data/versions.json">Download full measurement history ↗</a></p>
+    </details>
+  </section>
   <section id="timeline" class="section">
-    <div class="section-heading"><div><div class="eyebrow">02 / The 2026 attacks</div><h2>A pattern, not a one-off.</h2></div><span class="section-aside">AUGUST → NOVEMBER 2026</span></div>
+    <div class="section-heading"><div><div class="eyebrow">03 / The 2026 attacks</div><h2>A pattern, not a one-off.</h2></div><span class="section-aside">AUGUST → NOVEMBER 2026</span></div>
     <p class="section-intro">From suspected attacks at military bases to repeated disruption in European supermarkets.</p>
     <div id="incidents" class="timeline"></div>
     <p class="precedent">The problem predates 2026. Danfoss also documented attacks on supermarket refrigeration in Russia and Israel in 2022. <a href="https://assets.danfoss.com/documents/latest/533772/AO540160316124en-000101.pdf">Danfoss newsletter, page 9 ↗</a></p>
   </section>
   <section id="method" class="section method">
-    <div><div class="eyebrow">03 / Read the fine print</div><h2>Cold facts.<br>Clear limitations.</h2><p id="status-reason">A quiet news cycle is not an all-clear.</p></div>
+    <div><div class="eyebrow">04 / Read the fine print</div><h2>Cold facts.<br>Clear limitations.</h2><p id="status-reason">A quiet news cycle is not an all-clear.</p></div>
     <div class="method-items">
       <details open><summary>What does “No” mean?</summary><p>This is an editorial assessment of the reported attacks and continuing exposure, not a live test of every fridge. It does not automatically turn to “Yes” after a quiet stretch.</p></details>
       <details open><summary>What resets the counter?</summary><p>A reviewed, substantial attack wave that disrupts refrigeration at multiple sites. We use the incident date, not the date of a later article. Suspected incidents are labeled; a new headline about an old incident does not reset the clock. Days use UTC calendar dates.</p></details>
       <details><summary>What does the Shodan number measure?</summary><p>Matching internet service banners, worldwide, for <code>http.title:"Danfoss StoreView"</code>. It is a narrow fingerprint, not all Danfoss products. Multiple ports can inflate the total; one controller can serve many fridges. Shodan's index also lags real-world changes. <a href="https://developer.shodan.io/api#shodan-host-count">API methodology ↗</a></p></details>
-      <details><summary>How does this stay up to date?</summary><p>GitHub Actions requests an aggregate Shodan count daily at 11:17 UTC and saves the dated history. News is reviewed separately each day by a scheduled Codex task; its last completed review is shown above. Failed collections preserve prior data and show its age. Historical published snapshots remain separate from our own samples.</p><p id="collection-detail"></p></details>
+      <details><summary>How does this stay up to date?</summary><p>GitHub Actions requests aggregate Shodan exposure and firmware counts daily at 11:17 UTC and saves their dated history. News is reviewed separately each day by a scheduled Codex task; its last completed review is shown above. Failed collections preserve prior data and show its age. Historical published snapshots remain separate from our own samples.</p><p id="collection-detail"></p></details>
       <details><summary>How can operators reduce exposure?</summary><p>Follow the manufacturer's and your national CERT's guidance: restrict access to management interfaces, use protected remote access, and apply supported updates. Internet exposure does not by itself identify an exploited vulnerability. <a href="https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/">Read CERT-FR's advisory ↗</a></p></details>
     </div>
   </section>

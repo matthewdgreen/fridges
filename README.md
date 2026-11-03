@@ -16,7 +16,7 @@ Open http://localhost:8765. Relative asset paths support GitHub project Pages un
 
 ## Daily updates
 
-- **Shodan and deployment:** `.github/workflows/pages.yml` runs at 11:17 UTC daily, on manual dispatch, and on pushes to `main`. Scheduled/manual runs collect aggregates, validate, commit history, then publish `site/`. Push runs only validate and publish. GitHub may delay schedules.
+- **Shodan and deployment:** `.github/workflows/pages.yml` runs at 11:17 UTC daily, on manual dispatch, and on pushes to `main`. Scheduled/manual runs collect exposure and firmware aggregates, validate, commit both histories, then publish `site/`. Push runs only validate and publish. GitHub may delay schedules.
 - **Credential:** the repository Actions secret `SHODAN_API_KEY` is configured. To replace it, run `gh secret set SHODAN_API_KEY --repo matthewdgreen/fridges` and enter it at the hidden prompt. Never put it in a file or command-line argument. The browser never receives the key.
 - **News review:** the Codex heartbeat “Review fridge attacks daily” runs at 08:30 America/New_York. It searches and reads reports, makes evidenced editorial updates, and publishes them. It requires the local Codex environment to be available; GitHub collection continues independently. See `scripts/NEWS_REVIEW.md`.
 - **Manual refresh:** `gh workflow run pages.yml --repo matthewdgreen/fridges`. Check the Actions run and published timestamp.
@@ -33,7 +33,7 @@ Pages is configured to deploy with Actions. The source repository can remain pri
 - `site/data/reported-counts.json`: historical Shodan snapshots from SOCRadar and IRONHACKERS, kept distinct from direct collection. SOCRadar describes a page-title search without giving exact syntax; its methodology is not assumed identical to ours.
 - `site/data/reviews.json`: completed news-review record.
 
-**Services are not fridges.** Multiple ports can produce multiple Shodan results for one controller, while one controller can control many cabinets. Internet exposure does not establish exploitability or compromise. The query is a narrow StoreView fingerprint and does not cover every Danfoss product, the newer StoreView Web title, or Copeland/Dixell. Index data may be stale. We never query or scan discovered equipment.
+**Services are not fridges.** Multiple ports can produce multiple Shodan results for one controller, while one controller can control many cabinets. Internet exposure does not establish exploitability or compromise. The query is a StoreView title fingerprint, not an inventory of every Danfoss product or Copeland/Dixell. In the baseline census it also matched newer StoreView Web titles; a supplemental StoreView Web query added no distinct services. Index data may be stale. We never query or scan discovered equipment.
 
 The charts show individual observations, separated by collection type, with worldwide/France filters and a downloadable CSV. Published counts can differ because of search details and timing; do not interpret the points as an uninterrupted comparable series.
 
@@ -45,8 +45,24 @@ python3 scripts/validate.py
 node --check site/app.js
 ```
 
-Tests cover collection failures, missing keys, real zero counts, same-day deduplication, invalid API responses, query drift, and editorial data contracts. The page uses native disclosures, keyboard-operable region controls, an accessible data table, reduced-motion support, and responsive CSS.
+Tests cover collection failures, missing keys, real zero counts, same-day deduplication, invalid API responses, query drift, ambiguous fingerprints, changing index totals, overlapping counts, and editorial data contracts. The page uses native disclosures, keyboard-operable region controls, an accessible data table, reduced-motion support, and responsive CSS.
 
 ## Sources
 
 Each event and historical observation links to its evidence. Background: [CERT-FR advisory](https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/), [Censys November report](https://censys.com/blog/european-refrigerator-controller-redux-a-new-wave-of-refrigeration-attacks/), and [Shodan count API](https://developer.shodan.io/api#shodan-host-count).
+
+## Firmware mix over time
+
+`site/data/versions.json` records daily worldwide service counts by inferred firmware. `python -m scripts.refresh_versions` queries only Shodan's `/shodan/host/count` endpoint, which consumes no search credits. It runs with the existing daily Actions job and secret. For a local collection, use `python3 -m scripts.refresh_versions --prompt-key` and enter the key at the hidden prompt.
+
+The collector matches exact HTTP Last-Modified timestamps against [Censys's firmware-build mapping](https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report). It collects both the existing exposure query and the same query excluding Shodan-tagged honeypots. Multiple timestamps for one release are combined; a shared timestamp remains an ambiguous version family. Unknown/unmapped is the population total minus mapped fingerprints. Counts must be nonnegative and internally consistent. Changing population totals or overlapping sums reject the snapshot; failures retain the last good history and fail the workflow health check after publication.
+
+The page shows up to 30 daily observations as stacked bars, with percentage and absolute service-count modes, a honeypot filter, the latest exact-version table, and a complete CSV/JSON history download. The first baseline is explicitly not an upgrade trend. A rising share of 4.3.1 or 5.x can reflect upgrades, removals, arrivals, index changes, or a different mix of ports. It is not a measured per-device upgrade rate or a claim that newer equipment is secure. Untagged honeypots and duplicate physical devices may remain.
+
+The source timestamps and query semantics are versioned as `storeview-last-modified-v1`. Do not silently change their meaning or reinterpret earlier samples; a changed measurement method needs a separate series or explicitly documented boundary.
+
+### One-off full-result audit
+
+`research/storeview-versions.json` preserves aggregate findings from the initial full paginated search. All 76 planned pages across the existing title query and a StoreView Web supplement were retrieved. Shodan returned 6,508 distinct services at 2,080 unique IPs, despite advertising 6,522 services; the coverage gap is recorded. The supplement overlapped the primary query completely. No addresses or raw banners were retained. Subsequent count-only queries covered the full advertised 6,522-service population and established the chart baseline.
+
+The reproducible audit command is `python3 -m scripts.collect_versions --output research/storeview-versions.json`. Unlike the daily count-only collector, this consumes search credits and is **not scheduled**. It reads its key from the environment or a hidden prompt and requests cached results only. It does not connect to controllers or trigger scans.

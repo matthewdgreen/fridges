@@ -1,0 +1,137 @@
+{
+  "startedAt": "2026-11-03T02:34:30Z",
+  "completedAt": "2026-11-03T02:36:33Z",
+  "collectionStatus": "completed_with_coverage_gap",
+  "failure": null,
+  "method": "Existing Shodan search banners only. Exact Last-Modified mapping; no controller connections or new scans.",
+  "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
+  "queryReports": [
+    {
+      "query": "http.title:\"Danfoss StoreView\"",
+      "initialCount": 6522,
+      "pagesExpected": 66,
+      "pagesFetched": 66,
+      "recordsFetched": 6508,
+      "duplicatesWithinQuery": 0,
+      "recordsWithoutIdentity": 0,
+      "totalsSeen": [
+        6521
+      ],
+      "allPlannedPagesFetched": true,
+      "uniqueServicesFetched": 6508,
+      "finalCount": 6522
+    },
+    {
+      "query": "http.title:\"StoreView Web\"",
+      "initialCount": 940,
+      "pagesExpected": 10,
+      "pagesFetched": 10,
+      "recordsFetched": 940,
+      "duplicatesWithinQuery": 0,
+      "recordsWithoutIdentity": 0,
+      "totalsSeen": [
+        940
+      ],
+      "allPlannedPagesFetched": true,
+      "uniqueServicesFetched": 940,
+      "finalCount": 940
+    }
+  ],
+  "searchRequests": 76,
+  "services": 6508,
+  "uniqueIPs": 2080,
+  "ipsWithMultipleVersionLabels": 15,
+  "servicesByInferredVersion": {
+    "4.3.1": 3287,
+    "5.3.2": 832,
+    "4.1.4": 530,
+    "3.3.0": 501,
+    "3.0.12": 404,
+    "3.2.6": 319,
+    "4.2.4": 213,
+    "5.1.1": 132,
+    "SMG09.000.141": 85,
+    "3.1.11": 65,
+    "4.0.14": 43,
+    "5.0.19": 32,
+    "SMG09.000.135 (0179)": 32,
+    "SMG09.000.116/118/129 (ambiguous)": 13,
+    "SMG09.000.135 (0176)": 11,
+    "Unknown: unmapped build": 5,
+    "Unknown: missing/invalid header": 4
+  },
+  "uniqueIPsByInferredVersion": {
+    "4.3.1": 468,
+    "3.3.0": 350,
+    "3.2.6": 288,
+    "4.2.4": 203,
+    "4.1.4": 186,
+    "5.1.1": 128,
+    "5.3.2": 118,
+    "SMG09.000.141": 83,
+    "3.0.12": 67,
+    "3.1.11": 65,
+    "4.0.14": 43,
+    "5.0.19": 32,
+    "SMG09.000.135 (0179)": 32,
+    "SMG09.000.116/118/129 (ambiguous)": 13,
+    "SMG09.000.135 (0176)": 11,
+    "Unknown: unmapped build": 5,
+    "Unknown: missing/invalid header": 4
+  },
+  "servicesByQueryAndVersion": {
+    "http.title:\"Danfoss StoreView\"": {
+      "4.3.1": 3287,
+      "5.3.2": 832,
+      "4.1.4": 530,
+      "3.3.0": 501,
+      "3.0.12": 404,
+      "3.2.6": 319,
+      "4.2.4": 213,
+      "5.1.1": 132,
+      "SMG09.000.141": 85,
+      "3.1.11": 65,
+      "4.0.14": 43,
+      "5.0.19": 32,
+      "SMG09.000.135 (0179)": 32,
+      "SMG09.000.116/118/129 (ambiguous)": 13,
+      "SMG09.000.135 (0176)": 11,
+      "Unknown: unmapped build": 5,
+      "Unknown: missing/invalid header": 4
+    },
+    "http.title:\"StoreView Web\"": {
+      "5.3.2": 814,
+      "5.1.1": 99,
+      "5.0.19": 21,
+      "Unknown: unmapped build": 4,
+      "Unknown: missing/invalid header": 2
+    }
+  },
+  "unmappedBuildTimestamps": {
+    "2023-03-14T09:12:34Z": 3,
+    "2021-06-12T00:51:06Z": 1,
+    "2018-03-09T12:34:56Z": 1
+  },
+  "interfaceTitleTypes": {
+    "classic": 5567,
+    "StoreView Web": 940,
+    "other matching title": 1
+  },
+  "shodanTaggedHoneypotServices": 1910,
+  "observationAge": {
+    "0–7 days": 2222,
+    "8–30 days": 4286
+  },
+  "oldestObservation": "2026-10-04T02:55:49.675838+00:00",
+  "newestObservation": "2026-11-03T02:10:35.269134+00:00",
+  "limitations": [
+    "Services and unique IPs are not counts of physical fridges or controllers.",
+    "Shodan pagination is not an atomic snapshot; index changes can affect coverage.",
+    "Headers identify inferred builds, not verified installed firmware or current security.",
+    "Old shared build timestamps are explicitly ambiguous; unknown builds remain unknown.",
+    "Unique-IP version groups overlap when one IP has multiple version labels.",
+    "The StoreView Web supplement is separate from the existing website query.",
+    "No raw addresses or banners are persisted.",
+    "All planned pages were retrieved, but the classic query returned 14 fewer distinct services than its advertised count. Aggregate fingerprint counts in site/data/versions.json cover the full advertised population separately."
+  ]
+}
