@@ -6,12 +6,12 @@
   "scope": "worldwide",
   "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
   "status": "ok",
-  "lastAttemptAt": "2026-11-03T02:39:41Z",
-  "lastSuccessAt": "2026-11-03T02:39:41Z",
+  "lastAttemptAt": "2026-11-03T02:46:11Z",
+  "lastSuccessAt": "2026-11-03T02:46:11Z",
   "history": [
     {
       "date": "2026-11-03",
-      "collectedAt": "2026-11-03T02:39:41Z",
+      "collectedAt": "2026-11-03T02:46:11Z",
       "all": {
         "total": 6522,
         "versions": {
@@ -57,7 +57,7 @@
         }
       },
       "honeypotServicesExcluded": 1910,
-      "finishedAt": "2026-11-03T02:40:06Z"
+      "finishedAt": "2026-11-03T02:46:27Z"
     }
   ]
 }

@@ -2,13 +2,13 @@
   "query": "http.title:\"Danfoss StoreView\"",
   "metric": "services",
   "scope": "worldwide",
-  "lastAttemptAt": "2026-11-03T01:43:31Z",
-  "lastSuccessAt": "2026-11-03T01:43:31Z",
+  "lastAttemptAt": "2026-11-03T02:46:11Z",
+  "lastSuccessAt": "2026-11-03T02:46:11Z",
   "status": "ok",
   "history": [
     {
       "date": "2026-11-03",
-      "collectedAt": "2026-11-03T01:43:31Z",
+      "collectedAt": "2026-11-03T02:46:11Z",
       "count": 6591,
       "countries": {
         "FR": 1651,
