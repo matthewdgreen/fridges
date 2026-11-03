@@ -12,7 +12,7 @@ function renderChart() {
   const available = rows.filter(row => Number.isInteger(regionCount(row)));
   $('observations').innerHTML = available.map(row => `<tr><td>${date(row.date)}</td><td>${number(regionCount(row))}</td><td><a href="${escapeHTML(row.url)}">${escapeHTML(row.source)} ↗</a></td><td>${row.kind === 'daily' ? 'Daily collection' : 'Published snapshot'}</td></tr>`).join('');
   if (!available.length) { $('chart').textContent = 'No observations are available for this region yet.'; return; }
-  const width=1000, height=260, left=64, right=30, top=28, bottom=48;
+  const width=Math.max(300,$('chart').clientWidth), height=width<600?220:260, left=54, right=38, top=28, bottom=48;
   const times=available.map(row => Date.parse(row.date));
   let min=Math.min(...times), max=Math.max(...times);
   if (min === max) { min-=86400000; max+=86400000; }
@@ -21,7 +21,7 @@ function renderChart() {
   const y=n => height-bottom-n/ceiling*(height-top-bottom);
   let parts=[];
   for(let i=0;i<=4;i++) {const v=Math.round(ceiling*i/4);parts.push(`<path d="M${left} ${y(v)}H${width-right}" stroke="#d7dbd0" stroke-dasharray="3 5"/><text x="${left-15}" y="${y(v)+4}" text-anchor="end">${number(v)}</text>`);}
-  const labels=[...new Set([times[0],times[Math.floor(times.length/2)],times[times.length-1]])];
+  const labels=[...new Set([times[0],times[times.length-1]])];
   labels.forEach(t => parts.push(`<text x="${x(t)}" y="${height-13}" text-anchor="middle">${date(new Date(t).toISOString().slice(0,10))}</text>`));
   available.forEach((row,i) => {const v=regionCount(row);parts.push(`<circle cx="${x(times[i])}" cy="${y(v)}" r="5" fill="${row.kind==='daily'?'#396650':'#f5f3ec'}" stroke="${row.kind==='daily'?'#396650':'#b73825'}" stroke-width="2"><title>${escapeHTML(date(row.date))}: ${number(v)} services · ${escapeHTML(row.source)}</title></circle>`);});
   const latest=available[available.length-1];
@@ -67,4 +67,5 @@ $('download').addEventListener('click',()=>{
   const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
   const a=document.createElement('a');a.href=url;a.download=`fridge-exposure-${scope}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
+new ResizeObserver(() => { if(rows.length) renderChart(); }).observe($('chart'));
 start();
