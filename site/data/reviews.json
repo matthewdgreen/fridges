@@ -32,5 +32,37 @@
       }
     ],
     "collectionHealth": "Latest deployment succeeded; both Shodan datasets report successful collection on November 3 UTC. No collection was rerun during this news scan."
+  },
+  {
+    "date": "2026-11-03",
+    "checkedAt": "2026-11-03T13:28:22Z",
+    "outcome": "Scheduled follow-up review found no verified new major wave after November 2. Read CERT-FR, CERT-SE, NCSC Sweden and Censys: the Swedish notices are dated November 2 and corroborate the existing wave, not a new incident. CERT-FR remains last updated October 16. Counter and editorial assessment unchanged. Search coverage included StoreView, AK-SM/AK-SC and Copeland/Dixell XWEB; inaccessible sources were not treated as verified evidence.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.se/2026/11/cyberangrepp-mot-uppkopplade-frys-och-kylsystem.html",
+      "https://www.ncsc.se/sv/aktuellt/cyberangrepp-mot-kylsystem/",
+      "https://censys.com/blog/european-refrigerator-controller-redux-a-new-wave-of-refrigeration-attacks/"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403; current vendor advisories could not be verified."
+      },
+      {
+        "url": "https://www.krisinformation.se/aktuellt/nyheter/cyberangrepp-frys-och-kylsystem/",
+        "reason": "Search result found; article could not be fetched."
+      },
+      {
+        "url": "https://www.securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume/",
+        "reason": "Article could not be fetched during this follow-up."
+      },
+      {
+        "url": "https://thehackernews.com/2026/11/second-wave-of-cyberattacks-hits.html",
+        "reason": "Article could not be fetched during this follow-up."
+      }
+    ],
+    "collectionHealth": "Latest Pages deployment 41643520521 succeeded. IP and service collectors succeeded on November 3. Firmware refresh still rejects overlapping fingerprints or index drift and retains its 02:46 UTC valid snapshot; this unchanged failure was already reported to the user. No collection requests or device access were performed during this scheduled review."
   }
 ]
