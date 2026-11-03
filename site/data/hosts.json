@@ -5,12 +5,12 @@
   "metric": "unique_ip_addresses",
   "scope": "worldwide",
   "status": "ok",
-  "lastAttemptAt": "2026-11-03T13:15:20Z",
-  "lastSuccessAt": "2026-11-03T13:15:20Z",
+  "lastAttemptAt": "2026-11-03T13:17:53Z",
+  "lastSuccessAt": "2026-11-03T13:17:53Z",
   "history": [
     {
       "date": "2026-11-03",
-      "collectedAt": "2026-11-03T13:15:20Z",
+      "collectedAt": "2026-11-03T13:17:53Z",
       "all": {
         "services": 6576,
         "uniqueIPs": 2100,
