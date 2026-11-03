@@ -1,0 +1,92 @@
+{
+  "startedAt": "2026-11-03T12:43:16Z",
+  "query": "http.title:\"Danfoss StoreView\"",
+  "allServices": 6576,
+  "allUniqueIPs": 2100,
+  "filteredServices": 4663,
+  "filteredUniqueIPs": 2101,
+  "observedIPUnion": 2101,
+  "filteredIPsAbsentFromEarlierAllSnapshot": 1,
+  "ipFacetDrift": [
+    {
+      "advertisedServices": 6576,
+      "partitionedServices": 6577
+    },
+    {
+      "advertisedServices": 4663,
+      "partitionedServices": 4664
+    }
+  ],
+  "cachedEndpoints": 2050,
+  "cachedVersionByIP": {
+    "5.3.2": 120,
+    "SMG09.000.141": 79,
+    "4.2.4": 197,
+    "4.3.1": 475,
+    "3.3.0": 334,
+    "4.1.4": 179,
+    "3.2.6": 278,
+    "5.1.1": 127,
+    "5.0.19": 32,
+    "3.1.11": 63,
+    "4.0.14": 40,
+    "SMG09.000.135 (0179)": 32,
+    "3.0.12": 63,
+    "Unknown: unmapped build": 5,
+    "Unknown: missing/invalid header": 3,
+    "SMG09.000.135 (0176)": 11,
+    "SMG09.000.116/118/129 (ambiguous)": 12
+  },
+  "liveRequested": true,
+  "liveStatus": "completed",
+  "liveOutcomes": {
+    "timeout": 1409,
+    "tls_verification_failed": 332,
+    "storeview_landing_page": 212,
+    "other_landing_page": 74,
+    "connection_failed": 5,
+    "redirect_not_followed": 2,
+    "other_http_response": 7,
+    "non_html_response": 4,
+    "measurement_error": 5
+  },
+  "limitations": [
+    "Unique IPs are not physical controllers; one address may represent multiple controllers.",
+    "Tagged service records were excluded from endpoint selection; IPs with both tagged and untagged records can remain, as can unidentified decoys.",
+    "One landing-page request per eligible IP cannot establish whether the device is vulnerable or compromised.",
+    "No credentials, controller changes, redirects, retries, port scans, or JS execution are used.",
+    "A timeout or TLS error is not evidence that equipment is offline.",
+    "Only aggregates are retained; no raw IP addresses or page contents are persisted.",
+    "Index partitions were collected sequentially and differed by one IP/service; the inventory is not an atomic fleet snapshot.",
+    "The 3-second socket timeout and normal TLS certificate verification make this a conservative reachability check; redirects and alternate endpoints were not tried.",
+    "A visible web UI version is not controller firmware. Last-Modified matches are build inferences, and shared timestamps remain ambiguous."
+  ],
+  "noEligibleCachedEndpoint": 51,
+  "cachedPhaseCompletedAt": "2026-11-03T13:03:47Z",
+  "searchRequests": 20,
+  "liveStoreViewInferredVersions": {
+    "3.1.11": 7,
+    "4.3.1": 32,
+    "3.3.0": 37,
+    "3.2.6": 37,
+    "3.0.12": 10,
+    "5.3.2": 16,
+    "SMG09.000.141": 14,
+    "SMG09.000.135 (0179)": 6,
+    "4.0.14": 5,
+    "5.1.1": 12,
+    "4.1.4": 11,
+    "4.2.4": 16,
+    "Unknown: unmapped build": 2,
+    "5.0.19": 5,
+    "SMG09.000.116/118/129 (ambiguous)": 2
+  },
+  "cachedVsLiveInference": {
+    "same inferred version": 205,
+    "different/unknown inferred version": 7
+  },
+  "livePagesWithVisibleUIVersion": 0,
+  "liveCompletedAt": "2026-11-03T13:16:43Z",
+  "completedAt": "2026-11-03T13:16:43Z",
+  "apiRequests": 290
+}
