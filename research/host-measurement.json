@@ -88,5 +88,12 @@
   "livePagesWithVisibleUIVersion": 0,
   "liveCompletedAt": "2026-11-03T13:16:43Z",
   "completedAt": "2026-11-03T13:16:43Z",
-  "apiRequests": 290
+  "apiRequests": 290,
+  "retrospectiveAudit": {
+    "reviewedAt": "2026-11-03",
+    "bodyReadUndercountRisk": "The original reader waited for up to 16 KiB or end-of-body. A locally reproduced server sent HTTP 200 and a valid StoreView title but was classified as timeout because it kept the body open. Failure stages and HTTP-status aggregates were not retained, so the number of affected timeouts cannot be reconstructed.",
+    "honeypotIntersectionAmong212": null,
+    "honeypotIntersectionReason": "Only aggregate outcomes were retained; no IP-to-outcome linkage or overlap counter survives. Excluding tagged service records did not exclude IPs with other tagged service records.",
+    "scope": "No new controller requests were made for this audit. The checker was corrected and tested locally; the original measurement has not been rerun."
+  }
 }

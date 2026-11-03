@@ -7,16 +7,15 @@ Run from the repository root with python3 -m scripts.measure_hosts --live.
 import argparse
 import concurrent.futures
 import getpass
+import http.client
 import ipaddress
 import json
 import math
 import re
 import socket
 import ssl
-import threading
 import time
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -144,7 +143,9 @@ def read_page(target):
     request = Request(target['url'], headers={
         'User-Agent':'AreTheFridgesOK-measurement/1.0 (+https://arethefridgesok.org/#method)',
         'Accept':'text/html','Accept-Encoding':'identity','Connection':'close'})
-    outcome = {'status':'connection_failed','cachedVersion':target['version']}
+    outcome = {'status':'connection_failed','cachedVersion':target['version'],
+               'sharesIPWithTaggedService':target.get('sharesIPWithTaggedService',False)}
+    phase = 'connect_or_headers'
     try:
         try:
             response = LIVE_OPENER.open(request, timeout=3)
@@ -152,6 +153,7 @@ def read_page(target):
             response = error
         with response:
             outcome['httpStatus'] = response.status
+            phase = 'body'
             if 300 <= response.status < 400:
                 outcome['status'] = 'redirect_not_followed'
                 return outcome
@@ -167,7 +169,17 @@ def read_page(target):
                 outcome['status'] = 'non_html_response'
                 return outcome
             # Read a small bounded prefix only; no cookies, resources or scripts.
-            raw = response.read(16384)
+            # read(n) may wait for n bytes or EOF even after the title arrived.
+            # Read available chunks and stop as soon as the title is complete.
+            raw = bytearray()
+            body_started = time.monotonic()
+            while len(raw) < 16384 and time.monotonic() - body_started < 3:
+                chunk = response.read1(min(4096, 16384 - len(raw)))
+                if not chunk:
+                    break
+                raw.extend(chunk)
+                if re.search(br'</title\s*>', raw, re.I):
+                    break
             text = raw.decode('utf-8',errors='replace')
             title = re.search(r'<title\b[^>]*>(.*?)</title>',text,re.I|re.S)
             title_text = re.sub('<[^>]*>',' ',title.group(1)) if title else ''
@@ -179,10 +191,16 @@ def read_page(target):
         outcome['status'] = 'tls_verification_failed'
     except (TimeoutError, socket.timeout):
         outcome['status'] = 'timeout'
+        outcome['failurePhase'] = phase
     except URLError as error:
         outcome['status'] = 'tls_verification_failed' if isinstance(error.reason,ssl.SSLError) else 'timeout' if isinstance(error.reason,(TimeoutError,socket.timeout)) else 'connection_failed'
+    except http.client.HTTPException:
+        outcome['status'] = 'http_protocol_error'
+        outcome['failurePhase'] = phase
     except (OSError,ValueError):
         outcome['status'] = 'connection_failed'
+    if outcome['status'] in ('timeout', 'connection_failed', 'tls_verification_failed'):
+        outcome.setdefault('failurePhase', phase)
     return outcome
 
 
@@ -197,8 +215,12 @@ def main():
     remaining=info.get('query_credits',0)
     all_ips, all_services=api.ips(QUERY)
     filtered, filtered_services=api.ips(QUERY+' -tag:honeypot')
+    tagged, tagged_services=api.ips(QUERY+' tag:honeypot')
     print(json.dumps({'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'queryCredits':remaining}),flush=True)
-    report={'startedAt':started,'query':QUERY,'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'observedIPUnion':len(set(all_ips)|set(filtered)),'filteredIPsAbsentFromEarlierAllSnapshot':len(set(filtered)-set(all_ips)),'ipFacetDrift':api.facet_drift,'cachedEndpoints':0,'cachedVersionByIP':{},'liveRequested':args.live,'liveStatus':'not_started','liveOutcomes':{},'limitations':['Unique IPs are not physical controllers; one address may represent multiple controllers.','Only Shodan-tagged honeypots are excluded; unidentified decoys can remain.','One landing-page request per eligible IP cannot establish whether the device is vulnerable or compromised.','No credentials, controller changes, redirects, retries, port scans, or JS execution are used.','A timeout or TLS error is not evidence that equipment is offline.','Only aggregates are retained; no raw IP addresses or page contents are persisted.']}
+    report={'startedAt':started,'query':QUERY,'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'observedIPUnion':len(set(all_ips)|set(filtered)),'filteredIPsAbsentFromEarlierAllSnapshot':len(set(filtered)-set(all_ips)),'ipFacetDrift':api.facet_drift,'cachedEndpoints':0,'cachedVersionByIP':{},'liveRequested':args.live,'liveStatus':'not_started','liveOutcomes':{},'limitations':['Unique IPs are not physical controllers; one address may represent multiple controllers.','Tagged service records are excluded; IPs with both tagged and untagged records and unidentified decoys can remain.','One landing-page request per eligible IP cannot establish whether the device is vulnerable or compromised.','No credentials, controller changes, redirects, retries, port scans, or JS execution are used.','A timeout or TLS error is not evidence that equipment is offline.','Only aggregates are retained; no raw IP addresses or page contents are persisted.']}
+    report['IPsWithTaggedMatchingServices']=len(tagged)
+    report['filteredIPsAlsoWithTaggedMatchingServices']=len(set(filtered)&set(tagged))
+    report['taggedMatchingServices']=tagged_services
     # The inventory itself is complete and useful even if later metadata is unavailable.
     def save():
         args.output.parent.mkdir(parents=True,exist_ok=True)
@@ -265,7 +287,8 @@ def main():
             targets[ip]=None
         if index%25==0 or index==len(pending):
             print(f'Cached IP lookups {index}/{len(pending)}',flush=True)
-    selected=[t for t in targets.values() if t]
+    selected=[dict(t,sharesIPWithTaggedService=ip in tagged) for ip,t in targets.items() if t]
+    report['selectedIPsAlsoWithTaggedMatchingServices']=sum(t['sharesIPWithTaggedService'] for t in selected)
     report['cachedEndpoints']=len(selected)
     report['noEligibleCachedEndpoint']=len(filtered)-len(selected)
     report['cachedVersionByIP']=dict(Counter(t['version'] for t in selected))
@@ -274,21 +297,29 @@ def main():
     save()
     print(f'Eligible cached endpoints: {len(selected)}/{len(filtered)}',flush=True)
     if args.live:
-        counts=Counter();versions=Counter();changes=Counter();ui=0
+        counts=Counter();versions=Counter();changes=Counter();failure_phases=Counter();http_statuses=Counter();tagged_outcomes=Counter();ui=0
         report['liveStatus']='running';save()
         # At most six concurrent connections, at most four new IPs per second.
         with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
-            futures=[]
+            futures=[];future_tagged={}
             for target in selected:
-                futures.append(executor.submit(read_page,target))
+                future=executor.submit(read_page,target)
+                futures.append(future)
+                future_tagged[future]=target['sharesIPWithTaggedService']
                 time.sleep(0.25)
                 if len(futures)%100==0:
                     completed=sum(f.done() for f in futures)
                     print(f'Landing-page checks queued {len(futures)}/{len(selected)}; completed {completed}',flush=True)
             for index,future in enumerate(concurrent.futures.as_completed(futures),1):
                 try: result=future.result()
-                except Exception: result={'status':'measurement_error'}
+                except Exception: result={'status':'measurement_error','sharesIPWithTaggedService':future_tagged[future]}
                 counts[result['status']]+=1
+                if result.get('sharesIPWithTaggedService'):
+                    tagged_outcomes[result['status']]+=1
+                if 'failurePhase' in result:
+                    failure_phases[result['failurePhase']]+=1
+                if 'httpStatus' in result:
+                    http_statuses[str(result['httpStatus'])]+=1
                 if result['status']=='storeview_landing_page':
                     version=result.get('inferredVersion','Unknown')
                     versions[version]+=1
@@ -296,7 +327,7 @@ def main():
                     ui+=result.get('uiVersionVisible',False)
                 if index%100==0:
                     report['liveOutcomes']=dict(counts);save()
-        report.update({'liveStatus':'completed','liveOutcomes':dict(counts),'liveStoreViewInferredVersions':dict(versions),'cachedVsLiveInference':dict(changes),'livePagesWithVisibleUIVersion':ui,'liveCompletedAt':utcnow()})
+        report.update({'liveStatus':'completed','liveOutcomes':dict(counts),'liveOutcomesSharingIPWithTaggedMatchingService':dict(tagged_outcomes),'liveFailurePhases':dict(failure_phases),'liveHTTPStatuses':dict(http_statuses),'liveStoreViewInferredVersions':dict(versions),'cachedVsLiveInference':dict(changes),'livePagesWithVisibleUIVersion':ui,'liveCompletedAt':utcnow()})
     report['completedAt']=utcnow();report['apiRequests']=api.calls;save()
     print(json.dumps(report,indent=2),flush=True)
 

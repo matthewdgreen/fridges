@@ -7,6 +7,7 @@ from scripts.measure_hosts import API, endpoint, read_page
 class Page(http.server.BaseHTTPRequestHandler):
     requests=[]
     mode='page'
+    release=threading.Event()
     def do_GET(self):
         type(self).requests.append((self.path,self.headers.get('Authorization'),self.headers.get('Cookie')))
         if self.mode=='redirect':
@@ -18,6 +19,9 @@ class Page(http.server.BaseHTTPRequestHandler):
         self.send_header('Last-Modified','Thu, 31 Jul 2025 08:18:58 GMT')
         self.end_headers()
         self.wfile.write(b'<title>Danfoss StoreView</title><p>Version: 1.2.3</p>')
+        self.wfile.flush()
+        if self.mode=='held_open':
+            self.release.wait(4)
     def log_message(self,*args): pass
 
 
@@ -30,7 +34,7 @@ class HostMeasurementTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.server.shutdown();cls.server.server_close();cls.worker.join()
     def setUp(self):
-        Page.requests=[];Page.mode='page'
+        Page.requests=[];Page.mode='page';Page.release.clear()
         self.target={'url':f'http://127.0.0.1:{self.server.server_port}/','version':'4.3.1'}
     def test_one_get_and_inferred_version(self):
         result=read_page(self.target)
@@ -38,6 +42,15 @@ class HostMeasurementTests(unittest.TestCase):
         self.assertEqual(result['status'],'storeview_landing_page')
         self.assertEqual(result['inferredVersion'],'4.3.1')
         self.assertTrue(result['uiVersionVisible'])
+    def test_title_recognized_before_server_closes_body(self):
+        Page.mode='held_open'
+        try:
+            result=read_page(self.target)
+            self.assertEqual(result['status'],'storeview_landing_page')
+            self.assertEqual(result['httpStatus'],200)
+            self.assertEqual(Page.requests,[('/',None,None)])
+        finally:
+            Page.release.set()
     def test_redirect_not_followed(self):
         Page.mode='redirect';result=read_page(self.target)
         self.assertEqual(len(Page.requests),1)

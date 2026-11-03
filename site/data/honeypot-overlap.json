@@ -1,0 +1,35 @@
+{
+  "collectedAt": "2026-11-03T14:08:17Z",
+  "query": "http.title:\"Danfoss StoreView\"",
+  "source": "Shodan cached count API only; no device requests",
+  "populations": {
+    "all": {
+      "services": 6576,
+      "uniqueIPs": 2100,
+      "cardinalityMethod": "singleton-tail",
+      "facetRows": 1000,
+      "facetServices": 5476
+    },
+    "untaggedServices": {
+      "services": 4663,
+      "uniqueIPs": 2100,
+      "cardinalityMethod": "singleton-tail",
+      "facetRows": 1000,
+      "facetServices": 3563
+    },
+    "taggedServices": {
+      "services": 1919,
+      "uniqueIPs": 106,
+      "cardinalityMethod": "complete-facet",
+      "facetRows": 106,
+      "facetServices": 1919
+    }
+  },
+  "limitations": [
+    "This is a later cached-index snapshot, not the original live target set.",
+    "Sequential service totals differ: tagged plus untagged services exceed the all-service query by six. Do not treat the queries as atomic.",
+    "The 106 IPs have tagged StoreView-matching records; this is not proof every service on those addresses is a decoy.",
+    "The original 212 successful IPs were not retained, so their intersection cannot be reconstructed."
+  ],
+  "serviceTotalsConsistent": false
+}
