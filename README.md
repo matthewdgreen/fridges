@@ -68,3 +68,5 @@ The source timestamps and query semantics are versioned as `storeview-last-modif
 The reproducible audit command is `python3 -m scripts.collect_versions --output research/storeview-versions.json`. Unlike the daily count-only collector, this consumes search credits and is **not scheduled**. It reads its key from the environment or a hidden prompt and requests cached results only. It does not connect to controllers or trigger scans.
 
 The prominent baseline excludes Shodan-tagged honeypots and shows the inclusive total and excluded count in small print. A visible note explains the distinction before the metrics. If the filtered data cannot be loaded, the baseline is unavailable rather than silently replaced with an unfiltered total. Historical exposure points remain unfiltered and are labeled accordingly.
+
+CSS and JavaScript asset URLs in `site/index.html` carry content-hash query values to avoid mixed cached releases. Refresh the corresponding SHA-256 prefix when editing these assets.
