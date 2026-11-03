@@ -48,7 +48,7 @@ async function start() {
     const stale=latest && age(latest.collectedAt)>2;
     $('count-label').textContent=latest ? 'Shodan services indexed worldwide' : 'Last reported Shodan count';
     $('count').textContent=number((latest || historical).count);
-    $('count-date').textContent=latest ? `Collected ${date(latest.collectedAt)} · ${stale?'stale measurement':'daily snapshot'}` : `${date(historical.date)} · historical snapshot, not a current count`;
+    $('count-date').textContent=latest ? `Collected ${date(latest.collectedAt)} UTC · ${stale?'stale measurement':'daily snapshot'}` : `${date(historical.date)} · historical snapshot, not a current count`;
     $('collection-state').textContent=shodan.status==='error' ? 'Collection failed' : shodan.status==='awaiting_key' ? 'Daily count pending' : stale ? 'Data refresh overdue' : 'Daily count connected';
     $('collection-detail').textContent=`Last collection attempt: ${shodan.lastAttemptAt ? date(shodan.lastAttemptAt) : 'not yet run'}. Last success: ${shodan.lastSuccessAt ? date(shodan.lastSuccessAt) : 'none yet'}.`;
     rows=[...published.map(row=>({...row,kind:'published'})),...shodan.history.map(row=>({...row,france:row.countries.FR ?? null,kind:'daily',source:'Shodan count API',url:'https://developer.shodan.io/api#shodan-host-count'}))].sort((a,b)=>a.date.localeCompare(b.date));
