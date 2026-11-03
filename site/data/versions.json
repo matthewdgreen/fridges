@@ -6,7 +6,7 @@
   "scope": "worldwide",
   "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
   "status": "error",
-  "lastAttemptAt": "2026-11-03T13:17:45Z",
+  "lastAttemptAt": "2026-11-03T13:19:35Z",
   "lastSuccessAt": "2026-11-03T02:46:11Z",
   "history": [
     {
@@ -59,5 +59,6 @@
       "honeypotServicesExcluded": 1910,
       "finishedAt": "2026-11-03T02:46:27Z"
     }
-  ]
+  ],
+  "lastError": "Overlapping fingerprints or index drift"
 }

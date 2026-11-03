@@ -75,9 +75,14 @@ def refresh(data, key, now, collect=collect_snapshot):
         return data, False
     try:
         snapshot = collect(Shodan(key), now)
-    except (RuntimeError, ValueError, TypeError, KeyError, OSError):
+    except (RuntimeError, ValueError, TypeError, KeyError, OSError) as error:
+        reasons = {'Invalid count', 'Index total changed during collection',
+                   'Overlapping fingerprints or index drift', 'Inconsistent honeypot exclusion',
+                   'Inconsistent version populations'}
+        data['lastError'] = str(error) if type(error) is ValueError and str(error) in reasons else 'API or response failure; details suppressed'
         data['status'] = 'error'
         return data, True
+    data.pop('lastError', None)
     data['status'] = 'ok'
     data['lastSuccessAt'] = now
     data['history'] = sorted([r for r in data['history'] if r['date'] != snapshot['date']] + [snapshot], key=lambda r:r['date'])
@@ -96,7 +101,7 @@ def main():
     temporary.replace(DATA)
     print('Firmware mix refresh:', data['status'])
     if failed:
-        print('::warning::Firmware mix collection failed validation; previous snapshot retained.')
+        print('::warning::Firmware mix collection failed; previous snapshot retained. ' + data['lastError'])
     elif data['history']:
         sample = data['history'][-1]
         print(json.dumps(sample, indent=2))
