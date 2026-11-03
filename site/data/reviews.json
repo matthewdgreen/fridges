@@ -1,0 +1,13 @@
+[
+  {
+    "date": "2026-11-02",
+    "outcome": "Initial source review: seeded the August suspected US military incident, October French attacks and continuation, and the November 2 European wave. Military vendor and cross-wave attribution remain unconfirmed.",
+    "sources": [
+      "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://apnews.com/article/a8ea5b30d67da47957769f29101fe686",
+      "https://censys.com/blog/european-refrigerator-controller-redux-a-new-wave-of-refrigeration-attacks/",
+      "https://socradar.io/blog/french-supermarket-cyberattack-ot/",
+      "https://ironhackers.es/en/danfoss-ak-sm-800a-cve-2025-41450/"
+    ]
+  }
+]

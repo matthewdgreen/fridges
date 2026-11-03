@@ -1,0 +1,9 @@
+{
+  "query": "http.title:\"Danfoss StoreView\"",
+  "metric": "services",
+  "scope": "worldwide",
+  "lastAttemptAt": null,
+  "lastSuccessAt": null,
+  "status": "awaiting_key",
+  "history": []
+}

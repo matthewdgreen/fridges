@@ -1,0 +1,6 @@
+{
+  "answer": "No.",
+  "summary": "Supermarket refrigeration systems are still being hacked. Internet-exposed Danfoss controllers are part of the problem.",
+  "reviewedAt": "2026-11-02",
+  "reason": "A new wave of reported attacks hit European refrigeration systems on 2 November. Exposure remains measurable, and the absence of a new report is not an all-clear."
+}

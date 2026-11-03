@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2026-10-13",
+    "count": 4481,
+    "france": 2898,
+    "provider": "Shodan",
+    "metric": "services",
+    "source": "SOCRadar",
+    "url": "https://socradar.io/blog/french-supermarket-cyberattack-ot/",
+    "note": "Published StoreView page-title search. Service banners can count the same controller more than once."
+  },
+  {
+    "date": "2026-10-14",
+    "count": 4764,
+    "france": 2850,
+    "provider": "Shodan",
+    "metric": "services",
+    "source": "IRONHACKERS",
+    "url": "https://ironhackers.es/en/danfoss-ak-sm-800a-cve-2025-41450/",
+    "note": "Published snapshot for http.title:\"Danfoss StoreView\". An exposure measurement, not a vulnerability test."
+  }
+]
