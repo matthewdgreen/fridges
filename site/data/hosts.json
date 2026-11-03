@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "methodVersion": "shodan-ip-facet-cardinality-v1",
+  "query": "http.title:\"Danfoss StoreView\"",
+  "metric": "unique_ip_addresses",
+  "scope": "worldwide",
+  "status": "ok",
+  "lastAttemptAt": "2026-11-03T13:01:24Z",
+  "lastSuccessAt": "2026-11-03T13:01:24Z",
+  "history": [
+    {
+      "date": "2026-11-03",
+      "collectedAt": "2026-11-03T13:01:24Z",
+      "all": {
+        "services": 6576,
+        "uniqueIPs": 2100,
+        "cardinalityMethod": "singleton-tail",
+        "facetRows": 1000,
+        "facetServices": 5476
+      },
+      "excludingTaggedServices": {
+        "services": 4663,
+        "uniqueIPs": 2100,
+        "cardinalityMethod": "singleton-tail",
+        "facetRows": 1000,
+        "facetServices": 3563
+      },
+      "taggedServicesExcluded": 1913
+    }
+  ]
+}

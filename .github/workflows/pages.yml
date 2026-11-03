@@ -25,13 +25,14 @@ jobs:
           python-version: '3.12'
       - name: Check data and collection behavior
         run: python -m unittest discover -s tests -v
-      - name: Collect today's exposure and firmware mix
+      - name: Collect today's IP, service and firmware counts
         if: github.event_name != 'push'
         env:
           SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
         run: |
           python scripts/refresh.py
           python -m scripts.refresh_versions
+          python -m scripts.refresh_hosts
       - name: Validate updated data
         run: python scripts/validate.py
       - name: Preserve daily history
@@ -39,9 +40,9 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add site/data/shodan.json site/data/versions.json
+          git add site/data/shodan.json site/data/versions.json site/data/hosts.json
           if ! git diff --cached --quiet; then
-            git commit -m "Update daily Shodan exposure and firmware mix"
+            git commit -m "Update daily Shodan IP, service and firmware counts"
             git push origin HEAD:main
           fi
       - uses: actions/configure-pages@v5
@@ -73,7 +74,7 @@ jobs:
         run: |
           python - <<'PYCODE'
           import json
-          for name in ('shodan', 'versions'):
+          for name in ('shodan', 'versions', 'hosts'):
               data = json.load(open(f'site/data/{name}.json'))
               assert data['status'] != 'error', f'{name} refresh failed; previous successful data was preserved'
           PYCODE

@@ -68,6 +68,23 @@ def validate():
         assert all(n <= row['all']['versions'][v] for v,n in row['excludingHoneypots']['versions'].items())
     if firmware['status'] == 'ok':
         assert firmware['history'] and firmware['lastSuccessAt'] == firmware['history'][-1]['collectedAt']
+    hosts = json.loads((ROOT / 'hosts.json').read_text())
+    assert hosts['methodVersion'] == 'shodan-ip-facet-cardinality-v1'
+    assert hosts['query'] == live['query']
+    assert hosts['status'] in ('pending', 'awaiting_key', 'ok', 'error')
+    assert hosts['history'] == sorted(hosts['history'], key=lambda row: row['date'])
+    assert len({row['date'] for row in hosts['history']}) == len(hosts['history'])
+    for row in hosts['history']:
+        valid_date(row['date'])
+        assert row['collectedAt'].startswith(row['date'])
+        for scope in ('all', 'excludingTaggedServices'):
+            sample = row[scope]
+            assert type(sample['uniqueIPs']) is int and 0 <= sample['uniqueIPs'] <= sample['services']
+            assert sample['cardinalityMethod'] in ('complete-facet', 'singleton-tail')
+        assert row['all']['uniqueIPs'] >= row['excludingTaggedServices']['uniqueIPs']
+        assert row['taggedServicesExcluded'] == row['all']['services'] - row['excludingTaggedServices']['services'] >= 0
+    if hosts['status'] == 'ok':
+        assert hosts['history'] and hosts['lastSuccessAt'] == hosts['history'][-1]['collectedAt']
     print("Editorial and measurement data validated.")
 
 

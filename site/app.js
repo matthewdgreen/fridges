@@ -31,13 +31,13 @@ function renderChart() {
 
 async function start() {
   try {
-    const [status,incidents,shodan,published,versions]=await Promise.all(['status','incidents','shodan','reported-counts','versions'].map(async name => {
+    const [status,incidents,shodan,published,hosts]=await Promise.all(['status','incidents','shodan','reported-counts','hosts'].map(async name => {
       try {
         const response=await fetch(`data/${name}.json`,{cache:'no-cache'});
         if(!response.ok) throw new Error('Data unavailable');
         return await response.json();
       } catch(error) {
-        if(name==='versions') return null;
+        if(name==='hosts') return null;
         throw error;
       }
     }));
@@ -49,14 +49,14 @@ async function start() {
     const updateDays=()=>{ $('days').textContent=major ? String(Math.max(0,age(major.date))).padStart(2,'0') : '—'; };
     updateDays(); setInterval(updateDays,60000);
     $('last-attack').textContent=major ? `Latest wave: ${date(major.date)}` : 'No qualifying incident recorded';
-    const latest=shodan.history.at(-1), baseline=versions?.history?.at(-1);
+    const latest=shodan.history.at(-1), baseline=hosts?.history?.at(-1);
     const stale=baseline && age(baseline.collectedAt)>2;
-    $('count-label').textContent='Baseline · tagged honeypots excluded';
-    $('count').textContent=baseline ? number(baseline.excludingHoneypots.total) : '—';
+    $('count-label').textContent='Baseline · distinct IP addresses';
+    $('count').textContent=baseline ? number(baseline.excludingTaggedServices.uniqueIPs) : '—';
     $('count-date').textContent=baseline ? `Collected ${date(baseline.collectedAt)} UTC · ${stale?'stale measurement':'daily snapshot'}` : 'Filtered baseline unavailable';
-    $('honeypot-note').textContent=baseline ? `* ${number(baseline.all.total)} total including ${number(baseline.honeypotServicesExcluded)} services flagged as honeypots (${(100*baseline.honeypotServicesExcluded/(baseline.all.total || 1)).toFixed(1)}%).` : latest ? `* Last unfiltered total: ${number(latest.count)}. The honeypot breakdown is unavailable.` : '* Total including tagged honeypots unavailable.';
-    $('collection-state').textContent=!baseline ? 'Baseline unavailable' : versions.status==='error' ? 'Collection failed' : versions.status==='awaiting_key' ? 'Daily count pending' : stale ? 'Data refresh overdue' : 'Daily count connected';
-    $('collection-detail').textContent=`Baseline last attempt: ${versions?.lastAttemptAt ? date(versions.lastAttemptAt) : 'unavailable'}. Baseline last success: ${versions?.lastSuccessAt ? date(versions.lastSuccessAt) : 'unavailable'}. Unfiltered exposure last success: ${shodan.lastSuccessAt ? date(shodan.lastSuccessAt) : 'not yet run'}.`;
+    $('honeypot-note').textContent=baseline ? `* ${number(baseline.all.uniqueIPs)} IPs before filtering; ${number(baseline.all.services)} service results, including ${number(baseline.taggedServicesExcluded)} tagged as honeypots.` : latest ? `* Last unfiltered total: ${number(latest.count)}. The honeypot breakdown is unavailable.` : '* Total including tagged honeypots unavailable.';
+    $('collection-state').textContent=!baseline ? 'Baseline unavailable' : hosts.status==='error' ? 'Collection failed' : hosts.status==='awaiting_key' ? 'Daily count pending' : stale ? 'Data refresh overdue' : 'Daily count connected';
+    $('collection-detail').textContent=`Baseline last attempt: ${hosts?.lastAttemptAt ? date(hosts.lastAttemptAt) : 'unavailable'}. Baseline last success: ${hosts?.lastSuccessAt ? date(hosts.lastSuccessAt) : 'unavailable'}. Unfiltered exposure last success: ${shodan.lastSuccessAt ? date(shodan.lastSuccessAt) : 'not yet run'}.`;
     rows=[...published.map(row=>({...row,kind:'published'})),...shodan.history.map(row=>({...row,france:row.countries.FR ?? null,kind:'daily',source:'Shodan count API',url:'https://developer.shodan.io/api#shodan-host-count'}))].sort((a,b)=>a.date.localeCompare(b.date));
     renderChart();
     $('incidents').innerHTML=incidents.map(item=>`<article class="incident"><div class="incident-date">${escapeHTML(item.dateLabel)}<small>${escapeHTML(item.location)}</small></div><div class="incident-body"><span class="badge">${escapeHTML(item.classification)}</span><h3>${escapeHTML(item.title)}</h3><p>${escapeHTML(item.summary)}</p><div class="sources">${item.sources.map(source=>`<a href="${escapeHTML(source.url)}">${escapeHTML(source.name)} ↗</a>`).join('')}</div></div></article>`).join('');
