@@ -6,12 +6,22 @@
     "reportedAt": "2026-08-28",
     "location": "United States",
     "title": "Military freezers become a suspected target",
-    "summary": "Refrigeration failures affected at least six military commissaries. The Pentagon later investigated a suspected cyberattack. The equipment vendor and any connection to Europe's attacks remain unconfirmed.",
+    "summary": "Refrigeration failures affected at least six military commissaries and were investigated as a suspected cyberattack. NPR's November 3 review of public contracts found Danfoss controllers installed at some affected bases. Which equipment was compromised, the attack method, and any connection to Europe's attacks remain unconfirmed.",
     "classification": "Suspected attack",
     "major": false,
     "sources": [
-      {"name": "Military Times · 28 Aug", "url": "https://www.militarytimes.com/news/your-military/2026/08/28/dod-confirms-refrigeration-disruption-at-military-commissaries/"},
-      {"name": "Reuters · 29 Oct follow-up", "url": "https://www.investing.com/news/world-news/exclusivepentagon-treating-military-base-freezer-malfunctions-as-suspectedcyberattack-officials-say-4982294"}
+      {
+        "name": "Military Times · 28 Aug",
+        "url": "https://www.militarytimes.com/news/your-military/2026/08/28/dod-confirms-refrigeration-disruption-at-military-commissaries/"
+      },
+      {
+        "name": "Reuters · 29 Oct follow-up",
+        "url": "https://www.investing.com/news/world-news/exclusivepentagon-treating-military-base-freezer-malfunctions-as-suspectedcyberattack-officials-say-4982294"
+      },
+      {
+        "name": "NPR · 3 Nov investigation",
+        "url": "https://www.kpbs.org/news/national/2026/11/03/a-new-cold-war-hackers-target-fridges-across-the-globe"
+      }
     ]
   },
   {
@@ -25,8 +35,14 @@
     "classification": "Confirmed compromises",
     "major": true,
     "sources": [
-      {"name": "CERT-FR · official alert", "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"},
-      {"name": "Censys · 14 Oct", "url": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report/"}
+      {
+        "name": "CERT-FR · official alert",
+        "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      },
+      {
+        "name": "Censys · 14 Oct",
+        "url": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report/"
+      }
     ]
   },
   {
@@ -40,8 +56,14 @@
     "classification": "Related attacks",
     "major": false,
     "sources": [
-      {"name": "CERT-FR · updated alert", "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"},
-      {"name": "Le Monde · 13 Oct", "url": "https://www.lemonde.fr/en/pixels/article/2026/10/13/after-danfoss-hackers-strike-other-refrigeration-systems-used-in-france_6758565_13.html"}
+      {
+        "name": "CERT-FR · updated alert",
+        "url": "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+      },
+      {
+        "name": "Le Monde · 13 Oct",
+        "url": "https://www.lemonde.fr/en/pixels/article/2026/10/13/after-danfoss-hackers-strike-other-refrigeration-systems-used-in-france_6758565_13.html"
+      }
     ]
   },
   {
@@ -51,12 +73,26 @@
     "reportedAt": "2026-11-02",
     "location": "Across Europe",
     "title": "Another wave. More spoiled food.",
-    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden. Some stores reported settings raised to 50°C. Reporting implicates Danfoss systems; a shared attacker across the waves has not been established.",
+    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. A shared attacker across the waves remains unconfirmed. These reports do not establish a distinct new November 3 wave.",
     "classification": "Reported attack wave",
     "major": true,
     "sources": [
-      {"name": "Associated Press · 2 Nov", "url": "https://apnews.com/article/a8ea5b30d67da47957769f29101fe686"},
-      {"name": "Censys · 2 Nov", "url": "https://censys.com/blog/european-refrigerator-controller-redux-a-new-wave-of-refrigeration-attacks/"}
+      {
+        "name": "Associated Press · 2 Nov",
+        "url": "https://apnews.com/article/a8ea5b30d67da47957769f29101fe686"
+      },
+      {
+        "name": "Censys · 2 Nov",
+        "url": "https://censys.com/blog/european-refrigerator-controller-redux-a-new-wave-of-refrigeration-attacks/"
+      },
+      {
+        "name": "SecurityWeek · 3 Nov follow-up",
+        "url": "https://www.securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume/"
+      },
+      {
+        "name": "WDR · German incidents",
+        "url": "https://www1.wdr.de/nrw/cyberangriffe-supermarkt-kuehltruhen-nrw-100.amp"
+      }
     ]
   }
 ]

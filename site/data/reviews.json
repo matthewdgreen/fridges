@@ -9,5 +9,28 @@
       "https://socradar.io/blog/french-supermarket-cyberattack-ot/",
       "https://ironhackers.es/en/danfoss-ak-sm-800a-cve-2025-41450/"
     ]
+  },
+  {
+    "date": "2026-11-03",
+    "outcome": "Manual news scan found no verified new major wave after November 2. Added contemporaneous German, Portuguese and Sicilian incident reporting without asserting a common cause. Updated the August military entry: NPR found public contracts showing Danfoss installations at some affected bases; compromised equipment and attribution remain unconfirmed. November 3 follow-up articles do not reset the counter. CERT-FR's alert remains dated October 16; Sweden's NCSC notice is dated November 2.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://www.cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://www.ncsc.se/sv/aktuellt/cyberangrepp-mot-kylsystem/",
+      "https://www.kpbs.org/news/national/2026/11/03/a-new-cold-war-hackers-target-fridges-across-the-globe",
+      "https://www.securityweek.com/over-100-european-stores-hit-as-supermarket-fridge-attacks-resume/",
+      "https://thehackernews.com/2026/11/second-wave-of-cyberattacks-hits.html",
+      "https://www1.wdr.de/nrw/cyberangriffe-supermarkt-kuehltruhen-nrw-100.amp",
+      "https://heimatreport.de/cyberangriff-rewe-raesfeld-kuehlregale-leer/",
+      "https://www.truesec.com/hub/blog/refrigeration-and-freezer-systems-breached-at-large-scale"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 prevented verification of current vendor advisories."
+      }
+    ],
+    "collectionHealth": "Latest deployment succeeded; both Shodan datasets report successful collection on November 3 UTC. No collection was rerun during this news scan."
   }
 ]
