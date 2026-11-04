@@ -73,7 +73,7 @@
     "reportedAt": "2026-11-02",
     "location": "Across Europe",
     "title": "Another wave. More spoiled food.",
-    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. A shared attacker across the waves remains unconfirmed. These reports do not establish a distinct new November 3 wave.",
+    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. A shared attacker across the waves remains unconfirmed. Greece’s cybersecurity authority acknowledged domestic food-retail attacks on November 3 without giving incident dates or establishing a link to this wave. These follow-ups do not establish a distinct new wave.",
     "classification": "Reported attack wave",
     "major": true,
     "sources": [
@@ -92,6 +92,10 @@
       {
         "name": "WDR · German incidents",
         "url": "https://www1.wdr.de/nrw/cyberangriffe-supermarkt-kuehltruhen-nrw-100.amp"
+      },
+      {
+        "name": "Greek cybersecurity authority · 3 Nov follow-up",
+        "url": "https://cyber.gov.gr/i-ethniki-archi-kyvernoasfaleias-eiche-enimerosei-kai-systisei-sygkekrimena-metra-prostasias-gnostopoiontas-ton-kindyno-se-elegktes-emporikis-psyxis/"
       }
     ]
   },

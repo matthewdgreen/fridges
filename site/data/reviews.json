@@ -83,5 +83,24 @@
       }
     ],
     "collectionHealth": "Latest scheduled run 41693564610 deployed successfully but failed its health check because firmware populations were inconsistent. Service and distinct-IP collections succeeded; prior valid firmware data was preserved. This review did not repeat collection requests or access devices."
+  },
+  {
+    "date": "2026-11-04",
+    "checkedAt": "2026-11-04T13:29:09Z",
+    "outcome": "Scheduled follow-up found no verified later major wave. Added Greece’s November 3 official acknowledgment as context; it does not date the domestic attacks or establish a link to the November 2 wave, so no new incident date or counter reset was inferred. Its November 4 interview discusses resilience rather than a new refrigeration incident. CERT-FR remains dated October 16. The EFS incident was already incorporated in today’s manual review.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cyber.gov.gr/i-ethniki-archi-kyvernoasfaleias-eiche-enimerosei-kai-systisei-sygkekrimena-metra-prostasias-gnostopoiontas-ton-kindyno-se-elegktes-emporikis-psyxis/",
+      "https://cyber.gov.gr/einai-anapofeykto-oti-tha-ginoyn-kyvernoepitheseis-synenteyxi-toy-dioikiti-eak-michali-mpletsa-sti-dimosiografo-ilianna-magra/",
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://presse.efs.sante.fr/actualites/l-efs-confirme-l-incident-de-cybersecurite-impactant-un-de-ces-prestataires-d-equipement-frigorifique-2c07c-08a0a.html",
+        "reason": "Text fetch requires JavaScript; the statement had already been read in the browser and incorporated during today’s manual review."
+      }
+    ],
+    "collectionHealth": "Latest deployment 41837926113 succeeded. Prior scheduled run 41693564610 deployed retained data and failed its health check on inconsistent firmware populations; this known warning is unchanged. Service and IP collectors last succeeded November 3 UTC. No duplicate collection or device requests were made."
   }
 ]
