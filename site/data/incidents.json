@@ -94,5 +94,22 @@
         "url": "https://www1.wdr.de/nrw/cyberangriffe-supermarkt-kuehltruhen-nrw-100.amp"
       }
     ]
+  },
+  {
+    "id": "france-efs-2026-11",
+    "date": "2026-11-02",
+    "dateLabel": "2 November 2026 · disclosed 3 November",
+    "reportedAt": "2026-11-03",
+    "location": "France · three EFS sites",
+    "title": "Blood-service cold storage is affected",
+    "summary": "EFS confirmed that a refrigeration supplier incident altered cold-room temperature and defrost settings at three sites. Alarms enabled staff to secure equipment or transfer plasma; no product losses or health impact were reported, and collection and distribution continued. EFS did not identify the supplier or controller vendor. A link to the supermarket attacks remains unconfirmed.",
+    "classification": "Confirmed incident · contained",
+    "major": false,
+    "sources": [
+      {
+        "name": "EFS · official statement, 3 Nov",
+        "url": "https://presse.efs.sante.fr/actualites/l-efs-confirme-l-incident-de-cybersecurite-impactant-un-de-ces-prestataires-d-equipement-frigorifique-2c07c-08a0a.html"
+      }
+    ]
   }
 ]

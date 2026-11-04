@@ -64,5 +64,24 @@
       }
     ],
     "collectionHealth": "Latest Pages deployment 41643520521 succeeded. IP and service collectors succeeded on November 3. Firmware refresh still rejects overlapping fingerprints or index drift and retains its 02:46 UTC valid snapshot; this unchanged failure was already reported to the user. No collection requests or device access were performed during this scheduled review."
+  },
+  {
+    "date": "2026-11-04",
+    "outcome": "Added the EFS incident from its official November 3 statement, read in its JavaScript press room. Incident date is November 2; no later major wave established, so the counter remains anchored there. Kept vendor and cross-incident attribution unconfirmed. CERT-FR and Dutch NCSC advisories were also reviewed.",
+    "newIncidentFound": true,
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://presse.efs.sante.fr/actualites/l-efs-confirme-l-incident-de-cybersecurite-impactant-un-de-ces-prestataires-d-equipement-frigorifique-2c07c-08a0a.html",
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://www.ncsc.nl/nieuws/in-het-nieuws-cyberaanvallen-op-koelinstallaties-in-europa"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.thegrocer.co.uk/news/latest-wave-of-fridge-cyberattacks-claims-more-uk-victims/725503.article",
+        "reason": "HTTP 405; UK search-result details were not added as independently verified incidents."
+      }
+    ],
+    "collectionHealth": "Latest scheduled run 41693564610 deployed successfully but failed its health check because firmware populations were inconsistent. Service and distinct-IP collections succeeded; prior valid firmware data was preserved. This review did not repeat collection requests or access devices."
   }
 ]

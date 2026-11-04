@@ -1,6 +1,6 @@
 {
   "answer": "No.",
-  "summary": "Supermarket refrigeration systems are still being hacked. Internet-exposed Danfoss controllers are part of the problem.",
-  "reviewedAt": "2026-11-03",
-  "reason": "The latest reviewed major wave occurred on 2 November. Follow-up reporting expands its reported reach and adds evidence about equipment at US military bases, but no verified new major wave after 2 November was found in this review. Continuing exposure and unresolved investigations do not support an all-clear."
+  "summary": "Refrigeration controls at supermarkets and blood-storage sites have been attacked. Internet-exposed controllers remain a concern.",
+  "reviewedAt": "2026-11-04",
+  "reason": "The latest reviewed major wave occurred on 2 November. EFS has since confirmed a contained incident at three sites on that date, with no reported product loss. Its controller vendor and any connection to the supermarket attacks remain unconfirmed. No verified later major wave was found in this review."
 }
