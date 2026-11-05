@@ -73,7 +73,7 @@
     "reportedAt": "2026-11-02",
     "location": "Across Europe",
     "title": "Another wave. More spoiled food.",
-    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. A shared attacker across the waves remains unconfirmed. Greece’s cybersecurity authority acknowledged domestic food-retail attacks on November 3 without giving incident dates or establishing a link to this wave. These follow-ups do not establish a distinct new wave.",
+    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. NoName057(16) and Z-Pentest reportedly claimed responsibility on November 4, but those claims have not been independently verified; a common perpetrator across the waves remains unconfirmed. Greece’s cybersecurity authority acknowledged domestic food-retail attacks on November 3 without giving incident dates or establishing a link to this wave. These follow-ups do not establish a distinct new wave.",
     "classification": "Reported attack wave",
     "major": true,
     "sources": [
@@ -96,6 +96,14 @@
       {
         "name": "Greek cybersecurity authority · 3 Nov follow-up",
         "url": "https://cyber.gov.gr/i-ethniki-archi-kyvernoasfaleias-eiche-enimerosei-kai-systisei-sygkekrimena-metra-prostasias-gnostopoiontas-ton-kindyno-se-elegktes-emporikis-psyxis/"
+      },
+      {
+        "name": "Anadolu · 4 Nov claim reporting",
+        "url": "https://www.aa.com.tr/en/europe/2-pro-russian-hacker-groups-claim-attacks-on-european-refrigeration-systems-report/4111879"
+      },
+      {
+        "name": "SentinelLABS · 4 Nov attribution assessment",
+        "url": "https://www.sentinelone.com/labs/defrost-and-disrupt-an-assessment-of-europe-s-refrigeration-attacks/"
       }
     ]
   },
@@ -106,13 +114,21 @@
     "reportedAt": "2026-11-03",
     "location": "France · three EFS sites",
     "title": "Blood-service cold storage is affected",
-    "summary": "EFS confirmed that a refrigeration supplier incident altered cold-room temperature and defrost settings at three sites. Alarms enabled staff to secure equipment or transfer plasma; no product losses or health impact were reported, and collection and distribution continued. EFS did not identify the supplier or controller vendor. A link to the supermarket attacks remains unconfirmed.",
+    "summary": "EFS confirmed that a refrigeration supplier incident altered cold-room temperature and defrost settings at three sites. Alarms enabled staff to secure equipment or transfer plasma; no product losses or health impact were reported, and collection and distribution continued. EFS did not identify the supplier or controller vendor. A link to the supermarket attacks remains unconfirmed. Separately, Coolworld’s November 4 statement acknowledged an early-November remote-monitoring incident affecting a limited number of its units and described a third-party component vulnerability. It declined to discuss individual customer cases; this does not establish which controller or access route was involved at EFS.",
     "classification": "Confirmed incident · contained",
     "major": false,
     "sources": [
       {
         "name": "EFS · official statement, 3 Nov",
         "url": "https://presse.efs.sante.fr/actualites/l-efs-confirme-l-incident-de-cybersecurite-impactant-un-de-ces-prestataires-d-equipement-frigorifique-2c07c-08a0a.html"
+      },
+      {
+        "name": "Coolworld · official update, 4 Nov",
+        "url": "https://www.coolworld-rentals.com/news/cybersecurity-update"
+      },
+      {
+        "name": "BleepingComputer · 4 Nov follow-up",
+        "url": "https://www.bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france/"
       }
     ]
   }

@@ -102,5 +102,20 @@
       }
     ],
     "collectionHealth": "Latest deployment 41837926113 succeeded. Prior scheduled run 41693564610 deployed retained data and failed its health check on inconsistent firmware populations; this known warning is unchanged. Service and IP collectors last succeeded November 3 UTC. No duplicate collection or device requests were made."
+  },
+  {
+    "date": "2026-11-05",
+    "checkedAt": "2026-11-05T13:31:57Z",
+    "outcome": "No verified new major wave found. Added November 4 NoName057(16)/Z-Pentest claim reporting with SentinelLABS’s explicit lack of independent verification. Added Coolworld’s primary remote-monitoring incident statement as separate context to the EFS entry; neither its unnamed third-party component nor an EFS-specific customer link was inferred. November 4 disclosures do not reset the November 2 counter. CERT-FR remains last updated October 16.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://www.aa.com.tr/en/europe/2-pro-russian-hacker-groups-claim-attacks-on-european-refrigeration-systems-report/4111879",
+      "https://www.sentinelone.com/labs/defrost-and-disrupt-an-assessment-of-europe-s-refrigeration-attacks/",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france/",
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
+    ],
+    "collectionHealth": "Scheduled run 41889124401 succeeded, including collection health and deployment. Service, IP and firmware collectors all report successful November 4 UTC observations. Firmware collection has recovered from its previously reported validation failures and now has two daily observations. No additional Shodan requests or device access were performed during this review."
   }
 ]
