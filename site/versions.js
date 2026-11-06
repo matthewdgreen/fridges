@@ -34,6 +34,8 @@
       return;
     }
     const allRows=dataset.history;
+    const latestPolicy=allRows.at(-1).populationPolicy || 'original-title-query';
+    const comparableRows=allRows.filter(row=>(row.populationPolicy || 'original-title-query')===latestPolicy);
     const rows=allRows.slice(-30);
     const latestRow=allRows.at(-1), selected=population(), latest=latestRow[selected];
     const share=newerShare(latest);
@@ -65,10 +67,10 @@
       parts.push(`<text x="${left+plot+9}" y="${y+18}">${fmt(sample.total)}</text>`);
     });
     el('firmware-chart').innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="firmware-svg-title firmware-svg-description"><title id="firmware-svg-title">Global inferred firmware mix by day</title><desc id="firmware-svg-description">${rows.length} daily observations shown as stacked bars. ${measure==='share'?'Bar segments show percentage shares.':'Bar segments show service counts on a shared scale.'} Latest total: ${fmt(latest.total)}. Full values are available in the table and downloadable history.</desc>${parts.join('')}</svg>`;
-    if(allRows.length===1) {
-      el('firmware-trend').textContent='First baseline collected. A trend will appear after the next successful daily observation; no upgrade rate can be inferred yet.';
+    if(comparableRows.length===1) {
+      el('firmware-trend').textContent=latestRow.manuallyExcludedIPs ? 'New baseline after excluding two suspected emulation addresses on 6 November. Earlier rows retain the original population; no comparable trend is available yet.' : 'First baseline collected. A trend will appear after the next successful daily observation; no upgrade rate can be inferred yet.';
     } else {
-      const firstRow=rows[0], first=firstRow[selected], firstShare=newerShare(first);
+      const firstRow=comparableRows.slice(-30)[0], first=firstRow[selected], firstShare=newerShare(first);
       if(firstShare===null || share===null) {
         el('firmware-trend').textContent='A zero-service observation has no defined version share. Compare service counts to see the population change.';
       } else {
@@ -87,8 +89,8 @@
   el('exclude-honeypots').addEventListener('change',render);
   el('firmware-download').addEventListener('click',()=>{
     if(!dataset?.history?.length) return;
-    const cells=[['date','population','inferred_version','services','population_total']];
-    for(const row of dataset.history) for(const scope of ['all','excludingHoneypots']) for(const [version,count] of Object.entries(row[scope].versions)) cells.push([row.date,scope,version,count,row[scope].total]);
+    const cells=[['date','population','inferred_version','services','population_total','population_policy']];
+    for(const row of dataset.history) for(const scope of ['all','excludingHoneypots']) for(const [version,count] of Object.entries(row[scope].versions)) cells.push([row.date,scope,version,count,row[scope].total,row.populationPolicy || 'original-title-query']);
     const csv=cells.map(row=>row.map(value=>'"'+String(value).replace(/"/g,'""')+'"').join(',')).join('\r\n');
     const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
     const link=document.createElement('a');link.href=url;link.download='storeview-firmware-history.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);

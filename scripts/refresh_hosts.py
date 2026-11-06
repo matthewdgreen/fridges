@@ -42,9 +42,9 @@ def empty_data():
     return {'schemaVersion':1,'methodVersion':METHOD,'query':QUERY,'metric':'unique_ip_addresses','scope':'worldwide','status':'pending','lastAttemptAt':None,'lastSuccessAt':None,'history':[]}
 
 
-def collect_snapshot(api,now):
+def collect_snapshot(api,now,base_query=QUERY):
     row={'date':now[:10],'collectedAt':now}
-    for scope,query in [('all',QUERY),('excludingTaggedServices',QUERY+' -tag:honeypot')]:
+    for scope,query in [('all',base_query),('excludingTaggedServices',base_query+' -tag:honeypot')]:
         row[scope]=cardinality(api.request('/shodan/host/count',query=query,facets=f'ip:{CAP}'))
         time.sleep(1.05)
     if row['all']['uniqueIPs']<row['excludingTaggedServices']['uniqueIPs'] or row['all']['services']<row['excludingTaggedServices']['services']:
@@ -72,6 +72,8 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--prompt-key',action='store_true');args=parser.parse_args()
     key=getpass.getpass('Shodan key (hidden): ') if args.prompt_key else os.environ.get('SHODAN_API_KEY')
     data=json.loads(DATA.read_text()) if DATA.exists() else empty_data()
+    if data.get('populationPolicy'):
+        raise SystemExit('Use python3 -m scripts.refresh_screened to preserve manual exclusions')
     data,failed=refresh(data,key,utcnow())
     temp=DATA.with_suffix('.tmp');temp.write_text(json.dumps(data,indent=2)+'\n');temp.replace(DATA)
     print('Distinct-IP refresh:',data['status'])

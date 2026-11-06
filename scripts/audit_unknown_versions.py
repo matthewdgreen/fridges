@@ -110,7 +110,7 @@ def aggregate_records(records):
 def run(api, max_hosts, private_output=None, public_key=None):
     report = {'schemaVersion': 1, 'startedAt': utcnow(), 'status': 'collecting',
               'method': 'Shodan cached count facets and host metadata only; no search or scan requests.',
-              'query': UNKNOWN_QUERY, 'facetObservations': {}, 'hostLookupFailures': 0,
+              'query': QUERY, 'facetObservations': {}, 'hostLookupFailures': 0,
               'limitations': ['Service records are not physical controllers or fridges.',
                               'Sequential index queries and cached host metadata are not an atomic snapshot.',
                               'Unknown candidates are a local title and raw-header approximation to the search query.',
@@ -118,7 +118,6 @@ def run(api, max_hosts, private_output=None, public_key=None):
                               'Concentrations from truncated facets describe returned groups only.',
                               'Tagged service exclusion does not remove every honeypot.']}
     scopes = {'allServices': QUERY, 'untaggedServices': QUERY + ' -tag:honeypot',
-              'unknown': UNKNOWN_QUERY, 'unknownUntagged': UNKNOWN_QUERY + ' -tag:honeypot',
               'v431': fingerprint_query(QUERY, '2025-07-31T08:18:58Z'),
               'v431Untagged': fingerprint_query(QUERY + ' -tag:honeypot', '2025-07-31T08:18:58Z')}
     unknown_ips, all_ips = {}, {}
@@ -132,13 +131,34 @@ def run(api, max_hosts, private_output=None, public_key=None):
             all_ips = {str(ipaddress.ip_address(r['value'])): r['count']
                        for r in result.get('facets', {}).get('ip', [])}
         print('Completed aggregate scope:', name, flush=True)
-    report['unknownFacetComplete'] = sum(unknown_ips.values()) == report['facetObservations']['unknown']['services']
-    # Shodan's negative text terms need not behave as an exact phrase complement.
-    # Always inspect high-multiplicity addresses, even if the complement is empty.
-    combined_ips = dict(all_ips)
-    combined_ips.update(unknown_ips)
-    targets = sorted(combined_ips, key=lambda address: (address not in unknown_ips, -combined_ips[address], address))[:max_hosts]
-    report['hostSelection'] = 'Unknown-query IPs first, then highest-multiplicity all-service IPs; bounded sample.'
+    if sum(all_ips.values()) != report['facetObservations']['allServices']['services']:
+        all_ips, _ = api.ips(QUERY)
+    mapped_ips = Counter()
+    build_counts = Counter()
+    for stamp, version in BUILDS.items():
+        query = fingerprint_query(QUERY, stamp)
+        result = api.request('/shodan/host/count', query=query, facets='ip:1000')
+        entries = {str(ipaddress.ip_address(r['value'])): r['count']
+                   for r in result.get('facets', {}).get('ip', [])}
+        if sum(entries.values()) != result['total']:
+            entries, _ = api.ips(query)
+        mapped_ips.update(entries)
+        build_counts[version] += sum(entries.values())
+    # Match the chart's subtraction per address. Negative free-text phrases are
+    # deliberately not used to identify the residual population.
+    unknown_ips = {address: count - mapped_ips[address] for address, count in all_ips.items()
+                   if count > mapped_ips[address]}
+    report['perIPResidual'] = {'populationServices': sum(all_ips.values()),
+        'mappedServices': sum(mapped_ips.values()), 'positiveResidualServices': sum(unknown_ips.values()),
+        'residualIPs': len(unknown_ips),
+        'negativeResidualIPs': sum(mapped_ips[address] > count for address, count in all_ips.items()),
+        'mappedIPsAbsentFromPopulation': len(set(mapped_ips) - set(all_ips)),
+        'residualIPConcentration': concentration(unknown_ips.values()), 'buildCounts': dict(build_counts)}
+    combined_ips = dict(unknown_ips)
+    for address in sorted(all_ips, key=all_ips.get, reverse=True)[:2]:
+        combined_ips.setdefault(address, 0)
+    targets = sorted(combined_ips, key=lambda address: (-combined_ips[address], address))[:max_hosts]
+    report['hostSelection'] = 'Positive per-IP residuals plus the two busiest all-service IPs; bounded by host budget.'
     report['hostsPlanned'] = len(targets)
     report['selectedAdvertisedServices'] = sum(all_ips.get(address, 0) for address in targets)
     records, seen = [], set()
@@ -158,6 +178,10 @@ def run(api, max_hosts, private_output=None, public_key=None):
                       'hostTaggedHoneypot': 'honeypot' in (host.get('tags') or []),
                       'storeViewVersions': dict(Counter(infer(r)[0] for r in host.get('data', [])
                                                        if 'storeview' in (r.get('http', {}).get('title') or '').lower())),
+                      'storeViewObservedDates': dict(sorted(Counter(str(r.get('timestamp') or '')[:10]
+                          for r in host.get('data', [])
+                          if 'storeview' in (r.get('http', {}).get('title') or '').lower()
+                          and re.match(r'^\d{4}-\d{2}-\d{2}', str(r.get('timestamp') or ''))).items())),
                       'observedDates': dict(Counter(str(r.get('timestamp') or '')[:10] for r in host.get('data', [])
                                                    if re.match(r'^\d{4}-\d{2}-\d{2}', str(r.get('timestamp') or ''))))}
             busiest_details.append(detail)
@@ -197,7 +221,9 @@ def run(api, max_hosts, private_output=None, public_key=None):
                  '-pkeyopt', 'rsa_padding_mode:oaep', '-pkeyopt', 'rsa_oaep_md:sha256'],
                 input=json.dumps({'addresses': private_addresses}).encode(),
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout)
-    report['finalUnknownTotal'] = api.request('/shodan/host/count', query=UNKNOWN_QUERY)['total']
+    report['finalPopulationTotal'] = api.request('/shodan/host/count', query=QUERY)['total']
+    report['populationChangedDuringAudit'] = report['finalPopulationTotal'] != sum(all_ips.values())
+    report['candidateIPsPlanned'] = len(combined_ips)
     report['status'] = 'bounded_sample' if not report['hostLookupFailures'] else 'partial'
     report['completedAt'] = utcnow()
     return report

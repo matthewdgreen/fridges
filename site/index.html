@@ -8,8 +8,8 @@
   <title>Are the fridges ok?</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css?v=02fce004e641">
-  <script src="app.js?v=29741101c290" defer></script>
-  <script src="versions.js?v=e585522e39ae" defer></script>
+  <script src="app.js?v=c6815d47b0ff" defer></script>
+  <script src="versions.js?v=7b32d40f49ee" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -61,6 +61,7 @@
   <div class="review-line"><span id="review-date">News reviewed 6 Nov 2026</span><span>Independent tracker · Sources linked throughout</span></div>
   <div id="load-error" role="alert" hidden>Some data could not be loaded. Please reload this page. Displayed fallback content was last reviewed on 6 November 2026.</div>
   <p class="honeypot-intro">Our baseline counts each IP once, even when it exposes several StoreView services. Shodan-tagged honeypot records are excluded, but an IP with both tagged and untagged records can remain. IP addresses are a proxy for systems, not a count of physical fridges.</p>
+  <p class="chart-note"><strong>Measurement change · 6 November 2026:</strong> subsequent counts exclude two additional addresses suspected of emulating StoreView across more than 2,000 service records. Neither was tagged as a honeypot by Shodan. Earlier observations retain the original population; the original 6 November snapshot is <a href="data/archive/pre-manual-exclusions-2026-11-06/hosts.json">preserved separately</a>. This discontinuity is a filtering change, not evidence that thousands of fridges went offline. Cached observation dates do not establish when these addresses first appeared.</p>
   <section class="metrics" aria-label="Current situation">
     <article class="metric"><div class="eyebrow">Days since the last major attack</div><div class="big-number" id="days">—</div><p id="last-attack">Latest wave: 2 November 2026</p><a href="#method">Based on incident dates in news reports ↗</a></article>
     <article class="metric"><div class="eyebrow" id="count-label">Baseline · distinct IP addresses</div><div class="big-number"><span id="count">—</span><a class="metric-asterisk" href="#honeypot-note" aria-label="See total including tagged honeypots">*</a></div><p>Indexed StoreView IPs · tagged service records excluded</p><span class="small" id="count-date">Loading measurement…</span><p class="honeypot-note" id="honeypot-note">Loading total including tagged honeypots…</p></article>
@@ -71,7 +72,7 @@
     <p class="section-intro">Historical service totals before IP deduplication and honeypot filtering. These use a different unit from the distinct-IP baseline above; they do not count compromised fridges.</p>
     <div class="chart-top"><span><i class="key collected"></i> Daily collection <i class="key published"></i> Published snapshot</span><button id="download" class="download" type="button">Download CSV ↓</button></div>
     <div id="chart" class="chart" aria-live="polite"></div>
-    <p class="chart-note">These totals include tagged honeypots. Historical sources did not provide a honeypot breakdown. Published observations may use different search details and collection times. Gaps are unmeasured; points are not interpolated.</p>
+    <p class="chart-note">These totals include tagged honeypots. Historical sources did not provide a honeypot breakdown. Starting with the revised 6 November observation, two manually excluded addresses are omitted. Earlier points have not been retroactively adjusted: their exact contributions were not retained. Published observations may use different search details and collection times. Gaps are unmeasured; points are not interpolated. <a href="data/archive/pre-manual-exclusions-2026-11-06/shodan.json">Original series before manual exclusions ↗</a></p>
     <details><summary>View observations & sources <span aria-hidden="true">+</span></summary><div class="table-wrap"><table><caption class="sr-only">Shodan observations for the selected region</caption><thead><tr><th scope="col">Observed</th><th scope="col">Services</th><th scope="col">Source</th><th scope="col">Type</th></tr></thead><tbody id="observations"></tbody></table></div></details>
   </section>
   <section id="versions" class="section firmware-section" aria-labelledby="firmware-heading">
@@ -83,7 +84,7 @@
     <div id="firmware-legend" class="firmware-legend"></div>
     <div id="firmware-chart" class="firmware-chart" aria-live="polite"></div>
     <p id="firmware-trend" class="firmware-trend"></p>
-    <p class="chart-note">A rising share of newer versions can reflect upgrades, older systems going offline, new arrivals, or changes in Shodan's index. This chart does not follow individual devices or prove upgrades. Multiple ports can still inflate counts, and untagged honeypots may remain.</p>
+    <p class="chart-note"><strong>Population changes on 6 November:</strong> the revised observation excludes two suspected emulation addresses; earlier bars retain them. Counts and version shares across this boundary are not directly comparable. <a href="data/archive/pre-manual-exclusions-2026-11-06/versions.json">Original firmware observations ↗</a>. A rising share of newer versions can reflect upgrades, older systems going offline, new arrivals, or changes in Shodan's index. This chart does not follow individual devices or prove upgrades. Multiple ports can still inflate counts, and untagged honeypots may remain.</p>
     <details><summary>Latest version breakdown & methodology <span aria-hidden="true">+</span></summary>
       <div class="table-wrap"><table><caption id="firmware-table-caption">Latest inferred firmware distribution</caption><thead><tr><th scope="col">Inferred firmware</th><th scope="col">Services</th><th scope="col">Share</th></tr></thead><tbody id="firmware-breakdown"></tbody></table></div>
       <p class="firmware-method">Exact cached <code>Last-Modified</code> fingerprints are matched to the firmware-build timestamps published by <a href="https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report">Censys</a>. Shared fingerprints remain ambiguous; unmatched banners remain unknown. The chart uses the same StoreView query as the headline count, with an optional honeypot exclusion. Newer StoreView Web titles were present in this query during our baseline census; this is still not a complete inventory of all Danfoss products.</p>

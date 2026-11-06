@@ -13,8 +13,8 @@ DATA = ROOT / "site/data/shodan.json"
 QUERY = 'http.title:"Danfoss StoreView"'
 
 
-def fetch_count(key):
-    params = urlencode({"key": key, "query": QUERY, "facets": "country:100"})
+def fetch_count(key, query=QUERY):
+    params = urlencode({"key": key, "query": query, "facets": "country:100"})
     request = Request("https://api.shodan.io/shodan/host/count?" + params,
                       headers={"User-Agent": "AreTheFridgesOK/1.0"})
     with urlopen(request, timeout=30) as response:
@@ -57,7 +57,10 @@ def refresh(data, key, now, fetch=fetch_count):
 
 def main():
     now = datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z")
-    data, failed = refresh(json.loads(DATA.read_text()), os.environ.get("SHODAN_API_KEY"), now)
+    original = json.loads(DATA.read_text())
+    if original.get('populationPolicy'):
+        raise SystemExit('Use python3 -m scripts.refresh_screened to preserve manual exclusions')
+    data, failed = refresh(original, os.environ.get("SHODAN_API_KEY"), now)
     temporary = DATA.with_suffix(".tmp")
     temporary.write_text(json.dumps(data, indent=2) + "\n")
     temporary.replace(DATA)

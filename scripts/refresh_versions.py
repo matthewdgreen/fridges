@@ -39,8 +39,8 @@ def fingerprint_query(base, stamp):
     return base + ' "Last-Modified: ' + header + '"'
 
 
-def collect_snapshot(api, now, pause=time.sleep):
-    scopes = {'all':QUERY, 'excludingHoneypots':QUERY+' -tag:honeypot'}
+def collect_snapshot(api, now, pause=time.sleep, base_query=QUERY):
+    scopes = {'all':base_query, 'excludingHoneypots':base_query+' -tag:honeypot'}
     snapshot = {'date':now[:10], 'collectedAt':now}
     for scope, base in scopes.items():
         count = total(api, base)
@@ -95,6 +95,8 @@ def main():
     args = parser.parse_args()
     key = getpass.getpass('Shodan key (hidden): ') if args.prompt_key else os.environ.get('SHODAN_API_KEY')
     data = json.loads(DATA.read_text()) if DATA.exists() else empty_data()
+    if data.get('populationPolicy'):
+        raise SystemExit('Use python3 -m scripts.refresh_screened to preserve manual exclusions')
     data, failed = refresh(data, key, utcnow())
     temporary = DATA.with_suffix('.tmp')
     temporary.write_text(json.dumps(data, indent=2)+'\n')

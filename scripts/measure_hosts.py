@@ -21,6 +21,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 from scripts.collect_versions import infer, utcnow
+from scripts.measurement_scope import excluded_addresses, scoped_query
 
 QUERY = 'http.title:"Danfoss StoreView"'
 CAP = 1000
@@ -108,6 +109,8 @@ def is_storeview(row):
 
 
 def endpoint(row):
+    if (row.get('ip_str') or row.get('ipv6')) in excluded_addresses(required=False):
+        return None
     address = row.get('ip_str') or row.get('ipv6')
     try:
         ip = ipaddress.ip_address(address)
@@ -209,13 +212,19 @@ def main():
     parser.add_argument('--live',action='store_true')
     parser.add_argument('--output',type=Path,default=Path('research/host-measurement.json'))
     args=parser.parse_args()
+    # Fail before any network activity if the configured exclusions are missing.
+    try:
+        addresses = excluded_addresses()
+    except (ValueError, TypeError, OSError):
+        raise SystemExit('Required two-address exclusion configuration is unavailable or invalid') from None
     api=API(getpass.getpass('Shodan key (hidden): '))
     started=utcnow()
     info=api.request('/api-info')
     remaining=info.get('query_credits',0)
-    all_ips, all_services=api.ips(QUERY)
-    filtered, filtered_services=api.ips(QUERY+' -tag:honeypot')
-    tagged, tagged_services=api.ips(QUERY+' tag:honeypot')
+    private_query = scoped_query(QUERY, addresses)
+    all_ips, all_services=api.ips(private_query)
+    filtered, filtered_services=api.ips(private_query+' -tag:honeypot')
+    tagged, tagged_services=api.ips(private_query+' tag:honeypot')
     print(json.dumps({'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'queryCredits':remaining}),flush=True)
     report={'startedAt':started,'query':QUERY,'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'observedIPUnion':len(set(all_ips)|set(filtered)),'filteredIPsAbsentFromEarlierAllSnapshot':len(set(filtered)-set(all_ips)),'ipFacetDrift':api.facet_drift,'cachedEndpoints':0,'cachedVersionByIP':{},'liveRequested':args.live,'liveStatus':'not_started','liveOutcomes':{},'limitations':['Unique IPs are not physical controllers; one address may represent multiple controllers.','Tagged service records are excluded; IPs with both tagged and untagged records and unidentified decoys can remain.','One landing-page request per eligible IP cannot establish whether the device is vulnerable or compromised.','No credentials, controller changes, redirects, retries, port scans, or JS execution are used.','A timeout or TLS error is not evidence that equipment is offline.','Only aggregates are retained; no raw IP addresses or page contents are persisted.']}
     report['IPsWithTaggedMatchingServices']=len(tagged)

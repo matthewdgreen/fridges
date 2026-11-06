@@ -29,10 +29,9 @@ jobs:
         if: github.event_name != 'push'
         env:
           SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
+          EXCLUDED_STOREVIEW_IPS: ${{ secrets.EXCLUDED_STOREVIEW_IPS }}
         run: |
-          python scripts/refresh.py
-          python -m scripts.refresh_versions
-          python -m scripts.refresh_hosts
+          python -m scripts.refresh_screened
       - name: Validate updated data
         run: python scripts/validate.py
       - name: Preserve daily history
@@ -41,6 +40,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add site/data/shodan.json site/data/versions.json site/data/hosts.json
+          git add site/data/archive
           if ! git diff --cached --quiet; then
             git commit -m "Update daily Shodan IP, service and firmware counts"
             git push origin HEAD:main
