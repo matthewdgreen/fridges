@@ -6,8 +6,8 @@
   "scope": "worldwide",
   "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
   "status": "ok",
-  "lastAttemptAt": "2026-11-05T18:43:27Z",
-  "lastSuccessAt": "2026-11-05T18:43:27Z",
+  "lastAttemptAt": "2026-11-06T17:56:36Z",
+  "lastSuccessAt": "2026-11-06T17:56:36Z",
   "history": [
     {
       "date": "2026-11-03",
@@ -158,6 +158,56 @@
       },
       "honeypotServicesExcluded": 1960,
       "finishedAt": "2026-11-05T18:43:49Z"
+    },
+    {
+      "date": "2026-11-06",
+      "collectedAt": "2026-11-06T17:56:36Z",
+      "all": {
+        "total": 8459,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 9,
+          "SMG09.000.135 (0176)": 9,
+          "SMG09.000.135 (0179)": 30,
+          "SMG09.000.141": 81,
+          "3.0.12": 283,
+          "3.1.11": 62,
+          "3.2.6": 303,
+          "3.3.0": 473,
+          "4.0.14": 41,
+          "4.1.4": 445,
+          "4.2.4": 190,
+          "4.3.1": 5020,
+          "5.0.19": 32,
+          "5.1.1": 128,
+          "5.3.2": 950,
+          "Unknown/unmapped": 403
+        }
+      },
+      "excludingHoneypots": {
+        "total": 6273,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 9,
+          "SMG09.000.135 (0176)": 9,
+          "SMG09.000.135 (0179)": 30,
+          "SMG09.000.141": 81,
+          "3.0.12": 283,
+          "3.1.11": 62,
+          "3.2.6": 303,
+          "3.3.0": 473,
+          "4.0.14": 41,
+          "4.1.4": 445,
+          "4.2.4": 190,
+          "4.3.1": 3066,
+          "5.0.19": 32,
+          "5.1.1": 128,
+          "5.3.2": 950,
+          "Unknown/unmapped": 171
+        }
+      },
+      "honeypotServicesExcluded": 2186,
+      "finishedAt": "2026-11-06T17:56:59Z"
     }
   ]
 }
