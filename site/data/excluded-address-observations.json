@@ -1,0 +1,177 @@
+{
+  "startedAt": "2026-11-06T21:24:31Z",
+  "method": "Cached Shodan historical banners for the two excluded addresses only.",
+  "addresses": [
+    {
+      "latestPerService": {
+        "returnedBanners": 1000,
+        "storeViewObservedDates": {
+          "2026-10-07": 2,
+          "2026-10-08": 29,
+          "2026-10-09": 31,
+          "2026-10-10": 33,
+          "2026-10-11": 26,
+          "2026-10-12": 24,
+          "2026-10-13": 22,
+          "2026-10-14": 26,
+          "2026-10-15": 17,
+          "2026-10-16": 37,
+          "2026-10-17": 24,
+          "2026-10-18": 31,
+          "2026-10-19": 24,
+          "2026-10-20": 30,
+          "2026-10-21": 36,
+          "2026-10-22": 34,
+          "2026-10-23": 24,
+          "2026-10-24": 21,
+          "2026-10-25": 39,
+          "2026-10-26": 40,
+          "2026-10-27": 41,
+          "2026-10-28": 32,
+          "2026-10-29": 28,
+          "2026-10-30": 26,
+          "2026-10-31": 36,
+          "2026-11-01": 37,
+          "2026-11-02": 34,
+          "2026-11-03": 24,
+          "2026-11-04": 26,
+          "2026-11-05": 34,
+          "2026-11-06": 25
+        },
+        "oldestReturnedStoreViewDate": "2026-10-07",
+        "possibleRecordCap": true
+      },
+      "historical": {
+        "returnedBanners": 1000,
+        "storeViewObservedDates": {
+          "2026-11-05": 13,
+          "2026-11-06": 30
+        },
+        "oldestReturnedStoreViewDate": "2026-11-05",
+        "possibleRecordCap": true
+      },
+      "oldestReturnedStoreViewDate": "2026-10-07",
+      "label": "Address 1",
+      "earlierCurrentMetadata": {
+        "advertisedServices": 1072,
+        "cachedServices": 1000,
+        "cachedPorts": 1000,
+        "hostTaggedHoneypot": false,
+        "storeViewVersions": {
+          "5.3.2": 685,
+          "4.1.4": 208
+        },
+        "observedDates": {
+          "2026-10-22": 40,
+          "2026-11-05": 43,
+          "2026-11-06": 27,
+          "2026-10-25": 48,
+          "2026-10-27": 51,
+          "2026-10-31": 40,
+          "2026-10-10": 36,
+          "2026-10-24": 27,
+          "2026-10-13": 23,
+          "2026-11-02": 37,
+          "2026-10-20": 30,
+          "2026-10-18": 32,
+          "2026-10-15": 20,
+          "2026-10-28": 37,
+          "2026-10-17": 28,
+          "2026-11-04": 30,
+          "2026-10-16": 39,
+          "2026-10-21": 39,
+          "2026-10-29": 31,
+          "2026-10-26": 46,
+          "2026-11-03": 28,
+          "2026-10-23": 25,
+          "2026-10-30": 35,
+          "2026-10-19": 27,
+          "2026-10-09": 31,
+          "2026-10-11": 27,
+          "2026-10-08": 30,
+          "2026-10-14": 28,
+          "2026-11-01": 38,
+          "2026-10-12": 25,
+          "2026-10-07": 2
+        }
+      }
+    },
+    {
+      "latestPerService": {
+        "returnedBanners": 1000,
+        "storeViewObservedDates": {
+          "2026-11-05": 106,
+          "2026-11-06": 442
+        },
+        "oldestReturnedStoreViewDate": "2026-11-05",
+        "possibleRecordCap": true
+      },
+      "historical": {
+        "returnedBanners": 1000,
+        "storeViewObservedDates": {
+          "2026-11-05": 269,
+          "2026-11-06": 725
+        },
+        "oldestReturnedStoreViewDate": "2026-11-05",
+        "possibleRecordCap": true
+      },
+      "oldestReturnedStoreViewDate": "2026-11-05",
+      "label": "Address 2",
+      "earlierCurrentMetadata": {
+        "advertisedServices": 1057,
+        "cachedServices": 1000,
+        "cachedPorts": 1000,
+        "hostTaggedHoneypot": false,
+        "storeViewVersions": {
+          "4.3.1": 548
+        },
+        "observedDates": {
+          "2026-10-30": 8,
+          "2026-11-05": 203,
+          "2026-11-06": 448,
+          "2026-11-03": 36,
+          "2026-11-04": 61,
+          "2026-10-26": 14,
+          "2026-11-02": 24,
+          "2026-10-24": 14,
+          "2026-10-09": 11,
+          "2026-10-14": 11,
+          "2026-10-17": 5,
+          "2026-10-31": 13,
+          "2026-10-18": 8,
+          "2026-10-12": 6,
+          "2026-10-19": 8,
+          "2026-10-29": 8,
+          "2026-10-16": 9,
+          "2026-10-08": 9,
+          "2026-10-13": 11,
+          "2026-10-20": 7,
+          "2026-10-22": 11,
+          "2026-11-01": 10,
+          "2026-10-15": 9,
+          "2026-10-27": 7,
+          "2026-10-25": 12,
+          "2026-10-10": 7,
+          "2026-10-28": 9,
+          "2026-10-11": 7,
+          "2026-10-21": 7,
+          "2026-10-07": 1,
+          "2026-10-23": 6
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Oldest returned observation is not a first-seen date.",
+    "Historical API coverage and record limits may omit earlier observations.",
+    "Banner observations cannot reconstruct exact past search-index membership."
+  ],
+  "completedAt": "2026-11-06T21:24:34Z",
+  "status": "historical_observations_only",
+  "sourceRuns": [
+    "https://github.com/matthewdgreen/fridges/actions/runs/42294927815",
+    "https://github.com/matthewdgreen/fridges/actions/runs/42296454310"
+  ],
+  "assessment": "Suspected emulation based on unusually high port counts and StoreView fingerprints across many ports. Neither address was tagged as a honeypot. Exact first appearance and historical index contributions are not established.",
+  "rawAddressesRetained": false
+}

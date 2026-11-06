@@ -17,7 +17,6 @@ from scripts.measurement_scope import excluded_addresses
 
 
 PHRASES = [fingerprint_query('', stamp).strip() for stamp in BUILDS]
-UNKNOWN_QUERY = QUERY + ' ' + ' '.join('-' + phrase for phrase in PHRASES)
 
 
 def concentration(counts):

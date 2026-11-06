@@ -3,6 +3,8 @@
 Preserve the original aggregate history, and label the new population boundary.
 Private exclusion addresses never appear in saved data or console output.
 """
+import argparse
+import getpass
 import json
 import os
 from pathlib import Path
@@ -36,12 +38,16 @@ def update_data(data, key, now, name, query):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--prompt-key', action='store_true')
+    args = parser.parse_args()
     try:
         addresses = excluded_addresses()
         query = scoped_query(refresh.QUERY, addresses)
     except (ValueError, TypeError, OSError):
         raise SystemExit('Required two-address exclusion configuration is unavailable or invalid') from None
-    now, key = utcnow(), os.environ.get('SHODAN_API_KEY')
+    now = utcnow()
+    key = getpass.getpass('Shodan key (hidden): ') if args.prompt_key else os.environ.get('SHODAN_API_KEY')
     archive = ROOT / 'archive/pre-manual-exclusions-2026-11-06'
     archive.mkdir(parents=True, exist_ok=True)
     for name in ('shodan', 'versions', 'hosts'):
