@@ -114,14 +114,20 @@ def history_report(api, addresses):
                   'Historical API coverage and record limits may omit earlier observations.',
                   'Banner observations cannot reconstruct exact past search-index membership.']}
     for address in sorted(addresses):
-        host = api.request('/shodan/host/' + address, history='true', minify='false')
-        rows = host.get('data', [])
-        dates = Counter(str(row.get('timestamp') or '')[:10] for row in rows
-            if 'storeview' in (row.get('http', {}).get('title') or '').lower()
-            and re.match(r'^\d{4}-\d{2}-\d{2}', str(row.get('timestamp') or '')))
-        report['addresses'].append({'returnedBanners': len(rows), 'storeViewObservedDates': dict(sorted(dates.items())),
-                                    'oldestReturnedStoreViewDate': min(dates) if dates else None,
-                                    'possibleRecordCap': len(rows) >= 1000})
+        detail, combined = {}, Counter()
+        for mode in ('false', 'true'):
+            host = api.request('/shodan/host/' + address, history=mode, minify='false')
+            rows = host.get('data', [])
+            dates = Counter(str(row.get('timestamp') or '')[:10] for row in rows
+                if 'storeview' in (row.get('http', {}).get('title') or '').lower()
+                and re.match(r'^\d{4}-\d{2}-\d{2}', str(row.get('timestamp') or '')))
+            detail['historical' if mode == 'true' else 'latestPerService'] = {
+                'returnedBanners': len(rows), 'storeViewObservedDates': dict(sorted(dates.items())),
+                'oldestReturnedStoreViewDate': min(dates) if dates else None,
+                'possibleRecordCap': len(rows) >= 1000}
+            combined.update(dates)
+        detail['oldestReturnedStoreViewDate'] = min(combined) if combined else None
+        report['addresses'].append(detail)
     report['completedAt'] = utcnow()
     return report
 

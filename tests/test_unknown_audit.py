@@ -40,7 +40,7 @@ class UnknownAuditTests(unittest.TestCase):
         class HistoryAPI:
             def request(self, route, **params):
                 assert route == '/shodan/host/192.0.2.10'
-                assert params['history'] == 'true'
+                assert params['history'] in ('true', 'false')
                 return {'data': [
                     {'http': {'title': 'Danfoss StoreView'}, 'timestamp': '2026-10-09T00:00:00Z'},
                     {'http': {'title': 'Other'}, 'timestamp': '2020-01-01T00:00:00Z'}]}
