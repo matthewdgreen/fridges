@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from scripts.audit_unknown_versions import aggregate_records, classify, is_candidate, run
+from scripts.audit_unknown_versions import aggregate_records, classify, history_report, is_candidate, run
 
 
 class UnknownAuditTests(unittest.TestCase):
@@ -35,3 +35,15 @@ class UnknownAuditTests(unittest.TestCase):
         report = run(EmptyAPI(), 500)
         self.assertEqual(report['status'], 'bounded_sample')
         self.assertEqual(report['cachedCandidates']['all']['services'], 0)
+
+    def test_history_distinguishes_storeview_dates_from_other_services(self):
+        class HistoryAPI:
+            def request(self, route, **params):
+                assert route == '/shodan/host/192.0.2.10'
+                assert params['history'] == 'true'
+                return {'data': [
+                    {'http': {'title': 'Danfoss StoreView'}, 'timestamp': '2026-10-09T00:00:00Z'},
+                    {'http': {'title': 'Other'}, 'timestamp': '2020-01-01T00:00:00Z'}]}
+        report = history_report(HistoryAPI(), {'192.0.2.10'})
+        self.assertEqual(report['addresses'][0]['oldestReturnedStoreViewDate'], '2026-10-09')
+        self.assertNotIn('192.0.2.10', json.dumps(report))

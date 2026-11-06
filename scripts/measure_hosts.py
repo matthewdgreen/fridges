@@ -21,7 +21,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 from scripts.collect_versions import infer, utcnow
-from scripts.measurement_scope import excluded_addresses, scoped_query
+from scripts.measurement_scope import POLICY_ID, excluded_addresses, scoped_query
 
 QUERY = 'http.title:"Danfoss StoreView"'
 CAP = 1000
@@ -228,6 +228,8 @@ def main():
     print(json.dumps({'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'queryCredits':remaining}),flush=True)
     report={'startedAt':started,'query':QUERY,'allServices':all_services,'allUniqueIPs':len(all_ips),'filteredServices':filtered_services,'filteredUniqueIPs':len(filtered),'observedIPUnion':len(set(all_ips)|set(filtered)),'filteredIPsAbsentFromEarlierAllSnapshot':len(set(filtered)-set(all_ips)),'ipFacetDrift':api.facet_drift,'cachedEndpoints':0,'cachedVersionByIP':{},'liveRequested':args.live,'liveStatus':'not_started','liveOutcomes':{},'limitations':['Unique IPs are not physical controllers; one address may represent multiple controllers.','Tagged service records are excluded; IPs with both tagged and untagged records and unidentified decoys can remain.','One landing-page request per eligible IP cannot establish whether the device is vulnerable or compromised.','No credentials, controller changes, redirects, retries, port scans, or JS execution are used.','A timeout or TLS error is not evidence that equipment is offline.','Only aggregates are retained; no raw IP addresses or page contents are persisted.']}
     report['IPsWithTaggedMatchingServices']=len(tagged)
+    report['populationPolicy'] = POLICY_ID
+    report['manuallyExcludedIPs'] = len(addresses)
     report['filteredIPsAlsoWithTaggedMatchingServices']=len(set(filtered)&set(tagged))
     report['taggedMatchingServices']=tagged_services
     # The inventory itself is complete and useful even if later metadata is unavailable.

@@ -44,7 +44,7 @@
     el('firmware-excluded').textContent=fmt(latestRow.honeypotServicesExcluded);
     const stale=Date.now()-Date.parse(latestRow.collectedAt)>48*60*60*1000;
     const state=dataset.status==='error'?' · latest collection failed; showing previous data':dataset.status==='awaiting_key'?' · credential unavailable':stale?' · refresh overdue':'';
-    el('firmware-status').textContent=`Observed ${readableDate(latestRow.date,true)} UTC · ${el('exclude-honeypots').checked?'tagged honeypots excluded':'all matching services, including tagged honeypots'}${state}`;
+    el('firmware-status').textContent=`Observed ${readableDate(latestRow.date,true)} UTC · ${el('exclude-honeypots').checked?'tagged honeypots excluded':'all matching services, including tagged honeypots'}${latestRow.manuallyExcludedIPs ? ' · two manually excluded IPs omitted' : ''}${state}`;
     el('firmware-legend').innerHTML=groups.map(g=>`<span><i style="background:${g.color}"></i>${g.label}</span>`).join('');
     const width=Math.max(300,el('firmware-chart').clientWidth), left=58, right=65, top=38, rowHeight=44;
     const height=top+rows.length*rowHeight+18, plot=width-left-right;

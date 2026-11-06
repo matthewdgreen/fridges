@@ -13,6 +13,7 @@ from scripts.collect_versions import BUILDS, infer, utcnow
 from scripts.measure_hosts import API
 from scripts.refresh_hosts import cardinality
 from scripts.refresh_versions import QUERY, fingerprint_query
+from scripts.measurement_scope import excluded_addresses
 
 
 PHRASES = [fingerprint_query('', stamp).strip() for stamp in BUILDS]
@@ -104,6 +105,24 @@ def aggregate_records(records):
                          'ipConcentration': concentration(per_ip.values()),
                          'asnConcentration': concentration(per_asn.values()),
                          'ports': dict(ports.most_common()), 'observedDates': dict(sorted(ages.items()))}
+    return report
+
+
+def history_report(api, addresses):
+    report = {'startedAt': utcnow(), 'method': 'Cached Shodan historical banners for the two excluded addresses only.',
+              'addresses': [], 'limitations': ['Oldest returned observation is not a first-seen date.',
+                  'Historical API coverage and record limits may omit earlier observations.',
+                  'Banner observations cannot reconstruct exact past search-index membership.']}
+    for address in sorted(addresses):
+        host = api.request('/shodan/host/' + address, history='true', minify='false')
+        rows = host.get('data', [])
+        dates = Counter(str(row.get('timestamp') or '')[:10] for row in rows
+            if 'storeview' in (row.get('http', {}).get('title') or '').lower()
+            and re.match(r'^\d{4}-\d{2}-\d{2}', str(row.get('timestamp') or '')))
+        report['addresses'].append({'returnedBanners': len(rows), 'storeViewObservedDates': dict(sorted(dates.items())),
+                                    'oldestReturnedStoreViewDate': min(dates) if dates else None,
+                                    'possibleRecordCap': len(rows) >= 1000})
+    report['completedAt'] = utcnow()
     return report
 
 
@@ -241,8 +260,12 @@ def main():
         raise SystemExit('Shodan credential is unavailable')
     try:
         public_key = os.environ.get('AUDIT_PUBLIC_KEY')
-        report = run(API(key), args.max_hosts,
-                     args.output.with_suffix('.enc') if public_key else None, public_key)
+        if os.environ.get('AUDIT_HISTORY_ONLY') == 'true':
+            report = history_report(API(key), excluded_addresses())
+            report['status'] = 'historical_observations_only'
+        else:
+            report = run(API(key), args.max_hosts,
+                         args.output.with_suffix('.enc') if public_key else None, public_key)
     except (RuntimeError, ValueError, TypeError, KeyError, OSError):
         raise SystemExit('Cached audit failed; response and credential details suppressed') from None
     args.output.parent.mkdir(parents=True, exist_ok=True)

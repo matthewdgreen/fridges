@@ -10,6 +10,10 @@ on:
         description: Maximum cached host lookups
         type: number
         default: 100
+      history_only:
+        description: Inspect historical cached banners for the two excluded addresses only
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -28,6 +32,8 @@ jobs:
           SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
           AUDIT_PUBLIC_KEY: ${{ inputs.public_key }}
           AUDIT_MAX_HOSTS: ${{ inputs.max_hosts }}
+          AUDIT_HISTORY_ONLY: ${{ inputs.history_only }}
+          EXCLUDED_STOREVIEW_IPS: ${{ secrets.EXCLUDED_STOREVIEW_IPS }}
         run: python -m scripts.audit_unknown_versions --output research/unknown-firmware-audit.json --max-hosts "$AUDIT_MAX_HOSTS"
       - uses: actions/upload-artifact@v4
         with:
