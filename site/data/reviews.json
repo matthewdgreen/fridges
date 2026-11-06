@@ -117,5 +117,28 @@
       "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/"
     ],
     "collectionHealth": "Scheduled run 41889124401 succeeded, including collection health and deployment. Service, IP and firmware collectors all report successful November 4 UTC observations. Firmware collection has recovered from its previously reported validation failures and now has two daily observations. No additional Shodan requests or device access were performed during this review."
+  },
+  {
+    "date": "2026-11-06",
+    "checkedAt": "2026-11-06T13:25:34Z",
+    "outcome": "No verified new major wave found. ENISA’s November 4 joint statement explicitly dates the latest wave to November 1–2; its national advisory collection supplies country guidance, not a new victim census. SAMSIK’s November 5 primary statement says it can neither confirm nor deny the groups’ involvement. Added that source and the ENISA guidance link without changing incident dates or attribution. Coolworld’s November 4 statement is unchanged. Health-ISAC’s November 4 bulletin and AHA’s November 5 reporting are follow-up guidance, not evidence of a later attack.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://samsik.dk/artikler/2026/11/samsik-opmaerksom-pa-pro-russiske-hackergrupper-tager-ansvar-for-cyberangreb/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://github.com/enisaeu/CNW/blob/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.aha.org/h-isac-green-reports/2026-11-04-h-isac-tlp-white-threat-bulletin-alleged-attack-french-blood-establishment-efs",
+      "https://www.aha.org/news/headline/2026-11-05-agencies-urge-immediate-review-internet-connected-refrigeration-and-cold-chain-systems"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.cisa.gov/sites/default/files/2026-11/joint-factsheet-usg-partners-urge-hardening-industrial-refrigeration-cold-chain-monitoring-systems-508c.pdf",
+        "reason": "HTTP 403; the linked federal bulletin could not be independently read. AHA’s summary was read but not treated as evidence of a new incident."
+      }
+    ],
+    "collectionHealth": "Scheduled run 42086947436 succeeded through collection, deployment and health checks. All three datasets report successful November 5 UTC samples. No new count requests or equipment access were performed during this news review."
   }
 ]
