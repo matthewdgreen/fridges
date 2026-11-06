@@ -33,5 +33,5 @@ class UnknownAuditTests(unittest.TestCase):
                 assert route == '/shodan/host/count'
                 return {'total': 0, 'facets': {'ip': []}}
         report = run(EmptyAPI(), 500)
-        self.assertEqual(report['status'], 'completed')
+        self.assertEqual(report['status'], 'bounded_sample')
         self.assertEqual(report['cachedCandidates']['all']['services'], 0)

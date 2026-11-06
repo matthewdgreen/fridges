@@ -37,7 +37,9 @@ def facet_summary(result):
     for key in ('ip', 'asn'):
         summary[key + 'Concentration'] = concentration([r['count'] for r in facets.get(key, [])])
     # ASN identities and IPs stay in memory; countries and port numbers are safe aggregates.
-    summary['ports'] = {str(r['value']): r['count'] for r in facets.get('port', [])
+    summary['returnedPortGroups'] = len(facets.get('port', []))
+    summary['returnedPortServiceSum'] = sum(r['count'] for r in facets.get('port', []))
+    summary['top20Ports'] = {str(r['value']): r['count'] for r in facets.get('port', [])[:20]
                         if type(r['value']) is int and 0 < r['value'] < 65536}
     summary['countries'] = {r['value']: r['count'] for r in facets.get('country', [])
                             if isinstance(r['value'], str) and re.fullmatch('[A-Z]{2}', r['value'])}
@@ -117,18 +119,28 @@ def run(api, max_hosts):
               'unknown': UNKNOWN_QUERY, 'unknownUntagged': UNKNOWN_QUERY + ' -tag:honeypot',
               'v431': fingerprint_query(QUERY, '2025-07-31T08:18:58Z'),
               'v431Untagged': fingerprint_query(QUERY + ' -tag:honeypot', '2025-07-31T08:18:58Z')}
-    unknown_ips = {}
+    unknown_ips, all_ips = {}, {}
     for name, query in scopes.items():
         result = api.request('/shodan/host/count', query=query, facets='ip:1000,asn:1000,port:1000,country:100')
         report['facetObservations'][name] = facet_summary(result)
         if name == 'unknown':
             unknown_ips = {str(ipaddress.ip_address(r['value'])): r['count']
                            for r in result.get('facets', {}).get('ip', [])}
+        if name == 'allServices':
+            all_ips = {str(ipaddress.ip_address(r['value'])): r['count']
+                       for r in result.get('facets', {}).get('ip', [])}
         print('Completed aggregate scope:', name, flush=True)
     report['unknownFacetComplete'] = sum(unknown_ips.values()) == report['facetObservations']['unknown']['services']
-    targets = sorted(unknown_ips, key=lambda address: (-unknown_ips[address], address))[:max_hosts]
+    # Shodan's negative text terms need not behave as an exact phrase complement.
+    # Always inspect high-multiplicity addresses, even if the complement is empty.
+    combined_ips = dict(all_ips)
+    combined_ips.update(unknown_ips)
+    targets = sorted(combined_ips, key=lambda address: (address not in unknown_ips, -combined_ips[address], address))[:max_hosts]
+    report['hostSelection'] = 'Unknown-query IPs first, then highest-multiplicity all-service IPs; bounded sample.'
     report['hostsPlanned'] = len(targets)
+    report['selectedAdvertisedServices'] = sum(all_ips.get(address, 0) for address in targets)
     records, seen = [], set()
+    banner_versions, banner_ip_counts, host_tagged_counts = Counter(), Counter(), Counter()
     for index, address in enumerate(targets):
         try:
             host = api.request('/shodan/host/' + address, history='false', minify='false')
@@ -137,9 +149,16 @@ def run(api, max_hosts):
             continue
         for row in host.get('data', []):
             identity = (address, row.get('port'), row.get('transport', 'tcp'))
-            if identity in seen or type(row.get('port')) is not int or not is_candidate(row):
+            title = re.sub('[^a-z0-9]+', ' ', (row.get('http', {}).get('title') or '').lower())
+            if identity in seen or type(row.get('port')) is not int or 'danfoss' not in title or 'storeview' not in title:
                 continue
             seen.add(identity)
+            banner_versions[infer(row)[0]] += 1
+            banner_ip_counts[address] += 1
+            if 'honeypot' in (host.get('tags') or []):
+                host_tagged_counts[address] += 1
+            if not is_candidate(row):
+                continue
             reason, stamp = classify(row)
             asn = row.get('asn') or host.get('asn')
             records.append({'ip': address, 'port': row['port'], 'reason': reason, 'stamp': stamp,
@@ -149,8 +168,12 @@ def run(api, max_hosts):
         if (index + 1) % 20 == 0:
             print('Cached hosts processed:', index + 1, 'of', len(targets), flush=True)
     report['cachedCandidates'] = aggregate_records(records)
+    report['inspectedStoreViewBanners'] = sum(banner_versions.values())
+    report['inspectedVersions'] = dict(banner_versions)
+    report['inspectedIPConcentration'] = concentration(banner_ip_counts.values())
+    report['hostTaggedStoreViewBanners'] = sum(host_tagged_counts.values())
     report['finalUnknownTotal'] = api.request('/shodan/host/count', query=UNKNOWN_QUERY)['total']
-    report['status'] = 'completed' if report['unknownFacetComplete'] and len(targets) == len(unknown_ips) and not report['hostLookupFailures'] else 'partial'
+    report['status'] = 'bounded_sample' if not report['hostLookupFailures'] else 'partial'
     report['completedAt'] = utcnow()
     return report
 
@@ -158,7 +181,7 @@ def run(api, max_hosts):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--max-hosts', type=int, default=500)
+    parser.add_argument('--max-hosts', type=int, default=100)
     args = parser.parse_args()
     if not 0 <= args.max_hosts <= 500:
         raise SystemExit('Maximum host budget is 500')
