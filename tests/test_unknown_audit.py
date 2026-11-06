@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from scripts.audit_unknown_versions import aggregate_records, classify, history_report, is_candidate, run
+from scripts.audit_unknown_versions import aggregate_records, cached_hosts, classify, history_report, is_candidate, run
 
 
 class UnknownAuditTests(unittest.TestCase):
@@ -47,3 +47,15 @@ class UnknownAuditTests(unittest.TestCase):
         report = history_report(HistoryAPI(), {'192.0.2.10'})
         self.assertEqual(report['addresses'][0]['oldestReturnedStoreViewDate'], '2026-10-09')
         self.assertNotIn('192.0.2.10', json.dumps(report))
+
+    def test_cached_lookup_failures_preserve_other_results(self):
+        class CachedAPI:
+            def request(self, route, **params):
+                assert route.startswith('/shodan/host/')
+                assert params == {'history': 'false', 'minify': 'false'}
+                if route.endswith('.11'):
+                    raise RuntimeError('Unavailable')
+                return {'data': []}
+        results = dict(cached_hosts(CachedAPI(), ['192.0.2.10', '192.0.2.11'], workers=2))
+        self.assertEqual(results['192.0.2.10'], {'data': []})
+        self.assertIsNone(results['192.0.2.11'])

@@ -15,6 +15,7 @@ import re
 import socket
 import ssl
 import time
+import threading
 from collections import Counter
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -40,17 +41,19 @@ class API:
         self.search_calls = 0
         self.last = 0
         self.facet_drift = []
+        self.rate_lock = threading.Lock()
 
     def request(self, route, **params):
         assert route in ('/api-info', '/shodan/host/count', '/shodan/host/search') or re.fullmatch(r'/shodan/host/[0-9a-fA-F:.]+', route)
-        time.sleep(max(0, 1.05 - (time.monotonic()-self.last)))
         params['key'] = self.key
         request = Request('https://api.shodan.io'+route+'?'+urlencode(params), headers={'User-Agent':'AreTheFridgesOK-cached-inventory/1.0'})
         for attempt in range(3):
             try:
-                self.calls += 1
-                self.search_calls += route == '/shodan/host/search'
-                self.last = time.monotonic()
+                with self.rate_lock:
+                    time.sleep(max(0, 1.05 - (time.monotonic()-self.last)))
+                    self.calls += 1
+                    self.search_calls += route == '/shodan/host/search'
+                    self.last = time.monotonic()
                 with self.opener.open(request, timeout=20) as response:
                     result = json.load(response)
                 if not isinstance(result, dict) or 'error' in result:

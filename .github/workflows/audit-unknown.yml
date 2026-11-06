@@ -36,6 +36,7 @@ jobs:
           EXCLUDED_STOREVIEW_IPS: ${{ secrets.EXCLUDED_STOREVIEW_IPS }}
         run: python -m scripts.audit_unknown_versions --output research/unknown-firmware-audit.json --max-hosts "$AUDIT_MAX_HOSTS"
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: unknown-firmware-aggregates
           path: |

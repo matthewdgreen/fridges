@@ -1,5 +1,6 @@
 """Manual cached-data audit. Only Shodan is contacted; only aggregates are saved."""
 import argparse
+import concurrent.futures
 import ipaddress
 import json
 import os
@@ -131,7 +132,31 @@ def history_report(api, addresses):
     return report
 
 
-def run(api, max_hosts, private_output=None, public_key=None):
+def cached_hosts(api, targets, workers=6):
+    """Bound in-flight cached lookups; API's shared lock paces every request."""
+    addresses = iter(targets)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+        pending = {}
+        def submit():
+            address = next(addresses, None)
+            if address is not None:
+                pending[pool.submit(api.request, '/shodan/host/' + address,
+                                    history='false', minify='false')] = address
+        for _ in range(workers):
+            submit()
+        while pending:
+            done, _ = concurrent.futures.wait(pending, return_when=concurrent.futures.FIRST_COMPLETED)
+            for future in done:
+                address = pending.pop(future)
+                try:
+                    host = future.result()
+                except RuntimeError:
+                    host = None
+                yield address, host
+                submit()
+
+
+def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
     report = {'schemaVersion': 1, 'startedAt': utcnow(), 'status': 'collecting',
               'method': 'Shodan cached count facets and host metadata only; no search or scan requests.',
               'query': QUERY, 'facetObservations': {}, 'hostLookupFailures': 0,
@@ -185,14 +210,14 @@ def run(api, max_hosts, private_output=None, public_key=None):
     report['hostSelection'] = 'Positive per-IP residuals plus the two busiest all-service IPs; bounded by host budget.'
     report['hostsPlanned'] = len(targets)
     report['selectedAdvertisedServices'] = sum(all_ips.get(address, 0) for address in targets)
+    if checkpoint:
+        checkpoint(report)
     records, seen = [], set()
     banner_versions, banner_ip_counts, host_tagged_counts = Counter(), Counter(), Counter()
     busiest = sorted(all_ips, key=all_ips.get, reverse=True)[:2]
     private_addresses, busiest_details = [], []
-    for index, address in enumerate(targets):
-        try:
-            host = api.request('/shodan/host/' + address, history='false', minify='false')
-        except RuntimeError:
+    for index, (address, host) in enumerate(cached_hosts(api, targets)):
+        if host is None:
             report['hostLookupFailures'] += 1
             continue
         if address in busiest:
@@ -229,6 +254,10 @@ def run(api, max_hosts, private_output=None, public_key=None):
                             'date': str(row.get('timestamp') or '')[:10]})
         if (index + 1) % 20 == 0:
             print('Cached hosts processed:', index + 1, 'of', len(targets), flush=True)
+            if checkpoint:
+                report['cachedCandidates'] = aggregate_records(records)
+                report['hostsProcessed'] = index + 1
+                checkpoint(report)
     report['cachedCandidates'] = aggregate_records(records)
     report['inspectedStoreViewBanners'] = sum(banner_versions.values())
     report['inspectedVersions'] = dict(banner_versions)
@@ -245,7 +274,8 @@ def run(api, max_hosts, private_output=None, public_key=None):
                  '-pkeyopt', 'rsa_padding_mode:oaep', '-pkeyopt', 'rsa_oaep_md:sha256'],
                 input=json.dumps({'addresses': private_addresses}).encode(),
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout)
-    report['finalPopulationTotal'] = api.request('/shodan/host/count', query=QUERY)['total']
+    report['finalPopulationTotal'] = api.request('/shodan/host/count', query=QUERY, facets='ip:1000')['total']
+    report['inventoryPartitionDrift'] = getattr(api, 'facet_drift', [])
     report['populationChangedDuringAudit'] = report['finalPopulationTotal'] != sum(all_ips.values())
     report['candidateIPsPlanned'] = len(combined_ips)
     report['status'] = 'bounded_sample' if not report['hostLookupFailures'] else 'partial'
@@ -264,13 +294,16 @@ def main():
     if not key:
         raise SystemExit('Shodan credential is unavailable')
     try:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        def checkpoint(report):
+            args.output.write_text(json.dumps(report, indent=2) + '\n')
         public_key = os.environ.get('AUDIT_PUBLIC_KEY')
         if os.environ.get('AUDIT_HISTORY_ONLY') == 'true':
             report = history_report(API(key), excluded_addresses())
             report['status'] = 'historical_observations_only'
         else:
             report = run(API(key), args.max_hosts,
-                         args.output.with_suffix('.enc') if public_key else None, public_key)
+                         args.output.with_suffix('.enc') if public_key else None, public_key, checkpoint)
     except (RuntimeError, ValueError, TypeError, KeyError, OSError):
         raise SystemExit('Cached audit failed; response and credential details suppressed') from None
     args.output.parent.mkdir(parents=True, exist_ok=True)
