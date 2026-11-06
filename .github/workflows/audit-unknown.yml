@@ -1,6 +1,15 @@
 name: Audit cached unknown firmware
 on:
   workflow_dispatch:
+    inputs:
+      public_key:
+        description: Optional public key for encrypting the two busiest addresses
+        type: string
+        required: false
+      max_hosts:
+        description: Maximum cached host lookups
+        type: number
+        default: 100
 permissions:
   contents: read
 jobs:
@@ -17,9 +26,13 @@ jobs:
       - name: Inspect cached Shodan metadata
         env:
           SHODAN_API_KEY: ${{ secrets.SHODAN_API_KEY }}
-        run: python -m scripts.audit_unknown_versions --output research/unknown-firmware-audit.json
+          AUDIT_PUBLIC_KEY: ${{ inputs.public_key }}
+          AUDIT_MAX_HOSTS: ${{ inputs.max_hosts }}
+        run: python -m scripts.audit_unknown_versions --output research/unknown-firmware-audit.json --max-hosts "$AUDIT_MAX_HOSTS"
       - uses: actions/upload-artifact@v4
         with:
           name: unknown-firmware-aggregates
-          path: research/unknown-firmware-audit.json
+          path: |
+            research/unknown-firmware-audit.json
+            research/unknown-firmware-audit.enc
           retention-days: 7

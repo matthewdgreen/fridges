@@ -4,6 +4,8 @@ import ipaddress
 import json
 import os
 import re
+import subprocess
+import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -105,7 +107,7 @@ def aggregate_records(records):
     return report
 
 
-def run(api, max_hosts):
+def run(api, max_hosts, private_output=None, public_key=None):
     report = {'schemaVersion': 1, 'startedAt': utcnow(), 'status': 'collecting',
               'method': 'Shodan cached count facets and host metadata only; no search or scan requests.',
               'query': UNKNOWN_QUERY, 'facetObservations': {}, 'hostLookupFailures': 0,
@@ -141,12 +143,24 @@ def run(api, max_hosts):
     report['selectedAdvertisedServices'] = sum(all_ips.get(address, 0) for address in targets)
     records, seen = [], set()
     banner_versions, banner_ip_counts, host_tagged_counts = Counter(), Counter(), Counter()
+    busiest = sorted(all_ips, key=all_ips.get, reverse=True)[:2]
+    private_addresses, busiest_details = [], []
     for index, address in enumerate(targets):
         try:
             host = api.request('/shodan/host/' + address, history='false', minify='false')
         except RuntimeError:
             report['hostLookupFailures'] += 1
             continue
+        if address in busiest:
+            private_addresses.append(address)
+            detail = {'advertisedServices': all_ips[address], 'cachedServices': len(host.get('data', [])),
+                      'cachedPorts': len(set(r.get('port') for r in host.get('data', []))),
+                      'hostTaggedHoneypot': 'honeypot' in (host.get('tags') or []),
+                      'storeViewVersions': dict(Counter(infer(r)[0] for r in host.get('data', [])
+                                                       if 'storeview' in (r.get('http', {}).get('title') or '').lower())),
+                      'observedDates': dict(Counter(str(r.get('timestamp') or '')[:10] for r in host.get('data', [])
+                                                   if re.match(r'^\d{4}-\d{2}-\d{2}', str(r.get('timestamp') or ''))))}
+            busiest_details.append(detail)
         for row in host.get('data', []):
             identity = (address, row.get('port'), row.get('transport', 'tcp'))
             title = re.sub('[^a-z0-9]+', ' ', (row.get('http', {}).get('title') or '').lower())
@@ -172,6 +186,17 @@ def run(api, max_hosts):
     report['inspectedVersions'] = dict(banner_versions)
     report['inspectedIPConcentration'] = concentration(banner_ip_counts.values())
     report['hostTaggedStoreViewBanners'] = sum(host_tagged_counts.values())
+    report['busiestAddresses'] = busiest_details
+    if private_output and public_key:
+        # Only an encrypted address list leaves the runner; no plaintext artifact/log.
+        with tempfile.TemporaryDirectory() as directory:
+            key_path = Path(directory) / 'public.pem'
+            key_path.write_text(public_key)
+            private_output.write_bytes(subprocess.run(
+                ['openssl', 'pkeyutl', '-encrypt', '-pubin', '-inkey', str(key_path),
+                 '-pkeyopt', 'rsa_padding_mode:oaep', '-pkeyopt', 'rsa_oaep_md:sha256'],
+                input=json.dumps({'addresses': private_addresses}).encode(),
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True).stdout)
     report['finalUnknownTotal'] = api.request('/shodan/host/count', query=UNKNOWN_QUERY)['total']
     report['status'] = 'bounded_sample' if not report['hostLookupFailures'] else 'partial'
     report['completedAt'] = utcnow()
@@ -189,7 +214,9 @@ def main():
     if not key:
         raise SystemExit('Shodan credential is unavailable')
     try:
-        report = run(API(key), args.max_hosts)
+        public_key = os.environ.get('AUDIT_PUBLIC_KEY')
+        report = run(API(key), args.max_hosts,
+                     args.output.with_suffix('.enc') if public_key else None, public_key)
     except (RuntimeError, ValueError, TypeError, KeyError, OSError):
         raise SystemExit('Cached audit failed; response and credential details suppressed') from None
     args.output.parent.mkdir(parents=True, exist_ok=True)
