@@ -11,7 +11,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from scripts.collect_versions import BUILDS, infer, utcnow
-from scripts.measure_hosts import API
+from scripts.measure_hosts import API, CachedResponseLimit
 from scripts.refresh_hosts import cardinality
 from scripts.refresh_versions import QUERY, fingerprint_query
 from scripts.measurement_scope import excluded_addresses
@@ -150,9 +150,12 @@ def cached_hosts(api, targets, workers=6):
                 address = pending.pop(future)
                 try:
                     host = future.result()
+                    failure = None
+                except CachedResponseLimit as error:
+                    host, failure = None, str(error)
                 except RuntimeError:
-                    host = None
-                yield address, host
+                    host, failure = None, 'api_or_response_failure'
+                yield address, host, failure
                 submit()
 
 
@@ -209,6 +212,7 @@ def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
     targets = sorted(combined_ips, key=lambda address: (-combined_ips[address], address))[:max_hosts]
     report['hostSelection'] = 'Positive per-IP residuals plus the two busiest all-service IPs; bounded by host budget.'
     report['hostsPlanned'] = len(targets)
+    print('Cached host lookup budget:', len(targets), flush=True)
     report['selectedAdvertisedServices'] = sum(all_ips.get(address, 0) for address in targets)
     if checkpoint:
         checkpoint(report)
@@ -216,9 +220,11 @@ def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
     banner_versions, banner_ip_counts, host_tagged_counts = Counter(), Counter(), Counter()
     busiest = sorted(all_ips, key=all_ips.get, reverse=True)[:2]
     private_addresses, busiest_details = [], []
-    for index, (address, host) in enumerate(cached_hosts(api, targets)):
+    failures = Counter()
+    for index, (address, host, failure) in enumerate(cached_hosts(api, targets)):
         if host is None:
             report['hostLookupFailures'] += 1
+            failures[failure] += 1
             continue
         if address in busiest:
             private_addresses.append(address)
@@ -259,6 +265,7 @@ def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
                 report['hostsProcessed'] = index + 1
                 checkpoint(report)
     report['cachedCandidates'] = aggregate_records(records)
+    report['hostLookupFailureReasons'] = dict(failures)
     report['inspectedStoreViewBanners'] = sum(banner_versions.values())
     report['inspectedVersions'] = dict(banner_versions)
     report['inspectedIPConcentration'] = concentration(banner_ip_counts.values())

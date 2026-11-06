@@ -56,6 +56,6 @@ class UnknownAuditTests(unittest.TestCase):
                 if route.endswith('.11'):
                     raise RuntimeError('Unavailable')
                 return {'data': []}
-        results = dict(cached_hosts(CachedAPI(), ['192.0.2.10', '192.0.2.11'], workers=2))
+        results = {address: host for address, host, failure in cached_hosts(CachedAPI(), ['192.0.2.10', '192.0.2.11'], workers=2)}
         self.assertEqual(results['192.0.2.10'], {'data': []})
         self.assertIsNone(results['192.0.2.11'])

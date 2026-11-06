@@ -33,6 +33,25 @@ class NoRedirect(HTTPRedirectHandler):
         return None
 
 
+class CachedResponseLimit(RuntimeError):
+    pass
+
+
+def read_cached_json(response, seconds=10, max_bytes=16*1024*1024):
+    deadline = time.monotonic() + seconds
+    chunks, size = [], 0
+    while True:
+        if time.monotonic() >= deadline:
+            raise CachedResponseLimit('cached_response_time_limit')
+        chunk = response.read1(min(65536, max_bytes + 1 - size))
+        if not chunk:
+            return json.loads(b''.join(chunks))
+        chunks.append(chunk)
+        size += len(chunk)
+        if size > max_bytes:
+            raise CachedResponseLimit('cached_response_size_limit')
+
+
 class API:
     def __init__(self, key):
         self.key = key
@@ -45,22 +64,24 @@ class API:
 
     def request(self, route, **params):
         assert route in ('/api-info', '/shodan/host/count', '/shodan/host/search') or re.fullmatch(r'/shodan/host/[0-9a-fA-F:.]+', route)
+        cached_host = bool(re.fullmatch(r'/shodan/host/[0-9a-fA-F:.]+', route))
         params['key'] = self.key
         request = Request('https://api.shodan.io'+route+'?'+urlencode(params), headers={'User-Agent':'AreTheFridgesOK-cached-inventory/1.0'})
-        for attempt in range(3):
+        attempts = 1 if cached_host else 3
+        for attempt in range(attempts):
             try:
                 with self.rate_lock:
                     time.sleep(max(0, 1.05 - (time.monotonic()-self.last)))
                     self.calls += 1
                     self.search_calls += route == '/shodan/host/search'
                     self.last = time.monotonic()
-                with self.opener.open(request, timeout=20) as response:
-                    result = json.load(response)
+                with self.opener.open(request, timeout=8 if cached_host else 20) as response:
+                    result = read_cached_json(response) if cached_host else json.load(response)
                 if not isinstance(result, dict) or 'error' in result:
                     raise RuntimeError('Invalid Shodan response')
                 return result
             except HTTPError as error:
-                if (error.code == 429 or error.code >= 500) and attempt < 2:
+                if (error.code == 429 or error.code >= 500) and attempt < attempts - 1:
                     time.sleep(2**(attempt+1))
                     continue
                 try:
@@ -70,7 +91,7 @@ class API:
                     detail='details suppressed'
                 raise RuntimeError(f'Shodan HTTP {error.code}: {detail}') from None
             except (URLError, TimeoutError, OSError, ValueError):
-                if attempt < 2:
+                if attempt < attempts - 1:
                     time.sleep(2**(attempt+1))
                     continue
                 raise RuntimeError('Shodan request failed; details suppressed') from None
