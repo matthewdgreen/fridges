@@ -2,8 +2,8 @@
   "query": "http.title:\"Danfoss StoreView\"",
   "metric": "services",
   "scope": "worldwide",
-  "lastAttemptAt": "2026-11-06T17:56:36Z",
-  "lastSuccessAt": "2026-11-06T17:56:36Z",
+  "lastAttemptAt": "2026-11-06T21:18:59Z",
+  "lastSuccessAt": "2026-11-06T21:18:59Z",
   "status": "ok",
   "history": [
     {
@@ -80,7 +80,8 @@
         "PA": 1,
         "PR": 1,
         "TH": 1
-      }
+      },
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-04",
@@ -156,7 +157,8 @@
         "LB": 1,
         "PA": 1,
         "PR": 1
-      }
+      },
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-05",
@@ -234,50 +236,51 @@
         "LB": 1,
         "PA": 1,
         "PR": 1
-      }
+      },
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-06",
-      "collectedAt": "2026-11-06T17:56:36Z",
-      "count": 8460,
+      "collectedAt": "2026-11-06T21:18:59Z",
+      "count": 6470,
       "countries": {
-        "FR": 1426,
-        "US": 1192,
-        "NL": 1157,
-        "ZA": 1101,
-        "DE": 306,
-        "AU": 234,
-        "IN": 217,
-        "SG": 217,
-        "JP": 207,
-        "PL": 188,
+        "FR": 1433,
+        "US": 1194,
+        "DE": 310,
+        "AU": 236,
+        "SG": 229,
+        "IN": 223,
+        "JP": 209,
+        "PL": 189,
+        "HK": 186,
         "CA": 181,
-        "GB": 181,
-        "HK": 169,
-        "CN": 148,
+        "GB": 179,
+        "CN": 163,
+        "NL": 152,
         "ES": 142,
+        "IT": 110,
         "QA": 109,
-        "IT": 108,
         "BE": 105,
-        "SE": 102,
+        "SE": 105,
         "BR": 96,
-        "KR": 95,
+        "KR": 96,
         "CH": 88,
         "IL": 66,
         "RO": 63,
         "PT": 59,
         "DK": 54,
+        "LV": 52,
         "NO": 52,
         "ID": 40,
-        "LV": 40,
         "TR": 40,
         "CL": 34,
+        "ZA": 32,
+        "AE": 30,
         "IE": 30,
-        "AE": 29,
         "KZ": 23,
         "TW": 21,
         "FI": 15,
-        "MY": 15,
+        "MY": 14,
         "MX": 12,
         "UA": 9,
         "IS": 7,
@@ -315,7 +318,16 @@
         "OM": 1,
         "PA": 1,
         "PR": 1
-      }
+      },
+      "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
+      "manuallyExcludedIPs": 2
     }
-  ]
+  ],
+  "populationPolicy": {
+    "id": "exclude-two-high-multiplicity-ips-2026-11-06",
+    "effectiveDate": "2026-11-06",
+    "excludedIPs": 2,
+    "reason": "Two manually identified high-multiplicity addresses; suspected emulation.",
+    "historicalCorrection": "Earlier observations are preserved. Exact per-IP contributions were not retained."
+  }
 }

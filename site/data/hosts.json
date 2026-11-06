@@ -5,8 +5,8 @@
   "metric": "unique_ip_addresses",
   "scope": "worldwide",
   "status": "ok",
-  "lastAttemptAt": "2026-11-06T17:56:59Z",
-  "lastSuccessAt": "2026-11-06T17:56:59Z",
+  "lastAttemptAt": "2026-11-06T21:18:59Z",
+  "lastSuccessAt": "2026-11-06T21:18:59Z",
   "history": [
     {
       "date": "2026-11-03",
@@ -25,7 +25,8 @@
         "facetRows": 1000,
         "facetServices": 3589
       },
-      "taggedServicesExcluded": 1923
+      "taggedServicesExcluded": 1923,
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-04",
@@ -44,7 +45,8 @@
         "facetRows": 1000,
         "facetServices": 3642
       },
-      "taggedServicesExcluded": 1986
+      "taggedServicesExcluded": 1986,
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-05",
@@ -63,26 +65,36 @@
         "facetRows": 1000,
         "facetServices": 3956
       },
-      "taggedServicesExcluded": 2118
+      "taggedServicesExcluded": 2118,
+      "populationPolicy": "original-title-query"
     },
     {
       "date": "2026-11-06",
-      "collectedAt": "2026-11-06T17:56:59Z",
+      "collectedAt": "2026-11-06T21:18:59Z",
       "all": {
-        "services": 8460,
-        "uniqueIPs": 2379,
+        "services": 6470,
+        "uniqueIPs": 2384,
         "cardinalityMethod": "singleton-tail",
         "facetRows": 1000,
-        "facetServices": 7081
+        "facetServices": 5086
       },
       "excludingTaggedServices": {
-        "services": 6274,
-        "uniqueIPs": 2182,
+        "services": 4279,
+        "uniqueIPs": 2191,
         "cardinalityMethod": "singleton-tail",
         "facetRows": 1000,
-        "facetServices": 5092
+        "facetServices": 3088
       },
-      "taggedServicesExcluded": 2186
+      "taggedServicesExcluded": 2191,
+      "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
+      "manuallyExcludedIPs": 2
     }
-  ]
+  ],
+  "populationPolicy": {
+    "id": "exclude-two-high-multiplicity-ips-2026-11-06",
+    "effectiveDate": "2026-11-06",
+    "excludedIPs": 2,
+    "reason": "Two manually identified high-multiplicity addresses; suspected emulation.",
+    "historicalCorrection": "Earlier observations are preserved. Exact per-IP contributions were not retained."
+  }
 }
