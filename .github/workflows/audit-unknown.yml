@@ -14,6 +14,10 @@ on:
         description: Inspect historical cached banners for the two excluded addresses only
         type: boolean
         default: false
+      search_only:
+        description: Use at most 15 existing search credits for narrow cached banner retrieval
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -33,6 +37,7 @@ jobs:
           AUDIT_PUBLIC_KEY: ${{ inputs.public_key }}
           AUDIT_MAX_HOSTS: ${{ inputs.max_hosts }}
           AUDIT_HISTORY_ONLY: ${{ inputs.history_only }}
+          AUDIT_SEARCH_ONLY: ${{ inputs.search_only }}
           EXCLUDED_STOREVIEW_IPS: ${{ secrets.EXCLUDED_STOREVIEW_IPS }}
         run: python -m scripts.audit_unknown_versions --output research/unknown-firmware-audit.json --max-hosts "$AUDIT_MAX_HOSTS"
       - uses: actions/upload-artifact@v4

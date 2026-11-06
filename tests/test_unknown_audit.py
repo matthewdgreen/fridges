@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from scripts.audit_unknown_versions import aggregate_records, cached_hosts, classify, history_report, is_candidate, run
+from scripts.audit_unknown_versions import aggregate_records, cached_hosts, classify, filtered_search, history_report, is_candidate, run
 
 
 class UnknownAuditTests(unittest.TestCase):
@@ -59,3 +59,13 @@ class UnknownAuditTests(unittest.TestCase):
         results = {address: host for address, host, failure in cached_hosts(CachedAPI(), ['192.0.2.10', '192.0.2.11'], workers=2)}
         self.assertEqual(results['192.0.2.10'], {'data': []})
         self.assertIsNone(results['192.0.2.11'])
+
+    def test_no_search_when_credits_are_unavailable(self):
+        class NoCredits:
+            def request(self, route, **params):
+                assert route == '/api-info'
+                return {'query_credits': 0}
+        report, candidates = filtered_search(NoCredits(), {'192.0.2.10': 1}, {'192.0.2.10': 2})
+        self.assertEqual(report['status'], 'insufficient_query_credits')
+        self.assertIsNone(candidates)
+        self.assertNotIn('192.0.2.10', json.dumps(report))

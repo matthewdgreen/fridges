@@ -3,6 +3,7 @@ import argparse
 import concurrent.futures
 import ipaddress
 import json
+import math
 import os
 import re
 import subprocess
@@ -159,7 +160,59 @@ def cached_hosts(api, targets, workers=6):
                 submit()
 
 
-def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
+def filtered_search(api, unknown_ips, all_ips, max_pages=15):
+    """Optional small search-credit fallback; never stores address-bearing queries."""
+    addresses = sorted(unknown_ips)
+    chunks = [addresses[index:index+50] for index in range(0, len(addresses), 50)]
+    estimate = sum(math.ceil(sum(all_ips[address] for address in chunk)/100) for chunk in chunks)
+    credits = api.request('/api-info').get('query_credits')
+    report = {'estimatedPages': estimate, 'pageBudget': max_pages, 'pagesFetched': 0,
+              'scope': 'Cached title-matching banners at positive-residual IPs only.'}
+    if type(credits) is not int or credits < 0:
+        return dict(report, status='credit_balance_unavailable'), None
+    report['queryCreditsAvailable'] = credits
+    if credits < estimate:
+        return dict(report, status='insufficient_query_credits'), None
+    if estimate > max_pages:
+        return dict(report, status='configured_page_budget_exceeded'), None
+    records, seen = [], set()
+    reports = []
+    for index, chunk in enumerate(chunks):
+        query = QUERY + ' ip:' + ','.join(chunk)
+        advertised = api.request('/shodan/host/count', query=query)['total']
+        needed = math.ceil(advertised/100)
+        if report['pagesFetched'] + needed > min(credits, max_pages):
+            report['status'] = 'population_changed_beyond_page_budget'
+            break
+        detail = {'partition': index + 1, 'advertisedServices': advertised, 'retrievedServices': 0}
+        reports.append(detail)
+        for page in range(1, needed+1):
+            result = api.request('/shodan/host/search', query=query, page=page, minify='true',
+                fields='ip_str,ipv6,port,transport,http.title,http.headers,data,tags,timestamp,asn')
+            report['pagesFetched'] += 1
+            rows = result.get('matches')
+            if not isinstance(rows, list):
+                raise RuntimeError('Invalid cached search response')
+            detail['retrievedServices'] += len(rows)
+            for row in rows:
+                address = str(ipaddress.ip_address(row.get('ip_str') or row.get('ipv6')))
+                identity = (address, row.get('port'), row.get('transport', 'tcp'))
+                if address not in unknown_ips or identity in seen or not is_candidate(row):
+                    continue
+                seen.add(identity)
+                reason, stamp = classify(row)
+                asn = row.get('asn')
+                records.append({'ip': address, 'port': row.get('port'), 'reason': reason, 'stamp': stamp,
+                    'tagged': 'honeypot' in (row.get('tags') or []),
+                    'asn': asn if isinstance(asn, str) and re.fullmatch(r'AS\d+', asn) else None,
+                    'date': str(row.get('timestamp') or '')[:10]})
+    report.setdefault('status', 'completed')
+    report['partitions'] = reports
+    report['coverageGaps'] = any(row['advertisedServices'] != row['retrievedServices'] for row in reports)
+    return report, aggregate_records(records)
+
+
+def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None, search_only=False):
     report = {'schemaVersion': 1, 'startedAt': utcnow(), 'status': 'collecting',
               'method': 'Shodan cached count facets and host metadata only; no search or scan requests.',
               'query': QUERY, 'facetObservations': {}, 'hostLookupFailures': 0,
@@ -206,6 +259,13 @@ def run(api, max_hosts, private_output=None, public_key=None, checkpoint=None):
         'negativeResidualIPs': sum(mapped_ips[address] > count for address, count in all_ips.items()),
         'mappedIPsAbsentFromPopulation': len(set(mapped_ips) - set(all_ips)),
         'residualIPConcentration': concentration(unknown_ips.values()), 'buildCounts': dict(build_counts)}
+    if search_only:
+        report['filteredSearch'], candidates = filtered_search(api, unknown_ips, all_ips)
+        if candidates is not None:
+            report['cachedCandidates'] = candidates
+        report['status'] = report['filteredSearch']['status']
+        report['completedAt'] = utcnow()
+        return report
     combined_ips = dict(unknown_ips)
     for address in sorted(all_ips, key=all_ips.get, reverse=True)[:2]:
         combined_ips.setdefault(address, 0)
@@ -310,7 +370,8 @@ def main():
             report['status'] = 'historical_observations_only'
         else:
             report = run(API(key), args.max_hosts,
-                         args.output.with_suffix('.enc') if public_key else None, public_key, checkpoint)
+                         args.output.with_suffix('.enc') if public_key else None, public_key, checkpoint,
+                         search_only=os.environ.get('AUDIT_SEARCH_ONLY') == 'true')
     except (RuntimeError, ValueError, TypeError, KeyError, OSError):
         raise SystemExit('Cached audit failed; response and credential details suppressed') from None
     args.output.parent.mkdir(parents=True, exist_ok=True)
