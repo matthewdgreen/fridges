@@ -73,7 +73,7 @@
     "reportedAt": "2026-11-02",
     "location": "Across Europe",
     "title": "Another wave. More spoiled food.",
-    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-up reports described contemporaneous incidents in Germany, Portugal and Sicily; connections between individual cases remain under investigation. Some affected systems used Danfoss controllers. NoName057(16) and Z-Pentest reportedly claimed responsibility on November 4, but those claims have not been independently verified; a common perpetrator across the waves remains unconfirmed. Greece’s cybersecurity authority acknowledged domestic food-retail attacks on November 3 without giving incident dates or establishing a link to this wave. These follow-ups do not establish a distinct new wave.",
+    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-ups described contemporaneous incidents in Germany, Portugal and Sicily; some affected systems used Danfoss controllers. Greece acknowledged domestic food-retail attacks on November 3 without incident dates or an established link to this wave. Finland reported suspected domestic incidents on November 3 and refrigeration-related damage on November 6, without incident dates or controller vendors. Separately, Ransom-ISAC’s November 6 analysis of an anonymized November 2 Copeland XWEB log describes configuration changes across 31 listed devices; actual temperatures, stock loss and a connection to other attacks remain unconfirmed. Claims of responsibility by NoName057(16) and Z-Pentest were reported on November 4 and remain independently unverified. A common perpetrator is unconfirmed, and these follow-ups do not establish a distinct new wave.",
     "classification": "Reported attack wave",
     "major": true,
     "sources": [
@@ -108,6 +108,18 @@
       {
         "name": "SAMSIK · 5 Nov attribution remains unconfirmed",
         "url": "https://samsik.dk/artikler/2026/11/samsik-opmaerksom-pa-pro-russiske-hackergrupper-tager-ansvar-for-cyberangreb/"
+      },
+      {
+        "name": "Traficom · 3 Nov suspected Finnish incidents",
+        "url": "https://www.kyberturvallisuuskeskus.fi/fi/uutiset/iot-ja-ot-ymparistojen-tietoturva-alkaa-laitteiden-suojaamisesta"
+      },
+      {
+        "name": "Traficom · 6 Nov domestic damage report",
+        "url": "https://kyberturvallisuuskeskus.fi/fi/uutiset/kyberturvallisuuskeskuksen-viikkokatsaus-452026"
+      },
+      {
+        "name": "Ransom-ISAC · 6 Nov anonymized incident-log analysis",
+        "url": "https://ransom-isac.org/blog/the-copeland-incident/"
       }
     ]
   },

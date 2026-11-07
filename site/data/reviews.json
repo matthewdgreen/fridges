@@ -140,5 +140,33 @@
       }
     ],
     "collectionHealth": "Scheduled run 42086947436 succeeded through collection, deployment and health checks. All three datasets report successful November 5 UTC samples. No new count requests or equipment access were performed during this news review."
+  },
+  {
+    "date": "2026-11-07",
+    "checkedAt": "2026-11-07T13:31:55Z",
+    "outcome": "No verified later major wave found. Added Finnish official reporting: suspected domestic incidents disclosed November 3 and refrigeration-related damage acknowledged November 6, with incident dates and controller vendors unspecified. Added an anonymized November 2 Copeland incident-log analysis as researcher-reported context; physical impact and cross-incident attribution remain unconfirmed. Clarified that November 4 is the claim-reporting date, not an independently established claim date. ENISA still dates the latest wave to November 1–2. Euronews’s November 7 article discusses earlier honeypot reconnaissance and attribution hypotheses, not a new wave. Censys’s November 5 exposure measurements and Singapore’s November 6 advisory are follow-up research and guidance.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://www.kyberturvallisuuskeskus.fi/fi/uutiset/iot-ja-ot-ymparistojen-tietoturva-alkaa-laitteiden-suojaamisesta",
+      "https://kyberturvallisuuskeskus.fi/fi/uutiset/kyberturvallisuuskeskuksen-viikkokatsaus-452026",
+      "https://ransom-isac.org/blog/the-copeland-incident/",
+      "https://unit42.paloaltonetworks.com/europes-refrigeration-systems-attacks/",
+      "https://www.euronews.com/2026/11/07/hackers-probed-europes-fridge-systems-weeks-before-cyberattacks-who-did-it-and-what-could-",
+      "https://censys.com/blog/european-refrigeration-controller-exposure-sitrep",
+      "https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2026-014/",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://samsik.dk/artikler/2026/11/samsik-opmaerksom-pa-pro-russiske-hackergrupper-tager-ansvar-for-cyberangreb/"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.cisa.gov/resources-tools/resources/us-government-partners-urge-hardening-industrial-refrigeration-and-cold-chain-monitoring-systems",
+        "reason": "HTTP 403; the federal primary resource could not be independently read. Its secondary summaries were not used to infer a new incident."
+      }
+    ],
+    "collectionHealth": "Latest scheduled run 42266187474 and later manual screened collection 42295626165 succeeded. All three datasets last succeeded November 6 at 21:18:59 UTC; the two-address exclusion policy is present. Latest Pages deployment 42302154547 succeeded. No November 7 scheduled run was visible yet at review time; prior samples are less than one day old. No duplicate collection, credit-consuming audit or device requests were made."
   }
 ]
