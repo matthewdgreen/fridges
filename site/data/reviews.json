@@ -191,5 +191,33 @@
       }
     ],
     "collectionHealth": "Scheduled run 42393234001 succeeded through collection, deployment and health checks. All three datasets report successful November 7 samples at 16:49:46 UTC, with the two-address exclusion policy retained. No November 8 scheduled run was visible yet; existing samples are less than one day old. No collection requests, credit-consuming audit or refrigeration-device access were performed during this review."
+  },
+  {
+    "date": "2026-11-09",
+    "checkedAt": "2026-11-09T13:29:36Z",
+    "outcome": "No verified later major wave or incident correction found. CERT-FR remains last updated October 16; ENISA still dates the latest wave to November 1–2. The Hacker News’s November 9 report discusses federal hardening guidance, earlier European attacks and exposure measurements, without identifying a newly dated attack wave. An aggregator’s November 8 update grouped October 24 commentary with later consequences reporting; its update date was not treated as an incident date. Coolworld’s statement and SAMSIK’s attribution assessment are unchanged. Incident dates, the counter and the editorial assessment were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2026-014/",
+      "https://samsik.dk/artikler/2026/11/samsik-opmaerksom-pa-pro-russiske-hackergrupper-tager-ansvar-for-cyberangreb/",
+      "https://thehackernews.com/2026/11/us-agencies-warn-refrigeration.html",
+      "https://acturadar.com/evenements/40-cyberattaque-nationale-les-frigos-de-centaines-de-supermarches-compromis-l"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.cisa.gov/resources-tools/resources/us-government-partners-urge-hardening-industrial-refrigeration-and-cold-chain-monitoring-systems",
+        "reason": "HTTP 403; the federal primary resource could not be independently read. Secondary reporting was not treated as evidence of a new incident."
+      },
+      {
+        "url": "https://www.bfmtv.com/tech/cybersecurite/le-risque-c-etait-potentiellement-l-incendie-la-rupture-de-la-chaine-du-froid-et-ses-consequences-directes-parties-emergees-des-cyberattaques-contre-les-refrigerateurs-de-supermarches_AV-202611080153.html",
+        "reason": "Restricted fetch; the linked November 8 consequences article could not be independently read."
+      }
+    ],
+    "collectionHealth": "Scheduled run 42502861108 succeeded through collection, deployment and health checks. All three datasets report successful November 8 samples at 17:01:55 UTC, retaining the two-address exclusion policy. No November 9 scheduled run was visible yet; existing observations are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
