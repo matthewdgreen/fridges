@@ -219,5 +219,32 @@
       }
     ],
     "collectionHealth": "Scheduled run 42502861108 succeeded through collection, deployment and health checks. All three datasets report successful November 8 samples at 17:01:55 UTC, retaining the two-address exclusion policy. No November 9 scheduled run was visible yet; existing observations are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-10",
+    "checkedAt": "2026-11-10T13:31:26Z",
+    "outcome": "Updated the October incident with France’s November 9 official attribution to Iran’s IRGC-affiliated Shahid Kaveh unit. The C4 report describes about 700 affected retail sites and at least 15 fire outbreaks. This is retrospective attribution, not a new attack; the November counter and editorial No remain unchanged. Sekoia’s November 10 investigation hypothesizes a link between the waves but does not establish common attribution. SecurityScorecard’s November 5 report, covered again November 9, describes suspected spam/proxy abuse first observed November 2, with low-to-medium confidence and no established link to refrigeration sabotage; it was not treated as a new physical-disruption incident. CERT-FR’s product alert, ENISA’s wave dates and Coolworld’s statement are unchanged. No verified later major wave found.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://www.diplomatie.gouv.fr/fr/presse-et-ressources/decouvrir-et-informer/actualites/declaration-d-attribution-a-l-iran-de-cyberattaques-visant-la-france",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://cert.cyber.gouv.fr/uploads/CERTFR-2026-CTI-009.pdf",
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.sekoia.com/blog/the-cold-chain-on-fire-unpatched-danfoss-controllers-exploited",
+      "https://securityscorecard.com/blog/a-dish-served-lukewarm-the-refrigerator-botnet/",
+      "https://www.helpnetsecurity.com/2026/11/09/copeland-xweb-refrigeration-controllers-spam-botnet/"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403; the current vendor advisory listing could not be independently read."
+      }
+    ],
+    "collectionHealth": "Scheduled run 42702431772 succeeded through collection, deployment and health checks. All three datasets last succeeded November 9 at 21:26:04 UTC, retaining the two-address exclusion policy. No November 10 scheduled run was visible yet; existing samples are less than one day old. No duplicate collection, credit-consuming audit or refrigeration-device access was performed."
   }
 ]

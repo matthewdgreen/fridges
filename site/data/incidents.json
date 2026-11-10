@@ -31,7 +31,7 @@
     "reportedAt": "2026-10-12",
     "location": "France",
     "title": "Supermarket fridges forced into defrost",
-    "summary": "An overnight wave disrupted supermarket refrigeration and spoiled stock. France's CERT confirmed numerous compromises of Danfoss AK-SM and AK-SC controllers.",
+    "summary": "An overnight wave disrupted supermarket refrigeration and spoiled stock. France's CERT confirmed numerous compromises of Danfoss AK-SM and AK-SC controllers. On November 9, France officially attributed the October 11–12 campaign to Iran’s Shahid Kaveh unit, affiliated with the Islamic Revolutionary Guard Corps. The accompanying C4 report describes about 700 affected retail sites and at least 15 fire outbreaks. This attribution concerns the October campaign; it does not establish responsibility for the November incidents.",
     "classification": "Confirmed compromises",
     "major": true,
     "sources": [
@@ -42,6 +42,14 @@
       {
         "name": "Censys · 14 Oct",
         "url": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report/"
+      },
+      {
+        "name": "France Diplomatie · 9 Nov official attribution",
+        "url": "https://www.diplomatie.gouv.fr/fr/presse-et-ressources/decouvrir-et-informer/actualites/declaration-d-attribution-a-l-iran-de-cyberattaques-visant-la-france"
+      },
+      {
+        "name": "C4 / CERT-FR · 9 Nov attribution report",
+        "url": "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/"
       }
     ]
   },
