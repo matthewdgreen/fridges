@@ -246,5 +246,33 @@
       }
     ],
     "collectionHealth": "Scheduled run 42702431772 succeeded through collection, deployment and health checks. All three datasets last succeeded November 9 at 21:26:04 UTC, retaining the two-address exclusion policy. No November 10 scheduled run was visible yet; existing samples are less than one day old. No duplicate collection, credit-consuming audit or refrigeration-device access was performed."
+  },
+  {
+    "date": "2026-11-11",
+    "checkedAt": "2026-11-11T13:25:46Z",
+    "outcome": "No verified later major wave or incident correction found. CERT-FR’s product alert remains last updated October 16; its attribution report remains dated November 9 and concerns October 11–12. ENISA still dates the latest wave to November 1–2. NPR’s November 10 update reports Iran’s denial and continuing investigations, without establishing a later attack or US attribution. Check Point’s November 11 retrospective, read through its indexed full text after direct fetch failed, discusses the October campaign and older OT incidents. Sekoia’s link between the October and November waves remains a hypothesis. Coolworld’s statement is unchanged. Incident dates, counter and editorial assessment were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.kpbs.org/news/international/2026/11/09/iran-denies-it-was-behind-cyber-fridge-attacks-targeting-france",
+      "https://blog.checkpoint.com/security/from-water-systems-to-supermarket-refrigerators-inside-shahid-kaveh-and-cyberav3ngers-ot-attacks/",
+      "https://www.sekoia.com/blog/the-cold-chain-on-fire-unpatched-danfoss-controllers-exploited"
+    ],
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403; the current vendor advisory listing could not be independently read."
+      },
+      {
+        "url": "https://www.euronews.com/2026/11/11/iran-rejects-frances-baseless-accusations-on-fridge-cyberattacks",
+        "reason": "Direct fetch failed; the denial was instead reviewed in accessible NPR reporting."
+      }
+    ],
+    "collectionHealth": "Scheduled run 42877456419 succeeded through collection, deployment and health checks. All three datasets last succeeded November 10 at 18:39:53 UTC and retain the two-address exclusion policy. No November 11 scheduled run was visible yet; existing samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
