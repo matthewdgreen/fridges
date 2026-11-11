@@ -274,5 +274,18 @@
       }
     ],
     "collectionHealth": "Scheduled run 42877456419 succeeded through collection, deployment and health checks. All three datasets last succeeded November 10 at 18:39:53 UTC and retain the two-address exclusion policy. No November 11 scheduled run was visible yet; existing samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-11",
+    "checkedAt": "2026-11-11T17:57:46Z",
+    "type": "targeted-source-review",
+    "outcome": "Added a separate research update for Midnight Blue’s reported AK-SM 800A vulnerabilities through 5.3.2, distinguishing its older-firmware root demonstration from its Strict-mode memory-corruption finding. The source gives November 2026 without an exact publication day. Danfoss lists 5.4.0; whether it fixes these findings is not established. No attack incident or counter date changed.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a",
+      "https://www.danfoss.com/en/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a/"
+    ],
+    "sourceAccess": "Midnight Blue’s full article was read via direct HTTPS after browser search fetch failed. Danfoss’s software listing and guidance were read in full indexed text after its direct fetch returned HTTP 403."
   }
 ]

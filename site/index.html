@@ -7,7 +7,7 @@
   <meta name="description" content="Are the fridges ok? A sourced tracker of refrigeration cyberattacks, exposed Danfoss controllers, and what the numbers actually mean.">
   <title>Are the fridges ok?</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=02fce004e641">
+  <link rel="stylesheet" href="style.css?v=1d7e69cd7710">
   <script src="app.js?v=c6815d47b0ff" defer></script>
   <script src="versions.js?v=a804af9e08aa" defer></script>
 </head>
@@ -94,6 +94,13 @@
   <section id="timeline" class="section">
     <div class="section-heading"><div><div class="eyebrow">03 / The 2026 attacks</div><h2>A pattern, not a one-off.</h2></div><span class="section-aside">AUGUST → NOVEMBER 2026</span></div>
     <p class="section-intro">From suspected attacks at military bases to supermarket disruption and a contained incident at French blood-storage sites.</p>
+    <aside id="research-update" class="research-update" aria-labelledby="research-heading">
+      <div class="eyebrow">Research update · November 2026 · reviewed 11 November</div>
+      <h3 id="research-heading">New flaws reported through firmware 5.3.2.</h3>
+      <p>Midnight Blue reports six unauthenticated remote-code-execution vulnerabilities in Danfoss AK-SM 800A firmware through 5.3.2. Its demonstration shows root access on 3.3.0; the researchers also report a memory-corruption flaw reachable with Strict mode enabled on 5.3.2. CVE assignments and coordinated disclosure are pending. This research does not establish that these flaws caused the supermarket attacks.</p>
+      <p>Danfoss now lists 5.4.0; the report does not establish whether it fixes these findings. Both sources recommend restricting internet exposure. A firmware version alone is not an assurance of security.</p>
+      <div class="sources"><a href="https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a">Midnight Blue · research report ↗</a><a href="https://www.danfoss.com/en/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a/">Danfoss · current software &amp; guidance ↗</a></div>
+    </aside>
     <div id="incidents" class="timeline"></div>
     <p class="precedent">The problem predates 2026. Danfoss also documented attacks on supermarket refrigeration in Russia and Israel in 2022. <a href="https://assets.danfoss.com/documents/latest/533772/AO540160316124en-000101.pdf">Danfoss newsletter, page 9 ↗</a></p>
   </section>

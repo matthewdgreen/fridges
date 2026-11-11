@@ -275,6 +275,19 @@ th{
   white-space:nowrap}
 .timeline{
   margin-top:40px}
+.research-update{
+  border:1px solid var(--rule);
+  border-left:3px solid var(--red);
+  padding:22px;
+  margin-top:26px;
+  background:#ebece3}
+.research-update h3{
+  font:23px/1.3 Georgia,serif;
+  margin:12px 0}
+.research-update p{
+  font-size:13px;
+  max-width:850px;
+  margin:0 0 14px}
 .incident{
   display:grid;
   grid-template-columns:180px 1fr;
