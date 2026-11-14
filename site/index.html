@@ -95,11 +95,18 @@
     <div class="section-heading"><div><div class="eyebrow">03 / The 2026 attacks</div><h2>A pattern, not a one-off.</h2></div><span class="section-aside">AUGUST → NOVEMBER 2026</span></div>
     <p class="section-intro">From suspected attacks at military bases to supermarket disruption and a contained incident at French blood-storage sites.</p>
     <aside id="research-update" class="research-update" aria-labelledby="research-heading">
-      <div class="eyebrow">Research update · November 2026 · reviewed 11 November</div>
+      <div class="eyebrow">Research update · November 2026 · reviewed 14 November</div>
       <h3 id="research-heading">New flaws reported through firmware 5.3.2.</h3>
       <p>Midnight Blue reports six unauthenticated remote-code-execution vulnerabilities in Danfoss AK-SM 800A firmware through 5.3.2. Its demonstration shows root access on 3.3.0; the researchers also report a memory-corruption flaw reachable with Strict mode enabled on 5.3.2. CVE assignments and coordinated disclosure are pending. This research does not establish that these flaws caused the supermarket attacks.</p>
-      <p>Danfoss now lists 5.4.0; the report does not establish whether it fixes these findings. Both sources recommend restricting internet exposure. A firmware version alone is not an assurance of security.</p>
-      <div class="sources"><a href="https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a">Midnight Blue · research report ↗</a><a href="https://www.danfoss.com/en/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a/">Danfoss · current software &amp; guidance ↗</a></div>
+      <p><strong>5.4.0 update:</strong> Midnight Blue told Cooling Post that the new release does not fix its reported vulnerabilities. This is the researchers’ assessment, not an independent test by this tracker. Ireland’s NCSC also warns against relying on updates, password changes or Strict mode alone while controllers remain internet-exposed. A firmware version alone is not an assurance of security.</p>
+      <div class="sources"><a href="https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a">Midnight Blue · research report ↗</a><a href="https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/">Cooling Post · updated 5.4.0 assessment ↗</a><a href="https://www.ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf">Irish NCSC · 13 Nov advisory ↗</a><a href="https://www.danfoss.com/en/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a/">Danfoss · current software &amp; guidance ↗</a></div>
+    </aside>
+    <aside class="research-update" aria-labelledby="xweb-research-heading">
+      <div class="eyebrow">Research update · 13 November 2026 · reviewed 14 November</div>
+      <h3 id="xweb-research-heading">More flaws in Copeland / Dixell XWEB EVO.</h3>
+      <p>VulnCheck disclosed 14 vulnerabilities, reproduced with root access in firmware-based labs. Some findings also affect the end-of-support 5.8.8 release, according to the researchers; newer firmware does not resolve every reported issue. This research concerns XWEB EVO, a separate product line from XWEB Pro.</p>
+      <p>VulnCheck’s canary sensors recorded attempts against CVE-2026-124014 on 12 November and CVE-2026-124010 on 13 November. These are observations of attempts against decoys, not evidence of new food spoilage, affected production sites or a connection to the supermarket sabotage. They do not reset the attack counter.</p>
+      <div class="sources"><a href="https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root">VulnCheck · research &amp; canary observations ↗</a></div>
     </aside>
     <div id="incidents" class="timeline"></div>
     <p class="precedent">The problem predates 2026. Danfoss also documented attacks on supermarket refrigeration in Russia and Israel in 2022. <a href="https://assets.danfoss.com/documents/latest/533772/AO540160316124en-000101.pdf">Danfoss newsletter, page 9 ↗</a></p>

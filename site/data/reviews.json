@@ -287,5 +287,34 @@
       "https://www.danfoss.com/en/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a/"
     ],
     "sourceAccess": "Midnight Blue’s full article was read via direct HTTPS after browser search fetch failed. Danfoss’s software listing and guidance were read in full indexed text after its direct fetch returned HTTP 403."
+  },
+  {
+    "date": "2026-11-14",
+    "checkedAt": "2026-11-14T19:57:32Z",
+    "outcome": "No verified later major refrigeration-disruption wave found. Updated the research note: Cooling Post now quotes Midnight Blue saying 5.4.0 does not fix its findings; this is an attributed researcher assessment, not our own firmware test. Ireland’s November 13 NCSC advisory reiterates exposure restrictions. Added VulnCheck’s November 13 XWEB EVO research: 14 laboratory findings and November 12–13 canary attempts, without verified production disruption or a link to supermarket sabotage. Some findings reach end-of-support 5.8.8; secondary reporting that all findings are patched was not adopted. CERT-FR’s product alert and October attribution report, ENISA’s November 1–2 wave dates and Coolworld’s statement are unchanged. Incident dates, counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "updatedResearchCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root",
+      "https://cyberscoop.com/copeland-dixell-refrigeration-vulnerabilities/",
+      "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/"
+    ],
+    "sourceAccess": "The Irish NCSC advisory’s description and affected-products page, and Danfoss’s advisory listing, were reviewed in indexed text after direct web fetch failed. Midnight Blue’s article was read by direct HTTPS.",
+    "unavailableSources": [
+      {
+        "url": "https://ccb.belgium.be/advisories/warning-six-new-danfoss-vulnerabilities-refrigeration-controllers-risk-immediate-action",
+        "reason": "HTTP 403; the Belgian primary advisory could not be independently read. The accessible Irish advisory was reviewed instead."
+      }
+    ],
+    "collectionHealth": "Scheduled run 43619024446 succeeded through collection, deployment and health checks. All three datasets have successful November 14 samples at 17:03:58 UTC, retaining the two-address exclusion policy. November 11–13 scheduled runs also succeeded. No duplicate collection, credit-consuming audit or refrigeration-device access was performed."
   }
 ]
