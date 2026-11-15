@@ -316,5 +316,32 @@
       }
     ],
     "collectionHealth": "Scheduled run 43619024446 succeeded through collection, deployment and health checks. All three datasets have successful November 14 samples at 17:03:58 UTC, retaining the two-address exclusion policy. November 11–13 scheduled runs also succeeded. No duplicate collection, credit-consuming audit or refrigeration-device access was performed."
+  },
+  {
+    "date": "2026-11-15",
+    "checkedAt": "2026-11-15T13:30:48Z",
+    "outcome": "No verified later major wave or changed firmware assessment found. CERT-FR’s product alert and October attribution report, ENISA’s November 1–2 wave dates, Coolworld’s statement and Cooling Post’s attributed 5.4.0 assessment are unchanged. VulnCheck’s evidence remains November 12–13 canary attempts, not production disruption. Extended the existing November entry with The Record’s November 3 first-hand reporting on three British meat suppliers and Langridge Organic, with no stock losses reported. This is historical coverage, not a new wave. Freshly indexed aggregations and social claims were not treated as new verified incidents; an Italian report of thwarted attempts could not be read at its original source. The counter and editorial No remain unchanged.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root",
+      "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+      "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks"
+    ],
+    "sourceAccess": "Danfoss’s advisory listing was reviewed through indexed text. The British supplier source was read directly; the newer social-media circulation did not change its November 3 report date.",
+    "unavailableSources": [
+      {
+        "url": "https://www.newsminimalist.com/articles/hacker-attacks-target-supermarket-fridges-in-europe-aiming-to-raise-temperatures-to-50c-28cc8517",
+        "reason": "The summary fetch failed and its original Il Gazzettino report was unavailable under the source’s robots restrictions. No new incident was inferred from the summary."
+      }
+    ],
+    "collectionHealth": "Latest scheduled run 43619024446 succeeded through collection, deployment and health checks; subsequent review deployment 43635102079 also succeeded. All three datasets last succeeded November 14 at 17:03:58 UTC with the two-address exclusion policy. No November 15 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
