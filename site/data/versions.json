@@ -6,8 +6,8 @@
   "scope": "worldwide",
   "fingerprintSource": "https://censys.com/blog/frostbitten-in-france-a-danfoss-storeview-internet-exposure-report",
   "status": "ok",
-  "lastAttemptAt": "2026-11-14T17:03:58Z",
-  "lastSuccessAt": "2026-11-14T17:03:58Z",
+  "lastAttemptAt": "2026-11-15T17:41:44Z",
+  "lastSuccessAt": "2026-11-15T17:41:44Z",
   "history": [
     {
       "date": "2026-11-03",
@@ -627,6 +627,58 @@
       },
       "honeypotServicesExcluded": 2683,
       "finishedAt": "2026-11-14T17:04:18Z",
+      "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
+      "manuallyExcludedIPs": 2
+    },
+    {
+      "date": "2026-11-15",
+      "collectedAt": "2026-11-15T17:41:44Z",
+      "all": {
+        "total": 8450,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 4,
+          "SMG09.000.135 (0176)": 2,
+          "SMG09.000.135 (0179)": 16,
+          "SMG09.000.141": 45,
+          "3.0.12": 28,
+          "3.1.11": 42,
+          "3.2.6": 165,
+          "3.3.0": 194,
+          "4.0.14": 30,
+          "4.1.4": 93,
+          "4.2.4": 115,
+          "4.3.1": 6748,
+          "5.0.19": 30,
+          "5.1.1": 100,
+          "5.3.2": 194,
+          "Unknown/unmapped": 644
+        }
+      },
+      "excludingHoneypots": {
+        "total": 5769,
+        "versions": {
+          "SMG09.000.116 (0135)": 0,
+          "SMG09.000.116/118/129 (ambiguous)": 4,
+          "SMG09.000.135 (0176)": 2,
+          "SMG09.000.135 (0179)": 16,
+          "SMG09.000.141": 45,
+          "3.0.12": 28,
+          "3.1.11": 42,
+          "3.2.6": 165,
+          "3.3.0": 194,
+          "4.0.14": 30,
+          "4.1.4": 93,
+          "4.2.4": 115,
+          "4.3.1": 4625,
+          "5.0.19": 30,
+          "5.1.1": 100,
+          "5.3.2": 194,
+          "Unknown/unmapped": 86
+        }
+      },
+      "honeypotServicesExcluded": 2681,
+      "finishedAt": "2026-11-15T17:42:05Z",
       "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
       "manuallyExcludedIPs": 2
     }
