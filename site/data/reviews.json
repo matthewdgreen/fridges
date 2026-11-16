@@ -343,5 +343,30 @@
       }
     ],
     "collectionHealth": "Latest scheduled run 43619024446 succeeded through collection, deployment and health checks; subsequent review deployment 43635102079 also succeeded. All three datasets last succeeded November 14 at 17:03:58 UTC with the two-address exclusion policy. No November 15 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-16",
+    "checkedAt": "2026-11-16T13:29:10Z",
+    "outcome": "No verified later major refrigeration-disruption wave or material correction found. CERT-FR’s product alert remains dated October 16, and its attribution report still concerns October 11–12. ENISA retains November 1–2 as the latest wave. Newly indexed SecurityWeek coverage points to the already reviewed XWEB EVO findings; the accessible VulnCheck primary report still dates the canary attempts to November 12–13 and does not establish production disruption. Cooling Post’s attributed 5.4.0 assessment and Coolworld’s statement are unchanged. Incident dates, counter, research notes and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://raw.githubusercontent.com/enisaeu/CNW/main/advisories/2026/CNW-2026-05_retail-incidents.md",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root",
+      "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/"
+    ],
+    "sourceAccess": "Danfoss’s listing was checked through indexed text. SecurityWeek’s new headline and indexed excerpt were checked against the accessible VulnCheck primary report; the full secondary article was unavailable.",
+    "unavailableSources": [
+      {
+        "url": "https://www.securityweek.com/hackers-probe-newly-disclosed-flaws-in-copeland-refrigeration-controllers/",
+        "reason": "Full article could not be fetched; direct HTTPS returned HTTP 403. Indexed excerpts were not treated as evidence of a new incident."
+      }
+    ],
+    "collectionHealth": "Scheduled run 43742533538 succeeded through collection, deployment and health checks. All three datasets last succeeded November 15 at 17:41:44 UTC, retaining the two-address exclusion policy. No November 16 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
