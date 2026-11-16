@@ -5,8 +5,8 @@
   "metric": "unique_ip_addresses",
   "scope": "worldwide",
   "status": "ok",
-  "lastAttemptAt": "2026-11-15T17:41:44Z",
-  "lastSuccessAt": "2026-11-15T17:41:44Z",
+  "lastAttemptAt": "2026-11-16T21:00:10Z",
+  "lastSuccessAt": "2026-11-16T21:00:10Z",
   "history": [
     {
       "date": "2026-11-03",
@@ -275,6 +275,27 @@
         "facetServices": 5317
       },
       "taggedServicesExcluded": 2681,
+      "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
+      "manuallyExcludedIPs": 2
+    },
+    {
+      "date": "2026-11-16",
+      "collectedAt": "2026-11-16T21:00:10Z",
+      "all": {
+        "services": 8675,
+        "uniqueIPs": 1884,
+        "cardinalityMethod": "singleton-tail",
+        "facetRows": 1000,
+        "facetServices": 7791
+      },
+      "excludingTaggedServices": {
+        "services": 5944,
+        "uniqueIPs": 1427,
+        "cardinalityMethod": "singleton-tail",
+        "facetRows": 1000,
+        "facetServices": 5517
+      },
+      "taggedServicesExcluded": 2731,
       "populationPolicy": "exclude-two-high-multiplicity-ips-2026-11-06",
       "manuallyExcludedIPs": 2
     }
