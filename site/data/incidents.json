@@ -81,7 +81,7 @@
     "reportedAt": "2026-11-02",
     "location": "Across Europe",
     "title": "Another wave. More spoiled food.",
-    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-ups described contemporaneous incidents in Germany, Portugal and Sicily; some affected systems used Danfoss controllers. The Record’s November 3 follow-up quoted AIMS reporting attacks through Copeland XWEB controllers at three British meat suppliers, with no meat lost; British wholesaler Langridge Organic also reported an attack contained without stock loss. Greece acknowledged domestic food-retail attacks on November 3 without incident dates or an established link to this wave. Finland reported suspected domestic incidents on November 3 and refrigeration-related damage on November 6, without incident dates or controller vendors. Separately, Ransom-ISAC’s November 6 analysis of an anonymized November 2 Copeland XWEB log describes configuration changes across 31 listed devices; actual temperatures, stock loss and a connection to other attacks remain unconfirmed. Claims of responsibility by NoName057(16) and Z-Pentest were reported on November 4 and remain independently unverified. A common perpetrator is unconfirmed, and these follow-ups do not establish a distinct new wave.",
+    "summary": "Refrigeration attacks were reported in Belgium, Estonia, Ireland, Luxembourg, the Netherlands and Sweden, with some settings raised to 50°C. Follow-ups described contemporaneous incidents in Germany, Portugal and Sicily; some affected systems used Danfoss controllers. The Record’s November 3 follow-up quoted AIMS reporting attacks through Copeland XWEB controllers at three British meat suppliers, with no meat lost; British wholesaler Langridge Organic also reported an attack contained without stock loss. Greece acknowledged domestic food-retail attacks on November 3 without incident dates or an established link to this wave. Finland reported suspected domestic incidents on November 3 and refrigeration-related damage on November 6, without incident dates or controller vendors. Separately, Ransom-ISAC’s November 6 analysis of an anonymized November 2 Copeland XWEB log describes configuration changes across 31 listed devices; actual temperatures, stock loss and a connection to other attacks remain unconfirmed. Claims of responsibility by NoName057(16) and Z-Pentest were reported on November 4 and remain independently unverified. On November 12, Belgium’s interior minister cited indications of possible Iranian involvement, while its foreign minister said official attribution was premature and the federal prosecutor kept the investigation open. A common perpetrator is unconfirmed, and these follow-ups do not establish a distinct new wave.",
     "classification": "Reported attack wave",
     "major": true,
     "sources": [
@@ -132,6 +132,10 @@
       {
         "name": "The Record · 3 Nov British supplier follow-up",
         "url": "https://therecord.media/british-businesses-caught-in-europe-wide-supermarket-fridge-attacks"
+      },
+      {
+        "name": "AFP / AWP · 12 Nov Belgian attribution remains provisional",
+        "url": "https://ch.zonebourse.com/actualite-bourse/cyberattaque-contre-des-frigos-la-belgique-met-en-cause-l-iran-ce785ed8d18af62d"
       }
     ]
   },

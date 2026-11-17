@@ -368,5 +368,26 @@
       }
     ],
     "collectionHealth": "Scheduled run 43742533538 succeeded through collection, deployment and health checks. All three datasets last succeeded November 15 at 17:41:44 UTC, retaining the two-address exclusion policy. No November 16 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-17",
+    "checkedAt": "2026-11-17T13:26:59Z",
+    "outcome": "No verified later major refrigeration-disruption wave found. Le Monde’s November 16–17 follow-ups concern attribution, diplomatic responses and proposed sanctions rather than a new attack. Extended the existing November entry with AFP/AWP’s November 12 reporting: Belgium’s interior minister described possible Iranian involvement, while the foreign minister judged official attribution premature and the federal prosecutor declined to prejudge the inquiry. This remains a provisional lead, not confirmation of a common perpetrator. CERT-FR’s product alert and October attribution report, ENISA’s November 1–2 wave dates, Coolworld’s statement and Cooling Post’s attributed 5.4.0 assessment remain unchanged. The counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://ch.zonebourse.com/actualite-bourse/cyberattaque-contre-des-frigos-la-belgique-met-en-cause-l-iran-ce785ed8d18af62d",
+      "https://www.21news.be/cyberattaques-maxime-prevot-recadre-bernard-quintin-sur-la-piste-iranienne/",
+      "https://www.lemonde.fr/en/international/article/2026/11/16/inside-france-s-denunciation-of-iran-over-supermarket-freezer-hacks_6782272_4.html",
+      "https://www.lemonde.fr/en/international/article/2026/11/17/what-are-france-s-options-in-response-to-the-iranian-cyberattack-on-supermarket-freezers_6782470_4.html"
+    ],
+    "sourceAccess": "AFP/AWP’s article and the later Le Monde response analysis were read directly; Le Monde’s November 16 attribution follow-up was reviewed through indexed text. No legal or military response options were treated as new refrigeration incidents.",
+    "collectionHealth": "Scheduled run 43955514682 succeeded through collection, deployment and health checks. All three datasets last succeeded November 16 at 21:00:10 UTC and retain the two-address exclusion policy. No November 17 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
