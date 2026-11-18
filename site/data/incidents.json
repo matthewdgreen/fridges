@@ -163,5 +163,22 @@
         "url": "https://www.bleepingcomputer.com/news/security/cyberattack-disrupts-blood-storage-refrigeration-systems-in-france/"
       }
     ]
+  },
+  {
+    "id": "xweb-suspected-abuse-2026-11",
+    "date": "2026-11-02",
+    "dateLabel": "Observed 2 November 2026 · reported 5 November",
+    "reportedAt": "2026-11-05",
+    "location": "Multiple countries · XWEB-associated addresses",
+    "title": "Suspected spam and proxy abuse around XWEB controllers",
+    "summary": "SecurityScorecard’s STRIKE team reported network-flow evidence of suspected spam and proxy abuse involving addresses associated with Copeland/Dixell XWEB controllers, first identified on November 2. Its nine-address SMTP cluster included three addresses that researchers identified as XWEB through page titles or certificates; the report assigns low-to-medium overall confidence. These fingerprints and shared-address traffic do not independently establish that the mail or proxy processes ran on refrigeration controllers. No refrigeration disruption was established by this investigation, and the researchers did not link it to the October or November sabotage waves. This historical finding does not reset the major-attack counter.",
+    "classification": "Suspected infrastructure abuse",
+    "major": false,
+    "sources": [
+      {
+        "name": "SecurityScorecard STRIKE · 5 Nov primary research",
+        "url": "https://securityscorecard.com/blog/a-dish-served-lukewarm-the-refrigerator-botnet/"
+      }
+    ]
   }
 ]

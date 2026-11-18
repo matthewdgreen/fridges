@@ -389,5 +389,35 @@
     ],
     "sourceAccess": "AFP/AWP’s article and the later Le Monde response analysis were read directly; Le Monde’s November 16 attribution follow-up was reviewed through indexed text. No legal or military response options were treated as new refrigeration incidents.",
     "collectionHealth": "Scheduled run 43955514682 succeeded through collection, deployment and health checks. All three datasets last succeeded November 16 at 21:00:10 UTC and retain the two-address exclusion policy. No November 17 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-18",
+    "checkedAt": "2026-11-18T13:33:21Z",
+    "outcome": "No verified later major refrigeration-disruption wave found. Added a previously unlisted historical finding from SecurityScorecard’s November 5 primary report: suspected spam/proxy abuse first observed November 2, with low-to-medium confidence, uncertain device-level attribution and no established refrigeration disruption or sabotage link. Hive Pro’s November 12 advisory revisits that activity and the already reviewed November 2 log, not a new wave. Newly published Danfoss coverage revisits Midnight Blue’s findings; RH-ISAC and Ireland’s NCSC distinguish research from incidents. CERT-FR, ENISA, Coolworld and Cooling Post remain unchanged. The major-attack date and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a",
+      "https://ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root",
+      "https://rhisac.org/general-blog/unpatched-danfoss-ak-sm800a-flaws-expose-refrigeration-controllers-to-remote-takeover/",
+      "https://www.hivepro.com/threat-advisory/refrigerator-botnet-hijacks-exposed-copeland-xweb-controllers",
+      "https://securityscorecard.com/blog/a-dish-served-lukewarm-the-refrigerator-botnet/",
+      "https://www.danfoss.com/en-us/service-and-support/downloads/dcs/adap-kool-software/ak-sm-800a"
+    ],
+    "sourceAccess": "Primary incident and research reports were read directly. Danfoss’s download listing was checked through indexed text and still lists 5.4.0; its security-advisory listing returned HTTP 403 and was not treated as evidence that a patch exists. Network-flow interpretations were attributed to the researchers rather than independently verified.",
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 on direct retrieval."
+      }
+    ],
+    "collectionHealth": "Scheduled run 44162758958 succeeded through collection, deployment and health checks. All three datasets last succeeded November 17 at 19:49:56 UTC and retain the two-address exclusion policy. No November 18 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
