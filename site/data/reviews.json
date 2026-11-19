@@ -419,5 +419,35 @@
       }
     ],
     "collectionHealth": "Scheduled run 44162758958 succeeded through collection, deployment and health checks. All three datasets last succeeded November 17 at 19:49:56 UTC and retain the two-address exclusion policy. No November 18 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-19",
+    "checkedAt": "2026-11-19T13:31:10Z",
+    "outcome": "No verified later major refrigeration-disruption wave found. Swissinfo’s November 18 reopening report concerns an early-November attack, not a new incident. Expanded historical November coverage using SRF’s November 5 victim/Volg statements and Swiss NCSC’s November 10 confirmation of domestic incidents; exact dates, controller vendors and a shared campaign link remain unestablished. New Cooling Post coverage concerns guidance and a webinar. CERT-FR, ENISA, Ireland’s NCSC and Cooling Post’s attributed 5.4.0 assessment remain unchanged. The major-attack date and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "expandedIncidentCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.srf.ch/news/schweiz/kuehlanlage-manipuliert-berner-metzgerei-opfer-von-hackerangriff-auch-volg-betroffen",
+      "https://www.swissinfo.ch/ger/metzgerei-in-k%C3%B6niz-muss-nach-cyberangriff-vor%C3%BCbergehend-schliessen/92334848",
+      "https://www.swissinfo.ch/eng/swiss-industry/k%C3%B6niz-butchers-shop-reopens-following-a-cyberattack/92399021",
+      "https://www.bacs.admin.ch/en/warnung-kuehlanlagen-en",
+      "https://www.coolingpost.com/training/danfoss-to-host-cyber-security-webinar/",
+      "https://www.coolingpost.com/uk-news/beijer-offers-latest-security-guidance/"
+    ],
+    "sourceAccess": "Swiss victim/retailer quotations, Swiss NCSC guidance and the reopening follow-up were read directly. Danfoss’s security-advisory listing returned HTTP 403; no patch-status change was inferred from its unavailability.",
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 on direct retrieval."
+      }
+    ],
+    "collectionHealth": "Scheduled run 44380113572 succeeded through collection, deployment and health checks. All three datasets last succeeded November 18 at 19:24:22 UTC and retain the two-address exclusion policy. No November 19 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
