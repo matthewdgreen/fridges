@@ -449,5 +449,31 @@
       }
     ],
     "collectionHealth": "Scheduled run 44380113572 succeeded through collection, deployment and health checks. All three datasets last succeeded November 18 at 19:24:22 UTC and retain the two-address exclusion policy. No November 19 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-20",
+    "checkedAt": "2026-11-20T13:34:01Z",
+    "outcome": "No verified later major refrigeration-disruption wave or material correction found. CERT-FR’s alert and October attribution report, ENISA’s November 1–2 wave dates, Irish and Swiss guidance, Coolworld’s statement and Cooling Post’s attributed 5.4.0 assessment remain unchanged. VulnCheck still describes November 12–13 canary attempts, not newly evidenced production disruption. KIDE’s notices distinguish supported XWEB PRO updates from unsupported XWEB EVO; guidance is not evidence of a new attack. Incident dates, research notes, counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf",
+      "https://www.bacs.admin.ch/en/warnung-kuehlanlagen-en",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root",
+      "https://www.kide.com/en/?post_type=notification-v"
+    ],
+    "sourceAccess": "Listed sources were read directly. Danfoss’s security-advisory listing returned HTTP 403; its unavailability was not taken as evidence of patch status. KIDE’s XWEB PRO recommendation was not applied to the separate EVO product line.",
+    "unavailableSources": [
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 on direct retrieval."
+      }
+    ],
+    "collectionHealth": "Scheduled run 44598670774 succeeded through collection, deployment and health checks. All three datasets last succeeded November 19 at 19:28:34 UTC and retain the two-address exclusion policy. No November 20 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
