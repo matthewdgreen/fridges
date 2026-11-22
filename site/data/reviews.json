@@ -503,5 +503,33 @@
       }
     ],
     "collectionHealth": "Scheduled run 44798871783 succeeded through collection, deployment and health checks. All three datasets last succeeded November 20 at 19:05:37 UTC and retain the two-address exclusion policy. No November 21 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-22",
+    "checkedAt": "2026-11-22T13:25:45Z",
+    "outcome": "No verified later major refrigeration-disruption wave or material correction found. Euronews’s November 22 hybrid-threat overview revisits the November wave and October decoy observations, not new refrigeration incidents. Pen Test Partners’ November 20 primary report describes preventive RDM remediation with UK agencies and retailers; it does not establish a new attack wave or measure the StoreView population. CERT-FR’s alert and October attribution report, ENISA’s November 1–2 wave dates, Coolworld’s statement and Cooling Post’s attributed 5.4.0 assessment remain unchanged. Incident dates, research notes, counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://fr.euronews.com/2026/11/22/frigos-pirates-gps-brouilles-fausses-bombes-un-mois-dattaques-hybrides-en-europe",
+      "https://www.pentestpartners.com/security-blog/the-fridge-hack-uk-supermarkets-narrowly-avoided/"
+    ],
+    "sourceAccess": "Listed reports were read directly. The BBC report on UK remediation could not be fetched; the participating researchers’ primary account was read instead. Danfoss’s security-advisory listing returned HTTP 403, which was not taken as evidence of patch status.",
+    "unavailableSources": [
+      {
+        "url": "https://www.bbc.com/news/articles/c6eq49zyx7p4o",
+        "reason": "Browser retrieval failed; preventive-remediation findings were checked against Pen Test Partners’ accessible primary report."
+      },
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 on direct retrieval."
+      }
+    ],
+    "collectionHealth": "Scheduled run 44932810167 succeeded through collection, deployment and health checks. All three datasets last succeeded November 21 at 17:57:10 UTC and retain the two-address exclusion policy. No November 22 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
