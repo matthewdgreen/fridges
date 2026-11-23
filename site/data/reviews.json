@@ -531,5 +531,33 @@
       }
     ],
     "collectionHealth": "Scheduled run 44932810167 succeeded through collection, deployment and health checks. All three datasets last succeeded November 21 at 17:57:10 UTC and retain the two-address exclusion policy. No November 22 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-23",
+    "checkedAt": "2026-11-23T13:26:07Z",
+    "outcome": "No verified later major refrigeration-disruption wave or material correction found. Newly indexed Greek coverage describes an exposure survey; its full article was inaccessible, so no counts or attack claims were imported. DomainTools’ November 13 assessment revisits the October and November 1–2 waves; Cooling Post’s November 20 RDM report concerns preventive remediation. CERT-FR’s alert and October attribution report, ENISA’s wave dates, Coolworld’s statement and Cooling Post’s attributed 5.4.0 assessment remain unchanged. Incident dates, research notes, counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.coolingpost.com/world-news/belgium-warns-of-new-danfoss-controller-vulnerabilities/",
+      "https://dti.domaintools.com/research/european-refrigeration-systems-cyber-sabotage",
+      "https://www.coolingpost.com/uk-news/swift-action-to-secure-uk-supermarket-controls/"
+    ],
+    "sourceAccess": "Listed reports were read directly. SecNews’s November 23 headline and indexed introduction describe exposed interfaces, not a verified attack; full retrieval failed and direct HTTPS returned HTTP 403. Danfoss’s security-advisory listing also returned HTTP 403; no patch-status change was inferred.",
+    "unavailableSources": [
+      {
+        "url": "https://www.secnews.gr/en/753000/ereuna-secnews-psygeia-stin-ellada-hackers/",
+        "reason": "Full article unavailable; direct HTTPS returned HTTP 403. Indexed exposure figures were not imported."
+      },
+      {
+        "url": "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/",
+        "reason": "HTTP 403 on direct retrieval."
+      }
+    ],
+    "collectionHealth": "Scheduled run 45055379150 succeeded through collection, deployment and health checks. All three datasets last succeeded November 22 at 18:29:42 UTC and retain the two-address exclusion policy. No November 23 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
