@@ -615,5 +615,37 @@
       }
     ],
     "collectionHealth": "Scheduled run 45488233997 succeeded through collection, deployment and health checks. All three datasets last succeeded November 24 at 21:09:49 UTC and retain the two-address exclusion policy. No November 25 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
+  },
+  {
+    "date": "2026-11-26",
+    "checkedAt": "2026-11-26T13:35:16Z",
+    "outcome": "No verified later major refrigeration-disruption wave found. Updated the research note: CISA added CVE-2025-41450, CVE-2023-25914 and CVE-2023-25915 to KEV on November 25, establishing known exploitation without victim, attack-date or European-wave attribution. These are separate from CVE-2026-129713. Midnight Blue now collectively assigns its six findings to CVE-2026-129713, lists firmware through 5.4.0 and says a fix is planned for 5.5.x. CISA’s unchanged November 24 advisory reports no known public exploitation of that specific CVE. BleepingComputer’s November 25 article covers that advisory and earlier incidents. CERT-FR, ENISA, Irish guidance, Coolworld and VulnCheck supply no evidenced later major wave. Incident dates, counter and editorial No were preserved.",
+    "newMajorAttackFound": false,
+    "updatedResearchCoverage": true,
+    "latestMajorIncidentDate": "2026-11-02",
+    "sources": [
+      "https://raw.githubusercontent.com/cisagov/kev-data/develop/known_exploited_vulnerabilities.json",
+      "https://raw.githubusercontent.com/cisagov/CSAF/develop/csaf_files/OT/white/2026/icsa-26-328-03.json",
+      "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/129xxx/CVE-2026-129713.json",
+      "https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/127xxx/CVE-2026-127057.json",
+      "https://www.midnightblue.nl/blog/multiple-rce-danfoss-aksm800a",
+      "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2026-12-01/",
+      "https://www.danfoss.com/en/service-and-support/coordinated-vulnerability-disclosure/danfoss-security-advisories/dsa-2026-12-02/",
+      "https://www.bleepingcomputer.com/news/security/cisa-warns-of-critical-unpatched-flaw-in-danfoss-refrigeration-controllers/",
+      "https://cert.cyber.gouv.fr/alerte/CERTFR-2026-ALE-012/",
+      "https://cert.cyber.gouv.fr/cti/CERTFR-2026-CTI-009/",
+      "https://www.enisa.europa.eu/news/joint-statement-on-cyber-incidents-in-refrigeration-systems-across-the-eu",
+      "https://ncsc.gov.ie/pdfs/2611130306_New_Vulnerabilities_in_Refrigeration_Controllers.pdf",
+      "https://www.coolworld-rentals.com/news/cybersecurity-update",
+      "https://www.vulncheck.com/blog/copeland-xweb-evo-unauthenticated-root"
+    ],
+    "sourceAccess": "Official KEV JSON, CISA CSAF JSON, CNA records and listed research, incident and guidance sources were read directly. Danfoss’s dedicated advisories and listing were read in complete indexed official text; the listing now uses the correct CVE IDs. CISA’s November 25 announcement could not be retrieved, so the additions were verified in its official catalog JSON, version 2026.11.25. No patch release was inferred from a planned version.",
+    "unavailableSources": [
+      {
+        "url": "https://www.cisa.gov/news-events/alerts/2026/11/25/cisa-adds-ten-known-exploited-vulnerabilities-catalog",
+        "reason": "Web retrieval failed; official cisagov KEV JSON read instead."
+      }
+    ],
+    "collectionHealth": "Scheduled run 45695134017 succeeded through collection, deployment and health checks. All three datasets last succeeded November 25 at 20:27:34 UTC and retain the two-address exclusion policy. No November 26 scheduled run was visible yet; samples are less than one day old. No duplicate collection requests, credit-consuming audit or refrigeration-device access were performed."
   }
 ]
